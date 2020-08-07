@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -24,24 +24,24 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="PUSH" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PUSH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6i-ai-Mhi">
-                                <rect key="frame" x="25" y="55" width="92.5" height="42.5"/>
+                                <rect key="frame" x="25.000000000000007" y="11.000000000000004" width="92.666666666666686" height="42.333333333333343"/>
                                 <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="36"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VEg-Tg-rsp">
-                                <rect key="frame" x="12" y="103.5" width="390" height="5"/>
+                                <rect key="frame" x="12" y="59.333333333333336" width="390" height="5.0000000000000071"/>
                                 <color key="backgroundColor" red="0.22745098039215686" green="0.75294117647058822" blue="0.3529411764705882" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="5" id="zAW-XM-OMS"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jLJ-1N-ZYb">
-                                <rect key="frame" x="347" y="55.5" width="42" height="42"/>
+                                <rect key="frame" x="347" y="11.333333333333336" width="42" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="jLJ-1N-ZYb" secondAttribute="height" multiplier="1:1" id="5Ka-29-2WI"/>
                                     <constraint firstAttribute="width" constant="42" id="Vuy-yz-6Go"/>
@@ -53,16 +53,16 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="68" translatesAutoresizingMaskIntoConstraints="NO" id="3al-Ud-1Bj">
-                                <rect key="frame" x="40" y="108.5" width="319" height="115.5"/>
+                                <rect key="frame" x="40" y="64.333333333333314" width="319" height="119.66666666666669"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Your push-ups for today" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ns-Wc-Z2a">
-                                        <rect key="frame" x="0.0" y="46" width="219.5" height="23.5"/>
+                                        <rect key="frame" x="0.0" y="48" width="219.66666666666666" height="23.666666666666671"/>
                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="20"/>
                                         <color key="textColor" red="0.71372549019607845" green="0.71372549019607845" blue="0.71372549019607845" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r2f-KO-0kx">
-                                        <rect key="frame" x="287.5" y="29.5" width="31.5" height="56.5"/>
+                                        <rect key="frame" x="287.66666666666669" y="31.666666666666675" width="31.333333333333314" height="56.333333333333343"/>
                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="48"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -70,7 +70,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iPH-kG-0qv">
-                                <rect key="frame" x="30" y="763" width="354" height="69"/>
+                                <rect key="frame" x="30" y="637" width="354" height="69"/>
                                 <color key="backgroundColor" red="0.2274509804" green="0.75294117650000003" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="48"/>
                                 <state key="normal" title="Start">
@@ -81,23 +81,23 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V4H-1g-9bN">
-                                <rect key="frame" x="166.5" y="318.5" width="81" height="169"/>
+                                <rect key="frame" x="166.66666666666666" y="246.66666666666663" width="81" height="169"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="144"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jS6-Fm-M6Y">
-                                <rect key="frame" x="0.0" y="224" width="414" height="448"/>
+                                <rect key="frame" x="0.0" y="184" width="414" height="368"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rwr-Vl-Yas">
                                     <size key="itemSize" width="266" height="303"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="30" minY="0.0" maxX="60" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StatCell" id="BSl-t9-QrU">
-                                        <rect key="frame" x="0.0" y="72.5" width="266" height="303"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="StatCell" id="BSl-t9-QrU" customClass="StatCollectionViewCell" customModule="PUSH" customModuleProvider="target">
+                                        <rect key="frame" x="30" y="32.666666666666664" width="266" height="303"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="XWW-uE-3dn">
                                             <rect key="frame" x="0.0" y="0.0" width="266" height="303"/>
@@ -105,21 +105,47 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="266" height="303"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="AddCell" id="f6B-Xs-EU9">
-                                        <rect key="frame" x="276" y="72.5" width="266" height="303"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="AddCell" id="f6B-Xs-EU9" customClass="AddCollectionViewCell" customModule="PUSH" customModuleProvider="target">
+                                        <rect key="frame" x="306" y="32.666666666666664" width="266" height="303"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="r78-aX-vOi">
                                             <rect key="frame" x="0.0" y="0.0" width="266" height="303"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" spacing="123" translatesAutoresizingMaskIntoConstraints="NO" id="oD0-d4-k1j">
+                                                    <rect key="frame" x="36" y="0.0" width="194" height="303"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LVH-bY-xwJ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="194" height="55"/>
+                                                            <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="36"/>
+                                                            <state key="normal" title="Add a friend">
+                                                                <color key="titleColor" red="0.71372549019999998" green="0.71372549019999998" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvT-0m-Y5k">
+                                                            <rect key="frame" x="71" y="178" width="52" height="125"/>
+                                                            <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="96"/>
+                                                            <state key="normal" title="+">
+                                                                <color key="titleColor" red="0.71372549019999998" green="0.71372549019999998" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="oD0-d4-k1j" secondAttribute="bottom" id="3tx-dO-M6K"/>
+                                                <constraint firstItem="oD0-d4-k1j" firstAttribute="centerX" secondItem="r78-aX-vOi" secondAttribute="centerX" id="Kin-2b-kb0"/>
+                                                <constraint firstItem="oD0-d4-k1j" firstAttribute="top" secondItem="r78-aX-vOi" secondAttribute="top" id="koA-vH-Hcc"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="hzW-Py-ozJ">
-                                <rect key="frame" x="30" y="680" width="354" height="37"/>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="hzW-Py-ozJ">
+                                <rect key="frame" x="30" y="560" width="354" height="37"/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z9x-Mi-46N">
-                                <rect key="frame" x="25" y="708" width="44" height="30"/>
+                                <rect key="frame" x="25" y="582" width="44" height="30"/>
                                 <state key="normal" title="Sound"/>
                                 <connections>
                                     <action selector="soundTappedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pfj-od-XJM"/>
@@ -173,14 +199,14 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="662" y="116"/>
+            <point key="canvasLocation" x="660.86956521739137" y="115.7608695652174"/>
         </scene>
         <!--User View Controller-->
         <scene sceneID="oxt-ph-tBr">
             <objects>
                 <viewController id="9PB-TJ-hNO" customClass="UserViewController" customModule="PUSH" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="soL-CZ-RaC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nRm-P2-PJ8">
@@ -189,7 +215,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F39-Ub-Kz8">
-                                <rect key="frame" x="185.5" y="406" width="43" height="30"/>
+                                <rect key="frame" x="185.66666666666666" y="343" width="43" height="30"/>
                                 <state key="normal" title="Ready"/>
                                 <connections>
                                     <action selector="readyButton:" destination="9PB-TJ-hNO" eventType="touchUpInside" id="f0H-c5-XqT"/>

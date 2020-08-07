@@ -33,7 +33,21 @@ class MainViewController: UIViewController {
         cameraController.setUpCamera()
         cameraController.delegate = self
         countLabel.isHidden = true
+        soundButton.isHidden = true
         cameraController.audioController = audioController
+        
+        startButton.layer.cornerRadius = 33
+        //for collecti0n view
+        statsCollectionView.delegate = self
+        statsCollectionView.dataSource = self
+
+        statsCollectionView.decelerationRate = .fast
+        
+        statsCollectionView.backgroundColor = UIColor.black
+        statsCollectionView.showsHorizontalScrollIndicator = false
+        self.view.bringSubviewToFront(pageControl)
+        
+//        self.pageControl.numberOfPages = friend count plus 2
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,13 +69,14 @@ class MainViewController: UIViewController {
             cameraController.captureSession.stopRunning()
             stopTimer()
             startButton.setTitle("Start", for: .normal)
-            startButton.backgroundColor = .green
+            startButton.backgroundColor = UIColor(red: 58/255, green: 192/255, blue: 90/255, alpha: 1)
             prepareLight()
             print("Done")
+            reset()
         } else {
             cameraController.captureSession.startRunning()
             startButton.setTitle("Stop", for: .normal)
-            startButton.backgroundColor = .red
+            startButton.backgroundColor = UIColor(red: 176/255, green: 92/255, blue: 90/255, alpha: 1)
             startCountDown()
             prepareDark()
         }
@@ -93,6 +108,7 @@ class MainViewController: UIViewController {
         greenView.isHidden = true
         pageControl.isHidden = true
         countLabel.isHidden = false
+        soundButton.isHidden = false
         countLabel.text = String(countDownTime)
 //        setSpeakOn(bool: !defaults.bool(forKey: "sound"))
     }
@@ -106,6 +122,7 @@ class MainViewController: UIViewController {
         greenView.isHidden = false
         pageControl.isHidden = false
         countLabel.isHidden = true
+        soundButton.isHidden = true
     }
     
     // MARK: - Timer
@@ -161,17 +178,17 @@ extension MainViewController: PushupControllerDelegate {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2 //friends plus 1 for add
+        return self.userController.friends.count + 2 //friends plus 1 for add
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StatCell", for: indexPath) as? StatCollectionViewCell else { return UICollectionViewCell()}
-            return cell
-        } else {
+        if indexPath.row == self.userController.friends.count + 1 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddCell", for: indexPath) as? AddCollectionViewCell else { return UICollectionViewCell()}
             
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StatCell", for: indexPath) as? StatCollectionViewCell else { return UICollectionViewCell()}
             return cell
         }
     }
@@ -179,10 +196,34 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.frame.size.height
         let width = collectionView.frame.size.width
-        return CGSize(width: width, height: height - 35)
+        return CGSize(width: width - 60, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 20
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+
+        let pageWidth = Float((statsCollectionView.frame.width - 60) + 20)
+        let targetXContentOffset = Float(targetContentOffset.pointee.x)
+        let contentWidth = Float(statsCollectionView!.contentSize.width  )
+        var newPage = Float(self.pageControl.currentPage)
+
+        if velocity.x == 0 {
+            newPage = floor( (targetXContentOffset - Float(pageWidth) / 2) / Float(pageWidth)) + 1.0
+        } else {
+            newPage = Float(velocity.x > 0 ? self.pageControl.currentPage + 1 : self.pageControl.currentPage - 1)
+            if newPage < 0 {
+                newPage = 0
+            }
+            if (newPage > contentWidth / pageWidth) {
+                newPage = ceil(contentWidth / pageWidth) - 1.0
+            }
+        }
+
+        self.pageControl.currentPage = Int(newPage)
+        let point = CGPoint (x: CGFloat(newPage * pageWidth), y: targetContentOffset.pointee.y)
+        targetContentOffset.pointee = point
     }
 }
