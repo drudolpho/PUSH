@@ -17,7 +17,7 @@ class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     //Controllers
 //    var testController = TestController()
-//    var audioController: AudioController?
+    var audioController: AudioController?
 //    var pushupController: PushupController?
     var count = 0
     var delegate: PushupControllerDelegate?
@@ -90,7 +90,7 @@ class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
                     count += 1
                     delegate?.updatePushupLabel(pushups: count)
 //                    pushupController?.pushupCount += 1
-//                    audioController?.playChosenAudio(pushups: pushupController?.pushupCount)
+                    audioController?.playChosenAudio(pushups: count)
                     
                     
                     keyValueSet = false

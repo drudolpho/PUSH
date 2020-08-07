@@ -30,6 +30,9 @@
 		68978B6924DC636E00CBE40D /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68978B5D24DC636E00CBE40D /* Roboto-Thin.ttf */; };
 		68978B6B24DC6AF200CBE40D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6A24DC6AF200CBE40D /* User.swift */; };
 		68978B6D24DC72B100CBE40D /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6C24DC72B100CBE40D /* UserController.swift */; };
+		68978B6F24DC8F3700CBE40D /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6E24DC8F3700CBE40D /* UserViewController.swift */; };
+		68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B7024DCE6E900CBE40D /* AudioController.swift */; };
+		68978B7424DCE77C00CBE40D /* ClippedPock.wav in Resources */ = {isa = PBXBuildFile; fileRef = 68978B7324DCE77C00CBE40D /* ClippedPock.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,9 @@
 		68978B5D24DC636E00CBE40D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		68978B6A24DC6AF200CBE40D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		68978B6C24DC72B100CBE40D /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
+		68978B6E24DC8F3700CBE40D /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = SOURCE_ROOT; };
+		68978B7024DCE6E900CBE40D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = SOURCE_ROOT; };
+		68978B7324DCE77C00CBE40D /* ClippedPock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ClippedPock.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,12 +100,14 @@
 				68978B2F24DC42E700CBE40D /* SceneDelegate.swift */,
 				68978B6A24DC6AF200CBE40D /* User.swift */,
 				68978B4124DC453A00CBE40D /* MainViewController.swift */,
+				68978B6E24DC8F3700CBE40D /* UserViewController.swift */,
 				68978B4F24DC570B00CBE40D /* Controllers */,
 				68978B4624DC553700CBE40D /* StatViewsCells */,
 				68978B3324DC42E700CBE40D /* Main.storyboard */,
 				68978B3624DC42E800CBE40D /* Assets.xcassets */,
 				68978B3824DC42E800CBE40D /* LaunchScreen.storyboard */,
 				68978B3B24DC42E800CBE40D /* Info.plist */,
+				68978B7224DCE76400CBE40D /* Sounds */,
 				68978B4324DC473300CBE40D /* Fonts */,
 			);
 			path = PUSH;
@@ -138,8 +146,17 @@
 			children = (
 				68978B6C24DC72B100CBE40D /* UserController.swift */,
 				68978B5024DC574F00CBE40D /* CameraController.swift */,
+				68978B7024DCE6E900CBE40D /* AudioController.swift */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		68978B7224DCE76400CBE40D /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				68978B7324DCE77C00CBE40D /* ClippedPock.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,6 +226,7 @@
 				68978B6624DC636E00CBE40D /* Roboto-Regular.ttf in Resources */,
 				68978B6224DC636E00CBE40D /* Roboto-Italic.ttf in Resources */,
 				68978B6924DC636E00CBE40D /* Roboto-Thin.ttf in Resources */,
+				68978B7424DCE77C00CBE40D /* ClippedPock.wav in Resources */,
 				68978B6424DC636E00CBE40D /* Roboto-MediumItalic.ttf in Resources */,
 				68978B5E24DC636E00CBE40D /* Roboto-BoldItalic.ttf in Resources */,
 				68978B6824DC636E00CBE40D /* Roboto-Medium.ttf in Resources */,
@@ -225,7 +243,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */,
 				68978B5124DC574F00CBE40D /* CameraController.swift in Sources */,
+				68978B6F24DC8F3700CBE40D /* UserViewController.swift in Sources */,
 				68978B4224DC453A00CBE40D /* MainViewController.swift in Sources */,
 				68978B6D24DC72B100CBE40D /* UserController.swift in Sources */,
 				68978B4E24DC561900CBE40D /* AddCollectionViewCell.swift in Sources */,

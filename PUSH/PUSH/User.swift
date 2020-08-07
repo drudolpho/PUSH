@@ -8,7 +8,7 @@
 
 import Foundation
 
-class User {
+class User: Codable {
     var name: String
     var id: UUID
     var codeName: String
@@ -21,7 +21,7 @@ class User {
     var startDate: Date
     var friends: [UUID]?
     
-    init(name: String, id: UUID, codeName: String, imageID: String, total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: [Date] = [], max: Int, startDate: Date = Date()) {
+    init(name: String, id: UUID, codeName: String, imageID: String, total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: [Date] = [], max: Int = 0, startDate: Date = Date()) {
         self.name = name
         self.id = id
         self.codeName = codeName

@@ -12,6 +12,7 @@ class MainViewController: UIViewController {
     
     let userController = UserController()
     let cameraController = CameraController()
+    var audioController = AudioController()
     
     var countDownTime = 3
     var timer = Timer()
@@ -25,18 +26,28 @@ class MainViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var greenView: UIView!
     @IBOutlet weak var pageControl: UIPageControl!
+    @IBOutlet weak var soundButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraController.setUpCamera()
         cameraController.delegate = self
         countLabel.isHidden = true
+        cameraController.audioController = audioController
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        guard let _ = userController.user else {
+            performSegue(withIdentifier: "UserSegue", sender: nil)
+            return
+        }
     }
     
     
     // MARK: - Actions
     
     @IBAction func myButtonTapped(_ sender: UIButton) {
+        performSegue(withIdentifier: "UserSegue", sender: nil)
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
@@ -53,6 +64,23 @@ class MainViewController: UIViewController {
             startButton.backgroundColor = .red
             startCountDown()
             prepareDark()
+        }
+    }
+    
+    @IBAction func soundTapped(sender: UIButton) {
+        setSpeakOn(bool: audioController.speakOn)
+    }
+    
+    //Timer Methods
+    private func setSpeakOn(bool: Bool) {
+        if bool == false {
+            audioController.speakOn = true
+//            soundButton.setImage(UIImage(named: "speak"), for: .normal)
+//            defaults.set(true, forKey: "sound")
+        } else if bool == true {
+            audioController.speakOn = false
+//            soundButton.setImage(UIImage(named: "sound"), for: .normal)
+//            defaults.set(false, forKey: "sound")
         }
     }
     
@@ -105,6 +133,14 @@ class MainViewController: UIViewController {
         } else {
             countDownTime -= 1
             countLabel.text = String(countDownTime)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UserSegue" {
+            if let viewController = segue.destination as? UserViewController {
+                viewController.userController = userController
+            }
         }
     }
 }
