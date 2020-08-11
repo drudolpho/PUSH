@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import FirebaseDatabase
 
 class UserViewController: UIViewController {
     
     var userController: UserController?
+    
+    var ref = Database.database().reference()
 
     @IBOutlet weak var nameTF: UITextField!
     
@@ -30,7 +33,19 @@ class UserViewController: UIViewController {
         let user = User(name: name, id: uuid, codeName: "", imageID: "")
         
         userController.user = user
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(user), forKey: "user")
+        submit(name: name)
+//        UserDefaults.standard.set(try? PropertyListEncoder().encode(user), forKey: "user")
         dismiss(animated: true, completion: nil)
+    }
+    
+    func submit(name: String) {
+        ref.child(name).setValue(1) { (error:Error?, ref:DatabaseReference) in
+            if let error = error {
+                print("Data could not be saved: \(error).")
+                return
+            } else {
+                print("Data saved successfully!")
+            }
+        }
     }
 }
