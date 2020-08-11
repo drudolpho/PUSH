@@ -9,6 +9,22 @@
 import UIKit
 
 class StatCollectionViewCell: UICollectionViewCell {
+    
+    var userController: UserController?
+    var cellIndex = 0
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var cellImageView: UIImageView!
+    
+    @IBOutlet weak var totalNumLabel: UILabel!
+    @IBOutlet weak var setsNumLabel: UILabel!
+    @IBOutlet weak var avgNumLabel: UILabel!
+    @IBOutlet weak var streakNumLabel: UILabel!
+    @IBOutlet weak var maxNumLabel: UILabel!
+    @IBOutlet weak var daysNumLabel: UILabel!
+    
+    
+    
         override func awakeFromNib() {
            super.awakeFromNib()
            //custom logic goes here
@@ -18,7 +34,29 @@ class StatCollectionViewCell: UICollectionViewCell {
 //            self.layer.shadowOpacity = 0.3
 //            self.layer.shadowOffset = .zero
 //            self.layer.shadowRadius = 10
-            self.layer.masksToBounds = false
+            cellImageView.layer.cornerRadius = cellImageView.frame.size.width/2
+            cellImageView.clipsToBounds = true
     //        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).cgPath
         }
+    func updateViews() {
+        if cellIndex == 0 {
+            nameLabel.text = userController?.user?.name
+            totalNumLabel.text = "\(userController?.user?.total ?? 0)"
+            setsNumLabel.text = "\(userController?.user?.sets ?? 0)"
+            avgNumLabel.text = "\(userController?.user?.avg ?? 0)"
+            streakNumLabel.text = "\(userController?.user?.dayStreak.count ?? 0)"
+            maxNumLabel.text = "\(userController?.user?.max ?? 0)"
+            //configure with start date and formatter
+            daysNumLabel.text = "0"
+        } else {
+            nameLabel.text = userController?.friends[cellIndex - 1].name
+            totalNumLabel.text = "\(userController?.friends[cellIndex - 1].total ?? 0)"
+            setsNumLabel.text = "\(userController?.friends[cellIndex - 1].sets ?? 0)"
+            avgNumLabel.text = "\(userController?.friends[cellIndex - 1].avg ?? 0)"
+            streakNumLabel.text = "\(userController?.friends[cellIndex - 1].dayStreak.count ?? 0)"
+            maxNumLabel.text = "\(userController?.friends[cellIndex - 1].max ?? 0)"
+            //configure with start date and formatter
+            daysNumLabel.text = "0"
+        }
+    }
 }

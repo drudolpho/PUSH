@@ -37,6 +37,7 @@ class MainViewController: UIViewController {
         cameraController.audioController = audioController
         
         startButton.layer.cornerRadius = 33
+        myButton.imageView?.layer.cornerRadius = myButton.frame.size.width / 2.0
         //for collecti0n view
         statsCollectionView.delegate = self
         statsCollectionView.dataSource = self
@@ -46,6 +47,7 @@ class MainViewController: UIViewController {
         statsCollectionView.backgroundColor = UIColor.black
         statsCollectionView.showsHorizontalScrollIndicator = false
         self.view.bringSubviewToFront(pageControl)
+        pageControl.numberOfPages = userController.friends.count + 2
         
 //        self.pageControl.numberOfPages = friend count plus 2
     }
@@ -189,6 +191,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StatCell", for: indexPath) as? StatCollectionViewCell else { return UICollectionViewCell()}
+            
+            cell.userController = self.userController
+            cell.cellIndex = indexPath.row
+            cell.updateViews()
             return cell
         }
     }

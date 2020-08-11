@@ -61,7 +61,7 @@
 		68978B5D24DC636E00CBE40D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		68978B6A24DC6AF200CBE40D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		68978B6C24DC72B100CBE40D /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
-		68978B6E24DC8F3700CBE40D /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = SOURCE_ROOT; };
+		68978B6E24DC8F3700CBE40D /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserViewController.swift; path = "PUSH/View Controllers/UserViewController.swift"; sourceTree = SOURCE_ROOT; };
 		68978B7024DCE6E900CBE40D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = SOURCE_ROOT; };
 		68978B7324DCE77C00CBE40D /* ClippedPock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ClippedPock.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,8 +99,7 @@
 				68978B2D24DC42E700CBE40D /* AppDelegate.swift */,
 				68978B2F24DC42E700CBE40D /* SceneDelegate.swift */,
 				68978B6A24DC6AF200CBE40D /* User.swift */,
-				68978B4124DC453A00CBE40D /* MainViewController.swift */,
-				68978B6E24DC8F3700CBE40D /* UserViewController.swift */,
+				68E6C77F24E2EA1400A014BC /* View Controllers */,
 				68978B4F24DC570B00CBE40D /* Controllers */,
 				68978B4624DC553700CBE40D /* StatViewsCells */,
 				68978B3324DC42E700CBE40D /* Main.storyboard */,
@@ -157,6 +156,15 @@
 				68978B7324DCE77C00CBE40D /* ClippedPock.wav */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		68E6C77F24E2EA1400A014BC /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				68978B4124DC453A00CBE40D /* MainViewController.swift */,
+				68978B6E24DC8F3700CBE40D /* UserViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
