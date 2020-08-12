@@ -30,7 +30,14 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        userController.updateCollectionView = { () -> Void in
+            self.statsCollectionView.reloadData()
+        }
+        
+        //TESTING for testing on simulator, comment this vvv out
         cameraController.setUpCamera()
+        //TESTING
+        
         cameraController.delegate = self
         countLabel.isHidden = true
         soundButton.isHidden = true
@@ -48,11 +55,10 @@ class MainViewController: UIViewController {
         statsCollectionView.showsHorizontalScrollIndicator = false
         self.view.bringSubviewToFront(pageControl)
         pageControl.numberOfPages = userController.friends.count + 2
-        
-//        self.pageControl.numberOfPages = friend count plus 2
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        print(userController.user?.name)
         guard let _ = userController.user else {
             performSegue(withIdentifier: "UserSegue", sender: nil)
             return
@@ -70,11 +76,17 @@ class MainViewController: UIViewController {
         if cameraController.captureSession.isRunning {
             cameraController.captureSession.stopRunning()
             stopTimer()
-            startButton.setTitle("Start", for: .normal)
-            startButton.backgroundColor = UIColor(red: 58/255, green: 192/255, blue: 90/255, alpha: 1)
-            prepareLight()
+
             print("Done")
-            reset()
+            userController.newSet(reps: cameraController.count) //updates local user
+            userController.updateUserDatatoServer() { (error) in
+                self.startButton.setTitle("Start", for: .normal)
+                self.startButton.backgroundColor = UIColor(red: 58/255, green: 192/255, blue: 90/255, alpha: 1)
+                self.prepareLight()
+                self.reset()
+                self.statsCollectionView.reloadData()
+            }
+            
         } else {
             cameraController.captureSession.startRunning()
             startButton.setTitle("Stop", for: .normal)
@@ -159,6 +171,9 @@ class MainViewController: UIViewController {
         if segue.identifier == "UserSegue" {
             if let viewController = segue.destination as? UserViewController {
                 viewController.userController = userController
+                viewController.updateCollectionView = { () -> Void in
+                    self.statsCollectionView.reloadData()
+                }
             }
         }
     }

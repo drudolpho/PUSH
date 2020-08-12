@@ -10,18 +10,19 @@ import Foundation
 
 class User: Codable {
     var name: String
-    var id: UUID
+    var id: String //UUID
     var codeName: String
     var imageID: String
     var total: Int
     var sets: Int
     var avg: Int
     var max: Int
-    var dayStreak: [Date]
-    var startDate: Date
-    var friends: [UUID]?
+    var dayStreak: Int
+    var lastDate: String
+    var startDate: String //Date
+//    var friends: [UUID]?
     
-    init(name: String, id: UUID, codeName: String, imageID: String, total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: [Date] = [], max: Int = 0, startDate: Date = Date()) {
+    init(name: String, id: String, codeName: String, imageID: String = "i", total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: Int = 0, max: Int = 0, lastDate: String, startDate: String) {
         self.name = name
         self.id = id
         self.codeName = codeName
@@ -31,25 +32,27 @@ class User: Codable {
         self.avg = avg
         self.max = max
         self.dayStreak = dayStreak
+        self.lastDate = lastDate
         self.startDate = startDate
     }
     
     convenience init?(dictionary: [String: Any]) {
         guard let name = dictionary["name"] as? String,
-            let id = dictionary["id"] as? UUID,
+            let id = dictionary["id"] as? String,
             let codeName = dictionary["codeName"] as? String,
             let imageID = dictionary["imageID"] as? String,
             let total = dictionary["total"] as? Int,
             let sets = dictionary["sets"] as? Int,
             let avg = dictionary["avg"] as? Int,
-            let dayStreak = dictionary["dayStreak"] as? [Date],
+            let dayStreak = dictionary["dayStreak"] as? Int,
             let max = dictionary["max"] as? Int,
-            let startDate = dictionary["startDate"] as? Date else { return nil }
+            let lastDate = dictionary["lastDate"] as? String,
+            let startDate = dictionary["startDate"] as? String else { return nil }
 
-        self.init(name: name, id: id, codeName: codeName, imageID: imageID, total: total, sets: sets, avg: avg, dayStreak: dayStreak, max: max, startDate: startDate)
+        self.init(name: name, id: id, codeName: codeName, imageID: imageID, total: total, sets: sets, avg: avg, dayStreak: dayStreak, max: max, lastDate: lastDate, startDate: startDate)
     }
     
     var dictionaryRepresentation: [String: Any] {
-        return ["name": name, "id": id, "codeName": codeName, "imageID": imageID, "total": total, "sets": sets, "avg": avg, "dayStreak": dayStreak, "max": max, "startDate": startDate]
+        return ["name": name, "id": id, "codeName": codeName, "imageID": imageID, "total": total, "sets": sets, "avg": avg, "dayStreak": dayStreak, "max": max, "lastDate": lastDate, "startDate": startDate]
       }
 }

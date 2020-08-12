@@ -89,9 +89,7 @@ class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
                     
                     count += 1
                     delegate?.updatePushupLabel(pushups: count)
-//                    pushupController?.pushupCount += 1
                     audioController?.playChosenAudio(pushups: count)
-                    
                     
                     keyValueSet = false
                     keyValueBrightness = -999.0

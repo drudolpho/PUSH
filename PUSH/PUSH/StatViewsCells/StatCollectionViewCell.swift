@@ -22,6 +22,7 @@ class StatCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var streakNumLabel: UILabel!
     @IBOutlet weak var maxNumLabel: UILabel!
     @IBOutlet weak var daysNumLabel: UILabel!
+    @IBOutlet weak var codeLabel: UILabel!
     
     
     
@@ -39,24 +40,35 @@ class StatCollectionViewCell: UICollectionViewCell {
     //        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).cgPath
         }
     func updateViews() {
+        guard let userController = self.userController, let user = userController.user else { return }
         if cellIndex == 0 {
-            nameLabel.text = userController?.user?.name
-            totalNumLabel.text = "\(userController?.user?.total ?? 0)"
-            setsNumLabel.text = "\(userController?.user?.sets ?? 0)"
-            avgNumLabel.text = "\(userController?.user?.avg ?? 0)"
-            streakNumLabel.text = "\(userController?.user?.dayStreak.count ?? 0)"
-            maxNumLabel.text = "\(userController?.user?.max ?? 0)"
-            //configure with start date and formatter
-            daysNumLabel.text = "0"
+            nameLabel.text = user.name
+            totalNumLabel.text = "\(user.total)"
+            setsNumLabel.text = "\(user.sets)"
+            avgNumLabel.text = "\(user.avg)"
+            streakNumLabel.text = "\(user.dayStreak)"
+            maxNumLabel.text = "\(user.max)"
+            codeLabel.text = "#\(user.codeName.suffix(4))"
+            if let dayOne = userController.df.date(from: user.startDate) {
+                daysNumLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: Date()) + 1)"
+            }
         } else {
-            nameLabel.text = userController?.friends[cellIndex - 1].name
-            totalNumLabel.text = "\(userController?.friends[cellIndex - 1].total ?? 0)"
-            setsNumLabel.text = "\(userController?.friends[cellIndex - 1].sets ?? 0)"
-            avgNumLabel.text = "\(userController?.friends[cellIndex - 1].avg ?? 0)"
-            streakNumLabel.text = "\(userController?.friends[cellIndex - 1].dayStreak.count ?? 0)"
-            maxNumLabel.text = "\(userController?.friends[cellIndex - 1].max ?? 0)"
-            //configure with start date and formatter
-            daysNumLabel.text = "0"
+            nameLabel.text = userController.friends[cellIndex - 1].name
+            totalNumLabel.text = "\(userController.friends[cellIndex - 1].total)"
+            setsNumLabel.text = "\(userController.friends[cellIndex - 1].sets)"
+            avgNumLabel.text = "\(userController.friends[cellIndex - 1].avg)"
+            if let recentDate = userController.df.date(from: userController.friends[cellIndex - 1].lastDate) {
+                if userController.getDaysSince(day1: recentDate, day2: Date()) > 1 {
+                    streakNumLabel.text = "0"
+                } else {
+                    streakNumLabel.text = "\(userController.friends[cellIndex - 1].dayStreak)"
+                }
+            }
+            maxNumLabel.text = "\(userController.friends[cellIndex - 1].max)"
+            codeLabel.text = "#\(userController.friends[cellIndex - 1].codeName.suffix(4))"
+            if let dayOne = userController.df.date(from: userController.friends[cellIndex - 1].startDate) {
+                daysNumLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: Date()) + 1)"
+            }
         }
     }
 }

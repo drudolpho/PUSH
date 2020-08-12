@@ -12,14 +12,13 @@ import FirebaseDatabase
 class UserViewController: UIViewController {
     
     var userController: UserController?
-    
-    var ref = Database.database().reference()
+    var updateCollectionView: (() -> Void)?
 
     @IBOutlet weak var nameTF: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let _ = userController?.user {
+        if let _ = userController?.user { //prevents user from swiping to dismiss if no user is set
             self.isModalInPresentation = false
         } else {
             self.isModalInPresentation = true
@@ -30,22 +29,20 @@ class UserViewController: UIViewController {
         guard let userController = userController, let name = nameTF.text, !name.isEmpty  else { return }
         
         let uuid = UUID()
-        let user = User(name: name, id: uuid, codeName: "", imageID: "")
+        let uuidString = uuid.uuidString
+        let codeName = name + String(uuidString[0]) + String(uuidString[1]) + String(uuidString[2]) + String(uuidString[3])
+        let user = User(name: name, id: uuidString, codeName: codeName, lastDate: userController.df.string(from: Date()), startDate: userController.df.string(from: Date()))
         
         userController.user = user
-        submit(name: name)
-//        UserDefaults.standard.set(try? PropertyListEncoder().encode(user), forKey: "user")
+        userController.submit(codeName: codeName, user: user)
+        updateCollectionView?()
+        
         dismiss(animated: true, completion: nil)
     }
-    
-    func submit(name: String) {
-        ref.child(name).setValue(1) { (error:Error?, ref:DatabaseReference) in
-            if let error = error {
-                print("Data could not be saved: \(error).")
-                return
-            } else {
-                print("Data saved successfully!")
-            }
-        }
+}
+
+extension StringProtocol {
+    subscript(offset: Int) -> Character {
+        self[index(startIndex, offsetBy: offset)]
     }
 }
