@@ -17,6 +17,7 @@ class UserController {
     var ref = Database.database().reference()
     let df = DateFormatter()
     var date = Date()
+//    for testing future dates
 //    var date: Date {
 //        var dateComponents = DateComponents()
 //        dateComponents.year = 2020
@@ -99,14 +100,21 @@ class UserController {
         }
         
         if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
-            if self.getDaysSince(day1: lastDate, day2: date) == 1 {
+            if self.getDaysSince(day1: lastDate, day2: date) == 1 { //add to streak
                 self.user?.dayStreak += 1
                 self.user?.lastDate = df.string(from: date)
-            } else if self.getDaysSince(day1: lastDate, day2: date) == 0 && user.lastDate == user.startDate {
+                UserDefaults.standard.set(reps, forKey: "todaysPushups")
+            } else if self.getDaysSince(day1: lastDate, day2: date) == 0 && user.lastDate == user.startDate { //users first day
                 self.user?.dayStreak += 1
-            } else {
+                let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
+                UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
+            } else if self.getDaysSince(day1: lastDate, day2: date) == 0 { //new set same day
+                let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
+                UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
+            } else { // streak ended
                 self.user?.dayStreak = 1
                 self.user?.lastDate = df.string(from: date)
+                UserDefaults.standard.set(reps, forKey: "todaysPushups")
             }
         }
     }

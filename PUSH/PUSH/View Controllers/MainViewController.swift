@@ -39,8 +39,7 @@ class MainViewController: UIViewController {
         //TESTING
         
         cameraController.delegate = self
-        countLabel.isHidden = true
-        soundButton.isHidden = true
+        prepareLight()
         cameraController.audioController = audioController
         
         startButton.layer.cornerRadius = 33
@@ -137,6 +136,7 @@ class MainViewController: UIViewController {
         pageControl.isHidden = false
         countLabel.isHidden = true
         soundButton.isHidden = true
+        todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
     }
     
     // MARK: - Timer
