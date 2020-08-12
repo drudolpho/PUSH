@@ -31,7 +31,7 @@ class UserViewController: UIViewController {
         let uuid = UUID()
         let uuidString = uuid.uuidString
         let codeName = name + String(uuidString[0]) + String(uuidString[1]) + String(uuidString[2]) + String(uuidString[3])
-        let user = User(name: name, id: uuidString, codeName: codeName, lastDate: userController.df.string(from: Date()), startDate: userController.df.string(from: Date()))
+        let user = User(name: name, id: uuidString, codeName: codeName, lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
         
         userController.user = user
         userController.submit(codeName: codeName, user: user)

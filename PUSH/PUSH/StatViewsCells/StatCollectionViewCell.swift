@@ -50,7 +50,7 @@ class StatCollectionViewCell: UICollectionViewCell {
             maxNumLabel.text = "\(user.max)"
             codeLabel.text = "#\(user.codeName.suffix(4))"
             if let dayOne = userController.df.date(from: user.startDate) {
-                daysNumLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: Date()) + 1)"
+                daysNumLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: userController.date) + 1)"
             }
         } else {
             nameLabel.text = userController.friends[cellIndex - 1].name
@@ -58,7 +58,7 @@ class StatCollectionViewCell: UICollectionViewCell {
             setsNumLabel.text = "\(userController.friends[cellIndex - 1].sets)"
             avgNumLabel.text = "\(userController.friends[cellIndex - 1].avg)"
             if let recentDate = userController.df.date(from: userController.friends[cellIndex - 1].lastDate) {
-                if userController.getDaysSince(day1: recentDate, day2: Date()) > 1 {
+                if userController.getDaysSince(day1: recentDate, day2: userController.date) > 1 {
                     streakNumLabel.text = "0"
                 } else {
                     streakNumLabel.text = "\(userController.friends[cellIndex - 1].dayStreak)"
@@ -67,7 +67,7 @@ class StatCollectionViewCell: UICollectionViewCell {
             maxNumLabel.text = "\(userController.friends[cellIndex - 1].max)"
             codeLabel.text = "#\(userController.friends[cellIndex - 1].codeName.suffix(4))"
             if let dayOne = userController.df.date(from: userController.friends[cellIndex - 1].startDate) {
-                daysNumLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: Date()) + 1)"
+                daysNumLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: userController.date) + 1)"
             }
         }
     }

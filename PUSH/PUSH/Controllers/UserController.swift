@@ -16,6 +16,18 @@ class UserController {
     var updateCollectionView: (() -> Void)?
     var ref = Database.database().reference()
     let df = DateFormatter()
+    var date = Date()
+//    var date: Date {
+//        var dateComponents = DateComponents()
+//        dateComponents.year = 2020
+//        dateComponents.month = 8
+//        dateComponents.day = 15
+//        dateComponents.hour = 8
+//        dateComponents.minute = 33
+//
+//        let userCalendar = Calendar.current // user calendar
+//        return userCalendar.date(from: dateComponents)!
+//    }
     
     init() {
         df.dateFormat = "yyyy-MM-dd"
@@ -38,7 +50,7 @@ class UserController {
                 self.user = user
                 
                 if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
-                    if self.getDaysSince(day1: lastDate, day2: Date()) > 1 {
+                    if self.getDaysSince(day1: lastDate, day2: self.date) > 1 {
                         self.user?.dayStreak = 0
                     }
                 }
@@ -87,11 +99,14 @@ class UserController {
         }
         
         if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
-            if self.getDaysSince(day1: lastDate, day2: Date()) == 1 {
+            if self.getDaysSince(day1: lastDate, day2: date) == 1 {
                 self.user?.dayStreak += 1
-                self.user?.lastDate = df.string(from: Date())
-            } else if self.getDaysSince(day1: lastDate, day2: Date()) == 0 && user.lastDate == user.startDate {
+                self.user?.lastDate = df.string(from: date)
+            } else if self.getDaysSince(day1: lastDate, day2: date) == 0 && user.lastDate == user.startDate {
                 self.user?.dayStreak += 1
+            } else {
+                self.user?.dayStreak = 1
+                self.user?.lastDate = df.string(from: date)
             }
         }
     }
