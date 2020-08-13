@@ -34,7 +34,7 @@ class UserViewController: UIViewController {
         let user = User(name: name, id: uuidString, codeName: codeName, lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
         
         userController.user = user
-        userController.submit(codeName: codeName, user: user)
+        userController.submitUserInfo(codeName: codeName, user: user)
         updateCollectionView?()
         
         dismiss(animated: true, completion: nil)

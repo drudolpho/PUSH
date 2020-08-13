@@ -10,7 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    let userController = UserController()
+    var userController: UserController?
     let cameraController = CameraController()
     var audioController = AudioController()
     
@@ -30,12 +30,9 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        userController.updateCollectionView = { () -> Void in
-            self.statsCollectionView.reloadData()
-        }
         
         //TESTING for testing on simulator, comment this vvv out
-        cameraController.setUpCamera()
+//        cameraController.setUpCamera()
         //TESTING
         
         cameraController.delegate = self
@@ -53,12 +50,15 @@ class MainViewController: UIViewController {
         statsCollectionView.backgroundColor = UIColor.black
         statsCollectionView.showsHorizontalScrollIndicator = false
         self.view.bringSubviewToFront(pageControl)
-        pageControl.numberOfPages = userController.friends.count + 2
+        pageControl.numberOfPages = (userController?.friends.count ?? 0) + 2
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print(userController.user?.name)
-        guard let _ = userController.user else {
+        guard let _ = userController?.user else {
+//            if userController.daysSinceLastDate() > 0 {
+//                UserDefaults.standard.set(0, forKey: "todaysPushups")
+//            }
+//            todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
             performSegue(withIdentifier: "UserSegue", sender: nil)
             return
         }
@@ -72,6 +72,7 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
+        guard let userController = userController else { return }
         if cameraController.captureSession.isRunning {
             cameraController.captureSession.stopRunning()
             stopTimer()
@@ -195,12 +196,12 @@ extension MainViewController: PushupControllerDelegate {
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.userController.friends.count + 2 //friends plus 1 for add
+        return (self.userController?.friends.count ?? 0) + 2 //friends plus 1 for add
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row == self.userController.friends.count + 1 {
+        if indexPath.row == (self.userController?.friends.count ?? 0) + 1 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddCell", for: indexPath) as? AddCollectionViewCell else { return UICollectionViewCell()}
             
             return cell

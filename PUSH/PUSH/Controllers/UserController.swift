@@ -13,49 +13,44 @@ class UserController {
     
     var user: User?
     var friends: [User] = []
-    var updateCollectionView: (() -> Void)?
     var ref = Database.database().reference()
     let df = DateFormatter()
-    var date = Date()
+//    var date = Date()
 //    for testing future dates
-//    var date: Date {
-//        var dateComponents = DateComponents()
-//        dateComponents.year = 2020
-//        dateComponents.month = 8
-//        dateComponents.day = 15
-//        dateComponents.hour = 8
-//        dateComponents.minute = 33
-//
-//        let userCalendar = Calendar.current // user calendar
-//        return userCalendar.date(from: dateComponents)!
-//    }
+    var date: Date {
+        var dateComponents = DateComponents()
+        dateComponents.year = 2020
+        dateComponents.month = 8
+        dateComponents.day = 16
+        dateComponents.hour = 8
+        dateComponents.minute = 33
+
+        let userCalendar = Calendar.current // user calendar
+        return userCalendar.date(from: dateComponents)!
+    }
     
     init() {
         df.dateFormat = "yyyy-MM-dd"
-        if let codeName = UserDefaults.standard.string(forKey: "codeName") {
-            print("This was the stored codeName: \(codeName)")
-            fetchUserData(codeName: codeName)
-        } else {
-            print("no code name")
-        }
     }
     
-    func fetchUserData(codeName: String) {
+    func fetchUserData(codeName: String, completion: @escaping (Bool) -> Void) {
         ref.child(codeName).observeSingleEvent(of: .value) { (snapshot) in
             guard let userDataDictionary = snapshot.value as? [String: Any] else {
                 print("There is no data for this user")
+                completion(false)
                 return
             }
-            print(userDataDictionary)
+//            print(userDataDictionary)
             if let user = User(dictionary: userDataDictionary) {
                 self.user = user
-                
                 if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
                     if self.getDaysSince(day1: lastDate, day2: self.date) > 1 {
                         self.user?.dayStreak = 0
                     }
                 }
-                self.updateCollectionView?()
+                completion(true)
+            } else {
+                completion(false)
             }
         }
     }
@@ -65,7 +60,7 @@ class UserController {
         
     }
     
-    func submit(codeName: String, user: User) {
+    func submitUserInfo(codeName: String, user: User) {
         ref.child(codeName).setValue(user.dictionaryRepresentation) { (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Data could not be saved: \(error).")
@@ -99,23 +94,30 @@ class UserController {
             user.max = reps
         }
         
-        if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
-            if self.getDaysSince(day1: lastDate, day2: date) == 1 { //add to streak
-                self.user?.dayStreak += 1
-                self.user?.lastDate = df.string(from: date)
-                UserDefaults.standard.set(reps, forKey: "todaysPushups")
-            } else if self.getDaysSince(day1: lastDate, day2: date) == 0 && user.lastDate == user.startDate { //users first day
-                self.user?.dayStreak += 1
-                let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
-                UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
-            } else if self.getDaysSince(day1: lastDate, day2: date) == 0 { //new set same day
-                let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
-                UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
-            } else { // streak ended
-                self.user?.dayStreak = 1
-                self.user?.lastDate = df.string(from: date)
-                UserDefaults.standard.set(reps, forKey: "todaysPushups")
-            }
+        if daysSinceLastDate() == 1 { //add to streak
+            self.user?.dayStreak += 1
+            self.user?.lastDate = df.string(from: date)
+            UserDefaults.standard.set(reps, forKey: "todaysPushups")
+        } else if daysSinceLastDate() == 0 && user.lastDate == user.startDate { //users first day
+            self.user?.dayStreak += 1
+            let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
+            UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
+        } else if daysSinceLastDate() == 0 { //new set same day
+            let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
+            UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
+        } else { // streak ended
+            self.user?.dayStreak = 1
+            self.user?.lastDate = df.string(from: date)
+            UserDefaults.standard.set(reps, forKey: "todaysPushups")
+        }
+    }
+    
+    func daysSinceLastDate() -> Int {
+        guard let user = user else { return 2 }
+        if let lastDate =  self.df.date(from: user.lastDate) {
+            return self.getDaysSince(day1: lastDate, day2: date)
+        } else {
+            return 2
         }
     }
     

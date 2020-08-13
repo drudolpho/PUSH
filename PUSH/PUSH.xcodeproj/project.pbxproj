@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		490DF974B9AB24359BC1AAD0 /* Pods_PUSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70ACCFE5EBCF539C023FD7A /* Pods_PUSH.framework */; };
 		683698CA24E3411B00749236 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683698C924E3411B00749236 /* GoogleService-Info.plist */; };
+		686506B724E57EE900089234 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686506B624E57EE900089234 /* SplashViewController.swift */; };
 		68978B2E24DC42E700CBE40D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B2D24DC42E700CBE40D /* AppDelegate.swift */; };
 		68978B3024DC42E700CBE40D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B2F24DC42E700CBE40D /* SceneDelegate.swift */; };
 		68978B3524DC42E700CBE40D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68978B3324DC42E700CBE40D /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		683698C924E3411B00749236 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		686506B624E57EE900089234 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		68978B2A24DC42E700CBE40D /* PUSH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PUSH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68978B2D24DC42E700CBE40D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68978B2F24DC42E700CBE40D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 		68E6C77F24E2EA1400A014BC /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				686506B624E57EE900089234 /* SplashViewController.swift */,
 				68978B4124DC453A00CBE40D /* MainViewController.swift */,
 				68978B6E24DC8F3700CBE40D /* UserViewController.swift */,
 			);
@@ -333,6 +336,7 @@
 				68978B4C24DC560F00CBE40D /* StatCollectionViewCell.swift in Sources */,
 				68978B3024DC42E700CBE40D /* SceneDelegate.swift in Sources */,
 				68978B6B24DC6AF200CBE40D /* User.swift in Sources */,
+				686506B724E57EE900089234 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
