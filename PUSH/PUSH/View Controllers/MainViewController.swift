@@ -30,6 +30,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let userController = userController else { return }
         
         //TESTING for testing on simulator, comment this vvv out
 //        cameraController.setUpCamera()
@@ -50,15 +51,16 @@ class MainViewController: UIViewController {
         statsCollectionView.backgroundColor = UIColor.black
         statsCollectionView.showsHorizontalScrollIndicator = false
         self.view.bringSubviewToFront(pageControl)
-        pageControl.numberOfPages = (userController?.friends.count ?? 0) + 2
+        pageControl.numberOfPages = userController.friends.count + 2
+        if userController.daysSinceLastDate() > 0 {
+            UserDefaults.standard.set(0, forKey: "todaysPushups")
+        }
+        todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
     }
     
     override func viewDidAppear(_ animated: Bool) {
         guard let _ = userController?.user else {
-//            if userController.daysSinceLastDate() > 0 {
-//                UserDefaults.standard.set(0, forKey: "todaysPushups")
-//            }
-//            todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
+
             performSegue(withIdentifier: "UserSegue", sender: nil)
             return
         }
@@ -203,7 +205,12 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if indexPath.row == (self.userController?.friends.count ?? 0) + 1 {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddCell", for: indexPath) as? AddCollectionViewCell else { return UICollectionViewCell()}
-            
+            cell.userController = self.userController
+            cell.viewOne()
+            cell.updateCollectionView = { () -> Void in
+                self.statsCollectionView.reloadData()
+                self.pageControl.numberOfPages = (self.userController?.friends.count ?? 0) + 2
+            }
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StatCell", for: indexPath) as? StatCollectionViewCell else { return UICollectionViewCell()}

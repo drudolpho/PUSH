@@ -59,7 +59,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PUSH" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6i-ai-Mhi">
-                                <rect key="frame" x="25.000000000000007" y="11" width="92.666666666666686" height="42.333333333333343"/>
+                                <rect key="frame" x="25.000000000000007" y="11.000000000000004" width="92.666666666666686" height="42.333333333333343"/>
                                 <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="36"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -334,6 +334,9 @@
                                                             <state key="normal" title="Add a friend">
                                                                 <color key="titleColor" red="0.71372549019999998" green="0.71372549019999998" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="addAFriendTapped:" destination="f6B-Xs-EU9" eventType="touchUpInside" id="VG7-Eu-TBz"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JvT-0m-Y5k">
                                                             <rect key="frame" x="70.999999999999986" y="76" width="52" height="125"/>
@@ -341,17 +344,114 @@
                                                             <state key="normal" title="+">
                                                                 <color key="titleColor" red="0.71372549019999998" green="0.71372549019999998" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="plusButtonTapped:" destination="f6B-Xs-EU9" eventType="touchUpInside" id="ohE-2k-R4H"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="AF7-Cd-lJs">
+                                                    <rect key="frame" x="53" y="20" width="247" height="170.66666666666666"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fVA-lo-TDl">
+                                                            <rect key="frame" x="0.0" y="0.0" width="247" height="70.333333333333329"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UEj-mP-Ykw">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="62.333333333333336" height="28.333333333333332"/>
+                                                                    <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="24"/>
+                                                                    <color key="textColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Laz-xm-VKe">
+                                                                    <rect key="frame" x="0.0" y="36.333333333333336" width="247" height="34.000000000000007"/>
+                                                                    <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <textInputTraits key="textInputTraits"/>
+                                                                </textField>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XsO-l7-XoJ">
+                                                            <rect key="frame" x="0.0" y="100.33333333333334" width="247" height="70.333333333333343"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03q-rI-q4J">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="54.666666666666664" height="28.333333333333332"/>
+                                                                    <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="24"/>
+                                                                    <color key="textColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="#" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Lwh-mN-puj">
+                                                                    <rect key="frame" x="0.0" y="36.333333333333329" width="247" height="34"/>
+                                                                    <color key="backgroundColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <textInputTraits key="textInputTraits"/>
+                                                                </textField>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="Lwh-mN-puj" firstAttribute="width" secondItem="Laz-xm-VKe" secondAttribute="width" id="FXT-IJ-xYW"/>
+                                                    </constraints>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="YoV-H2-4uC">
+                                                    <rect key="frame" x="53" y="240.66666666666663" width="247" height="106"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hn7-Wh-3y2">
+                                                            <rect key="frame" x="0.0" y="0.0" width="247" height="45"/>
+                                                            <color key="backgroundColor" red="0.70980392156862748" green="0.70980392156862748" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="45" id="AaF-CU-r5w"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="24"/>
+                                                            <state key="normal" title="Add friend">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="addButtonTapped:" destination="f6B-Xs-EU9" eventType="touchUpInside" id="4jn-SQ-hja"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReY-hc-s8X">
+                                                            <rect key="frame" x="0.0" y="61.000000000000028" width="247" height="45"/>
+                                                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="45" id="jmj-0g-Uq7"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="Roboto-BoldItalic" family="Roboto" pointSize="24"/>
+                                                            <state key="normal" title="Cancel">
+                                                                <color key="titleColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="addButtonTapped:" destination="f6B-Xs-EU9" eventType="touchUpInside" id="di5-bf-vah"/>
+                                                                <action selector="cancelButtonTapped:" destination="f6B-Xs-EU9" eventType="touchUpInside" id="OFz-ye-1XG"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="YoV-H2-4uC" firstAttribute="top" secondItem="AF7-Cd-lJs" secondAttribute="bottom" constant="50" id="ABC-xn-odo"/>
+                                                <constraint firstItem="AF7-Cd-lJs" firstAttribute="top" secondItem="r78-aX-vOi" secondAttribute="top" constant="20" id="Anr-7s-avO"/>
                                                 <constraint firstItem="oD0-d4-k1j" firstAttribute="centerY" secondItem="r78-aX-vOi" secondAttribute="centerY" id="CUU-9Q-nxp"/>
+                                                <constraint firstItem="YoV-H2-4uC" firstAttribute="centerX" secondItem="r78-aX-vOi" secondAttribute="centerX" id="Qh9-sW-byT"/>
+                                                <constraint firstItem="Laz-xm-VKe" firstAttribute="width" secondItem="r78-aX-vOi" secondAttribute="width" multiplier="0.7" id="Tho-WO-o4h"/>
                                                 <constraint firstItem="oD0-d4-k1j" firstAttribute="centerX" secondItem="r78-aX-vOi" secondAttribute="centerX" id="Vlq-us-kNz"/>
                                                 <constraint firstItem="oD0-d4-k1j" firstAttribute="height" secondItem="r78-aX-vOi" secondAttribute="height" multiplier="0.55" id="l4l-X7-1YN"/>
+                                                <constraint firstItem="hn7-Wh-3y2" firstAttribute="width" secondItem="r78-aX-vOi" secondAttribute="width" multiplier="0.7" id="nss-A1-jq0"/>
+                                                <constraint firstItem="AF7-Cd-lJs" firstAttribute="centerX" secondItem="r78-aX-vOi" secondAttribute="centerX" id="xbP-UL-mq9"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="353" height="365"/>
+                                        <connections>
+                                            <outlet property="addAFriendButton" destination="LVH-bY-xwJ" id="Snz-QG-fRh"/>
+                                            <outlet property="addButton" destination="hn7-Wh-3y2" id="XeF-Od-c7h"/>
+                                            <outlet property="cancelButton" destination="ReY-hc-s8X" id="FYp-Yh-8Gs"/>
+                                            <outlet property="codeLabel" destination="03q-rI-q4J" id="JID-t1-uqk"/>
+                                            <outlet property="codeTF" destination="Lwh-mN-puj" id="Fms-Km-LUw"/>
+                                            <outlet property="nameLabel" destination="UEj-mP-Ykw" id="SmI-B3-g4K"/>
+                                            <outlet property="nameTF" destination="Laz-xm-VKe" id="ggK-9G-qsy"/>
+                                            <outlet property="plusButton" destination="JvT-0m-Y5k" id="RSk-P1-0b5"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>

@@ -24,21 +24,14 @@ class StatCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var daysNumLabel: UILabel!
     @IBOutlet weak var codeLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
+        self.layer.cornerRadius = 40
+        cellImageView.layer.cornerRadius = cellImageView.frame.size.width/2
+        cellImageView.clipsToBounds = true
+    }
     
-    
-        override func awakeFromNib() {
-           super.awakeFromNib()
-           //custom logic goes here
-            self.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
-            self.layer.cornerRadius = 40
-//            self.layer.shadowColor = UIColor.lightGray.cgColor
-//            self.layer.shadowOpacity = 0.3
-//            self.layer.shadowOffset = .zero
-//            self.layer.shadowRadius = 10
-            cellImageView.layer.cornerRadius = cellImageView.frame.size.width/2
-            cellImageView.clipsToBounds = true
-    //        self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.contentView.layer.cornerRadius).cgPath
-        }
     func updateViews() {
         guard let userController = self.userController, let user = userController.user else { return }
         if cellIndex == 0 {

@@ -31,10 +31,15 @@ class UserViewController: UIViewController {
         let uuid = UUID()
         let uuidString = uuid.uuidString
         let codeName = name + String(uuidString[0]) + String(uuidString[1]) + String(uuidString[2]) + String(uuidString[3])
-        let user = User(name: name, id: uuidString, codeName: codeName, lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
+        let noSpacesCodeName = String(codeName.filter { !" \n\t\r".contains($0) })
+        guard noSpacesCodeName.isAlphanumeric else {
+            //alert
+            return
+        }
+        let user = User(name: name, id: uuidString, codeName: noSpacesCodeName, lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
         
         userController.user = user
-        userController.submitUserInfo(codeName: codeName, user: user)
+        userController.submitUserInfo(codeName: noSpacesCodeName, user: user)
         updateCollectionView?()
         
         dismiss(animated: true, completion: nil)

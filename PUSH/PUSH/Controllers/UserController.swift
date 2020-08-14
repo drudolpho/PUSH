@@ -48,16 +48,66 @@ class UserController {
                         self.user?.dayStreak = 0
                     }
                 }
-                completion(true)
+                self.fetchAllFriendData {
+                    completion(true)
+                }
             } else {
                 completion(false)
             }
         }
     }
     
-    func fetchFriendData() {
-        guard let user = user else { return }
-        
+    func fetchAllFriendData(completion: @escaping () -> Void) {
+        var friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
+        friendHelper(friends: friends) { badFriends in
+            for index in badFriends {
+                friends.remove(at: index)
+                UserDefaults.standard.set(friends, forKey: "friends")
+            }
+        }
+        completion()
+    }
+    func friendHelper(friends: [String], completion: @escaping ([Int]) -> Void) {
+        var codesToRemove: [Int] = []
+        var friendIndex = 0
+        for friend in friends {
+            ref.child(friend).observeSingleEvent(of: .value) { (snapshot) in
+                if let userDataDictionary = snapshot.value as? [String: Any] {
+                    if let user = User(dictionary: userDataDictionary) {
+                        self.friends.append(user)
+                    } else {
+                        print("Could not make a user from this data")
+                        codesToRemove.append(friendIndex)
+                    }
+                } else {
+                    print("There is no data for this user")
+                    codesToRemove.append(friendIndex)
+                }
+                friendIndex += 1
+            }
+        }
+        completion(codesToRemove)
+    }
+    
+    func findFriendData(codeName: String, completion: @escaping (Bool) -> Void) {
+        ref.child(codeName).observeSingleEvent(of: .value) { (snapshot) in
+            guard let userDataDictionary = snapshot.value as? [String: Any] else {
+                print("There is no data for this user")
+                completion(false)
+                return
+            }
+            if let user = User(dictionary: userDataDictionary) {
+                print("friend was found")
+                self.friends.append(user)
+                var friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
+                friends.append(codeName)
+                UserDefaults.standard.set(friends, forKey: "friends")
+                completion(true)
+            } else {
+                print("friend was not found")
+                completion(false)
+            }
+        }
     }
     
     func submitUserInfo(codeName: String, user: User) {

@@ -56,3 +56,9 @@ class User: Codable {
         return ["name": name, "id": id, "codeName": codeName, "imageID": imageID, "total": total, "sets": sets, "avg": avg, "dayStreak": dayStreak, "max": max, "lastDate": lastDate, "startDate": startDate]
       }
 }
+
+extension String {
+    var isAlphanumeric: Bool {
+        return !isEmpty && range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
+    }
+}
