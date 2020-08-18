@@ -33,7 +33,7 @@ class MainViewController: UIViewController {
         guard let userController = userController else { return }
         
         //TESTING for testing on simulator, comment this vvv out
-//        cameraController.setUpCamera()
+        cameraController.setUpCamera()
         //TESTING
         
         cameraController.delegate = self
@@ -172,7 +172,7 @@ class MainViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UserSegue" {
-            if let viewController = segue.destination as? UserViewController {
+            if let viewController = segue.destination as? LoginViewController {
                 viewController.userController = userController
                 viewController.updateCollectionView = { () -> Void in
                     self.statsCollectionView.reloadData()

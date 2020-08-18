@@ -62,15 +62,15 @@ class AddCollectionViewCell: UICollectionViewCell {
     
     @IBAction func addButtonTapped(_ sender: UIButton) {
         guard let name = nameTF.text, !name.isEmpty, let code = codeTF.text, !code.isEmpty, let updateCollectionView = updateCollectionView else { return }
-        let codeName = name + code.suffix(4)
+        let codeLastFour = code.suffix(4)
+        let codeName = name + codeLastFour.uppercased()
         let noSpacesCodeName = String(codeName.filter { !" \n\t\r".contains($0) })
-        let capsCode = noSpacesCodeName.uppercased()
-        print(capsCode)
-        guard capsCode.isAlphanumeric else {
+        print(noSpacesCodeName)
+        guard noSpacesCodeName.isAlphanumeric else {
             //alert
             return
         }
-        userController?.findFriendData(codeName: capsCode, completion: { (successful) in
+        userController?.findFriendData(codeName: noSpacesCodeName, completion: { (successful) in
             if successful {
                 updateCollectionView()
                 self.viewOne()
@@ -93,15 +93,4 @@ class AddCollectionViewCell: UICollectionViewCell {
     }
 }
 
-extension UIView {
-    var isHiddenInStackView: Bool {
-        get {
-            return isHidden
-        }
-        set {
-            if isHidden != newValue {
-                isHidden = newValue
-            }
-        }
-    }
-}
+

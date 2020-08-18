@@ -62,3 +62,9 @@ extension String {
         return !isEmpty && range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
     }
 }
+
+extension StringProtocol {
+    subscript(offset: Int) -> Character {
+        self[index(startIndex, offsetBy: offset)]
+    }
+}

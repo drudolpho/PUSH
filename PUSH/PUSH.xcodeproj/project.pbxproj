@@ -33,7 +33,7 @@
 		68978B6924DC636E00CBE40D /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68978B5D24DC636E00CBE40D /* Roboto-Thin.ttf */; };
 		68978B6B24DC6AF200CBE40D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6A24DC6AF200CBE40D /* User.swift */; };
 		68978B6D24DC72B100CBE40D /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6C24DC72B100CBE40D /* UserController.swift */; };
-		68978B6F24DC8F3700CBE40D /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6E24DC8F3700CBE40D /* UserViewController.swift */; };
+		68978B6F24DC8F3700CBE40D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6E24DC8F3700CBE40D /* LoginViewController.swift */; };
 		68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B7024DCE6E900CBE40D /* AudioController.swift */; };
 		68978B7424DCE77C00CBE40D /* ClippedPock.wav in Resources */ = {isa = PBXBuildFile; fileRef = 68978B7324DCE77C00CBE40D /* ClippedPock.wav */; };
 /* End PBXBuildFile section */
@@ -66,7 +66,7 @@
 		68978B5D24DC636E00CBE40D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		68978B6A24DC6AF200CBE40D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		68978B6C24DC72B100CBE40D /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
-		68978B6E24DC8F3700CBE40D /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserViewController.swift; path = "PUSH/View Controllers/UserViewController.swift"; sourceTree = SOURCE_ROOT; };
+		68978B6E24DC8F3700CBE40D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = "PUSH/View Controllers/LoginViewController.swift"; sourceTree = SOURCE_ROOT; };
 		68978B7024DCE6E900CBE40D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = SOURCE_ROOT; };
 		68978B7324DCE77C00CBE40D /* ClippedPock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ClippedPock.wav; sourceTree = "<group>"; };
 		8B592F8160E120FB1DCF44A4 /* Pods-PUSH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PUSH.release.xcconfig"; path = "Target Support Files/Pods-PUSH/Pods-PUSH.release.xcconfig"; sourceTree = "<group>"; };
@@ -183,7 +183,7 @@
 			children = (
 				686506B624E57EE900089234 /* SplashViewController.swift */,
 				68978B4124DC453A00CBE40D /* MainViewController.swift */,
-				68978B6E24DC8F3700CBE40D /* UserViewController.swift */,
+				68978B6E24DC8F3700CBE40D /* LoginViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -328,7 +328,7 @@
 			files = (
 				68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */,
 				68978B5124DC574F00CBE40D /* CameraController.swift in Sources */,
-				68978B6F24DC8F3700CBE40D /* UserViewController.swift in Sources */,
+				68978B6F24DC8F3700CBE40D /* LoginViewController.swift in Sources */,
 				68978B4224DC453A00CBE40D /* MainViewController.swift in Sources */,
 				68978B6D24DC72B100CBE40D /* UserController.swift in Sources */,
 				68978B4E24DC561900CBE40D /* AddCollectionViewCell.swift in Sources */,
@@ -484,7 +484,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A9A835224B;
 				INFOPLIST_FILE = PUSH/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -504,7 +504,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A9A835224B;
 				INFOPLIST_FILE = PUSH/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

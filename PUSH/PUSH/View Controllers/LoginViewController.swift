@@ -1,5 +1,5 @@
 //
-//  UserViewController.swift
+//  LoginViewController.swift
 //  PUSH
 //
 //  Created by Dennis Rudolph on 8/6/20.
@@ -9,20 +9,52 @@
 import UIKit
 import FirebaseDatabase
 
-class UserViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var userController: UserController?
     var updateCollectionView: (() -> Void)?
 
     @IBOutlet weak var nameTF: UITextField!
+    @IBOutlet weak var imageViewButton: UIButton!
+    @IBOutlet weak var doneButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameTF.delegate = self
+        self.view.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
+        nameTF.layer.cornerRadius = 10
+        nameTF.clipsToBounds = true
+        doneButton.layer.cornerRadius = 25
         if let _ = userController?.user { //prevents user from swiping to dismiss if no user is set
             self.isModalInPresentation = false
         } else {
             self.isModalInPresentation = true
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    @IBAction func imageViewButtonTapped(_ sender: UIButton) {
+        //go to photo library
+    }
+    
+    @IBAction func imageOneTapped(_ sender: UIButton) {
+        imageViewButton.setImage(UIImage(named: "Tiger"), for: .normal)
+    }
+    
+    @IBAction func imageTwoTapped(_ sender: UIButton) {
+        imageViewButton.setImage(UIImage(named: "Gorilla"), for: .normal)
+    }
+    
+    @IBAction func imageThreeTapped(_ sender: UIButton) {
+        imageViewButton.setImage(UIImage(named: "Lizard"), for: .normal)
+    }
+    
+    @IBAction func imageFourTapped(_ sender: UIButton) {
+        //go to photo library
     }
     
     @IBAction func readyButton(_ sender: UIButton) {
@@ -43,11 +75,5 @@ class UserViewController: UIViewController {
         updateCollectionView?()
         
         dismiss(animated: true, completion: nil)
-    }
-}
-
-extension StringProtocol {
-    subscript(offset: Int) -> Character {
-        self[index(startIndex, offsetBy: offset)]
     }
 }
