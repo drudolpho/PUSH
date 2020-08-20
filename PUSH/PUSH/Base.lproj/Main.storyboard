@@ -82,7 +82,7 @@
                                     <constraint firstAttribute="width" constant="42" id="Vuy-yz-6Go"/>
                                     <constraint firstAttribute="height" constant="42" id="g6u-b8-LWZ"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="Dennis"/>
+                                <state key="normal" title="Button" image="chooseImage"/>
                                 <connections>
                                     <action selector="myButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VGa-1q-QKH"/>
                                 </connections>
@@ -133,7 +133,7 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Dennis" translatesAutoresizingMaskIntoConstraints="NO" id="aGA-DU-YJH">
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chooseImage" translatesAutoresizingMaskIntoConstraints="NO" id="aGA-DU-YJH">
                                                             <rect key="frame" x="156.66666666666666" y="0.0" width="90.333333333333343" height="90.333333333333329"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="aGA-DU-YJH" secondAttribute="height" multiplier="1:1" id="0Qt-Cl-1Wi"/>
@@ -429,7 +429,6 @@
                                                                 <color key="titleColor" red="0.86274509799999999" green="0.86274509799999999" blue="0.86274509799999999" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                             </state>
                                                             <connections>
-                                                                <action selector="addButtonTapped:" destination="f6B-Xs-EU9" eventType="touchUpInside" id="di5-bf-vah"/>
                                                                 <action selector="cancelButtonTapped:" destination="f6B-Xs-EU9" eventType="touchUpInside" id="OFz-ye-1XG"/>
                                                             </connections>
                                                         </button>
@@ -580,7 +579,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y4b-aM-qms">
-                                <rect key="frame" x="143.66666666666666" y="286.66666666666669" width="126.99999999999997" height="127"/>
+                                <rect key="frame" x="120" y="296.66666666666669" width="174" height="174"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Y4b-aM-qms" secondAttribute="height" multiplier="1:1" id="ljn-iy-cUC"/>
                                 </constraints>
@@ -589,63 +588,6 @@
                                     <action selector="imageViewButtonTapped:" destination="9PB-TJ-hNO" eventType="touchUpInside" id="4pc-k9-mmI"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="qOx-K8-EzK">
-                                <rect key="frame" x="36.333333333333343" y="438.66666666666669" width="341.33333333333326" height="58.333333333333314"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k2Z-0s-yPt">
-                                        <rect key="frame" x="0.0" y="0.0" width="58.333333333333336" height="58.333333333333336"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="k2Z-0s-yPt" secondAttribute="height" multiplier="1:1" id="Baz-1O-Snu"/>
-                                        </constraints>
-                                        <state key="normal" image="Tiger"/>
-                                        <connections>
-                                            <action selector="imageOneTapped:" destination="9PB-TJ-hNO" eventType="touchUpInside" id="Zo0-Te-WX1"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8H-91-GlT">
-                                        <rect key="frame" x="94.333333333333314" y="0.0" width="58.333333333333343" height="58.333333333333336"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="c8H-91-GlT" secondAttribute="height" multiplier="1:1" id="Xsz-Th-Nzw"/>
-                                        </constraints>
-                                        <state key="normal" image="Gorilla"/>
-                                        <connections>
-                                            <action selector="imageTwoTapped:" destination="9PB-TJ-hNO" eventType="touchUpInside" id="XET-li-o8K"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qam-Il-Hjn">
-                                        <rect key="frame" x="188.66666666666666" y="0.0" width="58.333333333333343" height="58.333333333333336"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Qam-Il-Hjn" secondAttribute="height" multiplier="1:1" id="n2j-wj-N12"/>
-                                        </constraints>
-                                        <state key="normal" image="Lizard"/>
-                                        <connections>
-                                            <action selector="imageThreeTapped:" destination="9PB-TJ-hNO" eventType="touchUpInside" id="eAN-nb-V9X"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rx0-vi-0Ou">
-                                        <rect key="frame" x="283" y="0.0" width="58.333333333333314" height="58.333333333333336"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="rx0-vi-0Ou" secondAttribute="height" multiplier="1:1" id="IhF-RU-Chh"/>
-                                        </constraints>
-                                        <state key="normal" image="chooseImage"/>
-                                        <connections>
-                                            <action selector="imageFourTapped:" destination="9PB-TJ-hNO" eventType="touchUpInside" id="rQt-bd-OxA"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="rx0-vi-0Ou" firstAttribute="width" secondItem="rx0-vi-0Ou" secondAttribute="height" multiplier="1:1" id="4ow-6S-Yoh"/>
-                                    <constraint firstItem="k2Z-0s-yPt" firstAttribute="width" secondItem="qOx-K8-EzK" secondAttribute="width" multiplier="0.15" constant="7.1100000000000003" id="5Gd-IK-5E5"/>
-                                    <constraint firstItem="Qam-Il-Hjn" firstAttribute="width" secondItem="Qam-Il-Hjn" secondAttribute="height" multiplier="1:1" id="9bL-Eo-3sX"/>
-                                    <constraint firstItem="rx0-vi-0Ou" firstAttribute="width" secondItem="k2Z-0s-yPt" secondAttribute="width" id="EKF-hV-Qk4"/>
-                                    <constraint firstItem="c8H-91-GlT" firstAttribute="width" secondItem="k2Z-0s-yPt" secondAttribute="width" id="K9P-UP-0Aa"/>
-                                    <constraint firstItem="Qam-Il-Hjn" firstAttribute="width" secondItem="Qam-Il-Hjn" secondAttribute="height" multiplier="1:1" id="KdJ-4V-Qgv"/>
-                                    <constraint firstItem="c8H-91-GlT" firstAttribute="width" secondItem="c8H-91-GlT" secondAttribute="height" multiplier="1:1" id="Npg-9S-1ym"/>
-                                    <constraint firstItem="Qam-Il-Hjn" firstAttribute="width" secondItem="k2Z-0s-yPt" secondAttribute="width" id="Pev-iw-YCh"/>
-                                    <constraint firstItem="rx0-vi-0Ou" firstAttribute="width" secondItem="rx0-vi-0Ou" secondAttribute="height" multiplier="1:1" id="Pks-Cg-iVZ"/>
-                                    <constraint firstItem="rx0-vi-0Ou" firstAttribute="width" secondItem="rx0-vi-0Ou" secondAttribute="height" multiplier="1:1" id="Wyj-Uy-qSP"/>
-                                </constraints>
-                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose a profile image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OA3-9V-lJQ">
                                 <rect key="frame" x="41.333333333333329" y="238.33333333333334" width="243.66666666666669" height="28.333333333333343"/>
                                 <constraints>
@@ -656,7 +598,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F39-Ub-Kz8">
-                                <rect key="frame" x="103.66666666666669" y="557" width="207" height="50"/>
+                                <rect key="frame" x="103.66666666666669" y="570.66666666666663" width="207" height="50"/>
                                 <color key="backgroundColor" red="0.2274509804" green="0.75294117650000003" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="Dvt-we-W7M"/>
@@ -675,19 +617,17 @@
                         <constraints>
                             <constraint firstItem="MiY-4x-2Py" firstAttribute="top" secondItem="Hp3-lc-q1c" secondAttribute="top" constant="35" id="1Ld-XR-zcs"/>
                             <constraint firstItem="OA3-9V-lJQ" firstAttribute="leading" secondItem="9Vh-FR-ZIJ" secondAttribute="leading" id="8Nk-bP-jSe"/>
-                            <constraint firstItem="Y4b-aM-qms" firstAttribute="width" secondItem="soL-CZ-RaC" secondAttribute="width" multiplier="0.306763" id="Aqn-Wf-noh"/>
-                            <constraint firstItem="qOx-K8-EzK" firstAttribute="top" secondItem="Y4b-aM-qms" secondAttribute="bottom" constant="25" id="Fpg-pt-Wia"/>
-                            <constraint firstItem="qOx-K8-EzK" firstAttribute="centerX" secondItem="soL-CZ-RaC" secondAttribute="centerX" id="LTs-iw-m3y"/>
+                            <constraint firstItem="Y4b-aM-qms" firstAttribute="width" secondItem="soL-CZ-RaC" secondAttribute="width" multiplier="0.42" id="Aqn-Wf-noh"/>
                             <constraint firstItem="nRm-P2-PJ8" firstAttribute="width" secondItem="soL-CZ-RaC" secondAttribute="width" multiplier="0.8" id="Pnt-GS-94a"/>
                             <constraint firstItem="Y4b-aM-qms" firstAttribute="centerX" secondItem="soL-CZ-RaC" secondAttribute="centerX" id="RzV-kl-p5J"/>
-                            <constraint firstItem="F39-Ub-Kz8" firstAttribute="top" secondItem="qOx-K8-EzK" secondAttribute="bottom" constant="60" id="SYI-bR-wjS"/>
                             <constraint firstItem="EIw-ZK-fLa" firstAttribute="leading" secondItem="Hp3-lc-q1c" secondAttribute="leading" constant="41.333333333333343" id="g5y-ep-1OP"/>
                             <constraint firstItem="OA3-9V-lJQ" firstAttribute="top" secondItem="EIw-ZK-fLa" secondAttribute="bottom" constant="40" id="iqx-aE-rQN"/>
                             <constraint firstItem="EIw-ZK-fLa" firstAttribute="centerX" secondItem="soL-CZ-RaC" secondAttribute="centerX" id="oKt-4p-1Xk"/>
                             <constraint firstItem="F39-Ub-Kz8" firstAttribute="width" secondItem="soL-CZ-RaC" secondAttribute="width" multiplier="0.5" id="p1n-JQ-7e9"/>
+                            <constraint firstItem="F39-Ub-Kz8" firstAttribute="top" secondItem="Y4b-aM-qms" secondAttribute="bottom" constant="100" id="sTz-Pw-jdi"/>
                             <constraint firstItem="MiY-4x-2Py" firstAttribute="leading" secondItem="Hp3-lc-q1c" secondAttribute="leading" constant="30" id="tSh-gZ-8aH"/>
                             <constraint firstItem="EIw-ZK-fLa" firstAttribute="top" secondItem="MiY-4x-2Py" secondAttribute="bottom" constant="40" id="tic-yw-AXu"/>
-                            <constraint firstItem="Y4b-aM-qms" firstAttribute="top" secondItem="OA3-9V-lJQ" secondAttribute="bottom" constant="20" id="yfA-b0-THn"/>
+                            <constraint firstItem="Y4b-aM-qms" firstAttribute="top" secondItem="OA3-9V-lJQ" secondAttribute="bottom" constant="30" id="yfA-b0-THn"/>
                             <constraint firstItem="F39-Ub-Kz8" firstAttribute="centerX" secondItem="soL-CZ-RaC" secondAttribute="centerX" id="z2W-vT-gbt"/>
                         </constraints>
                     </view>
@@ -720,10 +660,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Dennis" width="415" height="403"/>
-        <image name="Gorilla" width="207" height="206"/>
-        <image name="Lizard" width="257" height="258"/>
-        <image name="Tiger" width="257" height="258"/>
         <image name="chooseImage" width="436" height="436"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

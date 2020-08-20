@@ -8,12 +8,15 @@
 
 import Foundation
 import FirebaseDatabase
+import FirebaseStorage
 
 class UserController {
     
     var user: User?
     var friends: [User] = []
+    var images: [String: UIImage] = [:]
     var ref = Database.database().reference()
+    let storageRef = Storage.storage().reference()
     let df = DateFormatter()
 //    var date = Date()
 //    for testing future dates
@@ -31,6 +34,23 @@ class UserController {
     
     init() {
         df.dateFormat = "yyyy-MM-dd"
+    }
+    
+    func uploadImage(name: String, image: UIImage) {
+        guard let data = image.pngData() else { return }
+        
+        images[name] = image
+        let imageRef = storageRef.child(name)
+        _ = imageRef.putData(data, metadata: nil) { (metadata, error) in
+            if let error = error {
+                print("Error saving image to storage \(error)")
+                return
+            }
+            if let _ = metadata {
+                print("Error retrieving metadata image to storage ")
+                return
+            }
+        }
     }
     
     func fetchUserData(codeName: String, completion: @escaping (Bool) -> Void) {

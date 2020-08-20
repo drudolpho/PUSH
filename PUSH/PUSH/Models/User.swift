@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import UIKit
 
 class User: Codable {
     var name: String
-    var id: String //UUID
+    var id: String
     var codeName: String
     var imageID: String
     var total: Int
@@ -19,10 +20,9 @@ class User: Codable {
     var max: Int
     var dayStreak: Int
     var lastDate: String
-    var startDate: String //Date
-//    var friends: [UUID]?
+    var startDate: String
     
-    init(name: String, id: String, codeName: String, imageID: String = "i", total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: Int = 0, max: Int = 0, lastDate: String, startDate: String) {
+    init(name: String, id: String, codeName: String, imageID: String, total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: Int = 0, max: Int = 0, lastDate: String, startDate: String) {
         self.name = name
         self.id = id
         self.codeName = codeName
@@ -55,16 +55,4 @@ class User: Codable {
     var dictionaryRepresentation: [String: Any] {
         return ["name": name, "id": id, "codeName": codeName, "imageID": imageID, "total": total, "sets": sets, "avg": avg, "dayStreak": dayStreak, "max": max, "lastDate": lastDate, "startDate": startDate]
       }
-}
-
-extension String {
-    var isAlphanumeric: Bool {
-        return !isEmpty && range(of: "[^a-zA-Z0-9]", options: .regularExpression) == nil
-    }
-}
-
-extension StringProtocol {
-    subscript(offset: Int) -> Character {
-        self[index(startIndex, offsetBy: offset)]
-    }
 }

@@ -36,6 +36,7 @@ class StatCollectionViewCell: UICollectionViewCell {
         guard let userController = self.userController, let user = userController.user else { return }
         if cellIndex == 0 {
             nameLabel.text = user.name
+            cellImageView.image = userController.images[user.imageID]
             totalNumLabel.text = "\(user.total)"
             setsNumLabel.text = "\(user.sets)"
             avgNumLabel.text = "\(user.avg)"
@@ -46,15 +47,17 @@ class StatCollectionViewCell: UICollectionViewCell {
                 daysNumLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: userController.date) + 1)"
             }
         } else {
-            nameLabel.text = userController.friends[cellIndex - 1].name
-            totalNumLabel.text = "\(userController.friends[cellIndex - 1].total)"
-            setsNumLabel.text = "\(userController.friends[cellIndex - 1].sets)"
-            avgNumLabel.text = "\(userController.friends[cellIndex - 1].avg)"
-            if let recentDate = userController.df.date(from: userController.friends[cellIndex - 1].lastDate) {
+            let friend = userController.friends[cellIndex - 1]
+            nameLabel.text = friend.name
+            cellImageView.image = userController.images[friend.imageID]
+            totalNumLabel.text = "\(friend.total)"
+            setsNumLabel.text = "\(friend.sets)"
+            avgNumLabel.text = "\(friend.avg)"
+            if let recentDate = userController.df.date(from: friend.lastDate) {
                 if userController.getDaysSince(day1: recentDate, day2: userController.date) > 1 {
                     streakNumLabel.text = "0"
                 } else {
-                    streakNumLabel.text = "\(userController.friends[cellIndex - 1].dayStreak)"
+                    streakNumLabel.text = "\(friend.dayStreak)"
                 }
             }
             maxNumLabel.text = "\(userController.friends[cellIndex - 1].max)"

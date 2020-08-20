@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		490DF974B9AB24359BC1AAD0 /* Pods_PUSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70ACCFE5EBCF539C023FD7A /* Pods_PUSH.framework */; };
+		680882C924EF0F670056D2A9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680882C824EF0F670056D2A9 /* Extensions.swift */; };
 		683698CA24E3411B00749236 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683698C924E3411B00749236 /* GoogleService-Info.plist */; };
 		686506B724E57EE900089234 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686506B624E57EE900089234 /* SplashViewController.swift */; };
 		68978B2E24DC42E700CBE40D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B2D24DC42E700CBE40D /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		680882C824EF0F670056D2A9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		683698C924E3411B00749236 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		686506B624E57EE900089234 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		68978B2A24DC42E700CBE40D /* PUSH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PUSH.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +96,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		680882CA24EF0F8F0056D2A9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				68978B6A24DC6AF200CBE40D /* User.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		68978B2124DC42E700CBE40D = {
 			isa = PBXGroup;
 			children = (
@@ -117,9 +127,10 @@
 			children = (
 				68978B2D24DC42E700CBE40D /* AppDelegate.swift */,
 				68978B2F24DC42E700CBE40D /* SceneDelegate.swift */,
-				68978B6A24DC6AF200CBE40D /* User.swift */,
-				68E6C77F24E2EA1400A014BC /* View Controllers */,
+				680882C824EF0F670056D2A9 /* Extensions.swift */,
+				680882CA24EF0F8F0056D2A9 /* Models */,
 				68978B4F24DC570B00CBE40D /* Controllers */,
+				68E6C77F24E2EA1400A014BC /* View Controllers */,
 				68978B4624DC553700CBE40D /* StatViewsCells */,
 				68978B3324DC42E700CBE40D /* Main.storyboard */,
 				68978B3624DC42E800CBE40D /* Assets.xcassets */,
@@ -333,6 +344,7 @@
 				68978B6D24DC72B100CBE40D /* UserController.swift in Sources */,
 				68978B4E24DC561900CBE40D /* AddCollectionViewCell.swift in Sources */,
 				68978B2E24DC42E700CBE40D /* AppDelegate.swift in Sources */,
+				680882C924EF0F670056D2A9 /* Extensions.swift in Sources */,
 				68978B4C24DC560F00CBE40D /* StatCollectionViewCell.swift in Sources */,
 				68978B3024DC42E700CBE40D /* SceneDelegate.swift in Sources */,
 				68978B6B24DC6AF200CBE40D /* User.swift in Sources */,
