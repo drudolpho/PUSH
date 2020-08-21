@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddCollectionViewCell: UICollectionViewCell {
+class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     var userController: UserController?
     var updateCollectionView: (() -> Void)?
@@ -25,6 +25,8 @@ class AddCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        nameTF.delegate = self
+        codeTF.delegate = self
         self.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
         self.layer.cornerRadius = 40
         addButton.layer.cornerRadius = 20
@@ -34,6 +36,15 @@ class AddCollectionViewCell: UICollectionViewCell {
         codeTF.layer.cornerRadius = 10
         codeTF.clipsToBounds = true
         self.layer.masksToBounds = false
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == nameTF {
+            codeTF.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+        return true
     }
     
     func viewOne() {

@@ -13,8 +13,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var userController: UserController?
     var updateCollectionView: (() -> Void)?
-    var imageAlert: UIAlertController?
-    var badNameAlert: UIAlertController?
+    
     var chosenImage: UIImage? {
         didSet {
             guard let chosenImage = chosenImage else { return }
@@ -29,8 +28,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupImageAlert()
-        setupBadNameAlert()
         nameTF.delegate = self
         self.view.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
         nameTF.layer.cornerRadius = 10
@@ -78,36 +75,39 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    private func setupImageAlert() {
-        imageAlert = UIAlertController(title: "Please choose a photo", message: nil, preferredStyle: .actionSheet)
-        imageAlert?.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
+    private func imageAlert() {
+        let imageAlert = UIAlertController(title: "Please choose a photo", message: nil, preferredStyle: .actionSheet)
+        imageAlert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
             self.presentImagePickerController(type: 0)
         }))
-        imageAlert?.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+        imageAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
             self.presentImagePickerController(type: 1)
         }))
-        imageAlert?.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        imageAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(imageAlert, animated: true)
     }
     
-    private func setupBadNameAlert() {
-        badNameAlert = UIAlertController(title: "Invalid name", message: "Please create an alphanumeric name between 3 and 8 characters", preferredStyle: .alert)
-        badNameAlert?.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+    private func badNameAlert() {
+        let badNameAlert = UIAlertController(title: "Invalid name", message: "Please create an alphanumeric name between 3 and 8 characters", preferredStyle: .alert)
+        badNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+    }
+    
+    private func bigImageAlert() {
+        let bigImageAlert = UIAlertController(title: "Image is too large", message: "Please choose an image under 1.6 mb", preferredStyle: .alert)
+        bigImageAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
     }
     
     @IBAction func imageViewButtonTapped(_ sender: UIButton) {
-        guard let alert = self.imageAlert else { return }
-        self.present(alert, animated: true)
+        imageAlert()
     }
     
     @IBAction func readyButton(_ sender: UIButton) {
         guard let userController = userController, let name = nameTF.text, !name.isEmpty, name.count < 9, name.count > 2 else {
-            guard let alert = self.badNameAlert else { return }
-            present(alert, animated: true)
+            badNameAlert()
             return
         }
         guard let image = chosenImage else {
-            guard let alert = self.imageAlert else { return }
-            present(alert, animated: true)
+            imageAlert()
             return
         }
         
@@ -116,8 +116,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let codeName = name + String(uuidString[0]) + String(uuidString[1]) + String(uuidString[2]) + String(uuidString[3])
         let noSpacesCodeName = String(codeName.filter { !" \n\t\r".contains($0) })
         guard noSpacesCodeName.isAlphanumeric else {
-            guard let alert = self.badNameAlert else { return }
-            present(alert, animated: true)
+            badNameAlert()
+            return
+        }
+        
+        guard let imageData = userController.compressAddImage(name: noSpacesCodeName, image: image) else {
+            bigImageAlert()
             return
         }
         
@@ -125,7 +129,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         userController.user = user
         userController.submitUserInfo(codeName: noSpacesCodeName, user: user)
-        userController.uploadImage(name: noSpacesCodeName, image: image)
+        userController.uploadImage(name: noSpacesCodeName, imageData: imageData)
         updateCollectionView?()
         
         dismiss(animated: true, completion: nil)
