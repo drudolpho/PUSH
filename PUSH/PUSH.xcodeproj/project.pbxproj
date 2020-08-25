@@ -37,6 +37,8 @@
 		68978B6F24DC8F3700CBE40D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6E24DC8F3700CBE40D /* LoginViewController.swift */; };
 		68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B7024DCE6E900CBE40D /* AudioController.swift */; };
 		68978B7424DCE77C00CBE40D /* ClippedPock.wav in Resources */ = {isa = PBXBuildFile; fileRef = 68978B7324DCE77C00CBE40D /* ClippedPock.wav */; };
+		68EF0F6824F4399000F93899 /* TopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF0F6724F4399000F93899 /* TopTableViewCell.swift */; };
+		68EF0F6A24F4399D00F93899 /* StatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF0F6924F4399D00F93899 /* StatTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,6 +73,8 @@
 		68978B6E24DC8F3700CBE40D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = "PUSH/View Controllers/LoginViewController.swift"; sourceTree = SOURCE_ROOT; };
 		68978B7024DCE6E900CBE40D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = SOURCE_ROOT; };
 		68978B7324DCE77C00CBE40D /* ClippedPock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ClippedPock.wav; sourceTree = "<group>"; };
+		68EF0F6724F4399000F93899 /* TopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTableViewCell.swift; sourceTree = "<group>"; };
+		68EF0F6924F4399D00F93899 /* StatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatTableViewCell.swift; sourceTree = "<group>"; };
 		8B592F8160E120FB1DCF44A4 /* Pods-PUSH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PUSH.release.xcconfig"; path = "Target Support Files/Pods-PUSH/Pods-PUSH.release.xcconfig"; sourceTree = "<group>"; };
 		A23F7BDAAE49502D4528D9F4 /* Pods-PUSH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PUSH.debug.xcconfig"; path = "Target Support Files/Pods-PUSH/Pods-PUSH.debug.xcconfig"; sourceTree = "<group>"; };
 		F70ACCFE5EBCF539C023FD7A /* Pods_PUSH.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PUSH.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +136,7 @@
 				68978B4F24DC570B00CBE40D /* Controllers */,
 				68E6C77F24E2EA1400A014BC /* View Controllers */,
 				68978B4624DC553700CBE40D /* StatViewsCells */,
+				68EF0F6624F4394900F93899 /* Table View Cells */,
 				68978B3324DC42E700CBE40D /* Main.storyboard */,
 				68978B3624DC42E800CBE40D /* Assets.xcassets */,
 				68978B3824DC42E800CBE40D /* LaunchScreen.storyboard */,
@@ -197,6 +202,15 @@
 				68978B6E24DC8F3700CBE40D /* LoginViewController.swift */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		68EF0F6624F4394900F93899 /* Table View Cells */ = {
+			isa = PBXGroup;
+			children = (
+				68EF0F6724F4399000F93899 /* TopTableViewCell.swift */,
+				68EF0F6924F4399D00F93899 /* StatTableViewCell.swift */,
+			);
+			path = "Table View Cells";
 			sourceTree = "<group>";
 		};
 		7C71C3F0D3C15A1D94E155E4 /* Pods */ = {
@@ -340,10 +354,12 @@
 				68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */,
 				68978B5124DC574F00CBE40D /* CameraController.swift in Sources */,
 				68978B6F24DC8F3700CBE40D /* LoginViewController.swift in Sources */,
+				68EF0F6A24F4399D00F93899 /* StatTableViewCell.swift in Sources */,
 				68978B4224DC453A00CBE40D /* MainViewController.swift in Sources */,
 				68978B6D24DC72B100CBE40D /* UserController.swift in Sources */,
 				68978B4E24DC561900CBE40D /* AddCollectionViewCell.swift in Sources */,
 				68978B2E24DC42E700CBE40D /* AppDelegate.swift in Sources */,
+				68EF0F6824F4399000F93899 /* TopTableViewCell.swift in Sources */,
 				680882C924EF0F670056D2A9 /* Extensions.swift in Sources */,
 				68978B4C24DC560F00CBE40D /* StatCollectionViewCell.swift in Sources */,
 				68978B3024DC42E700CBE40D /* SceneDelegate.swift in Sources */,

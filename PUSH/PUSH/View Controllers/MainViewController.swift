@@ -33,7 +33,7 @@ class MainViewController: UIViewController {
         guard let userController = userController else { return }
         
         //TESTING for testing on simulator, comment this vvv out
-        cameraController.setUpCamera()
+//        cameraController.setUpCamera()
         //TESTING
         
         cameraController.delegate = self

@@ -14,7 +14,8 @@ class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        login()
+//        login()
+        simLogin() // for using a simulator
     }
     
     func login() {
@@ -28,6 +29,15 @@ class SplashViewController: UIViewController {
             }
         } else {
             performSegue(withIdentifier: "MainSegue", sender: nil)
+        }
+    }
+    
+    func simLogin() { // Use this when using a simulator
+        userController.fetchUserData(codeName: "DennisB2D6") { (user) in
+            if user == false {
+                UserDefaults.standard.set(nil, forKey: "codeName")
+            }
+            self.performSegue(withIdentifier: "MainSegue", sender: nil)
         }
     }
 
