@@ -10,11 +10,15 @@ import UIKit
 
 class StatTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var statNameLabel: UILabel!
-    @IBOutlet weak var statValueLabel: UILabel!
+    @IBOutlet weak var statOneNameLabel: UILabel!
+    @IBOutlet weak var statOneValueLabel: UILabel!
+    @IBOutlet weak var statTwoNameLabel: UILabel!
+    @IBOutlet weak var statTwoValueLabel: UILabel!
+    @IBOutlet weak var statThreeNameLabel: UILabel!
+    @IBOutlet weak var statThreeValueLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        self.backgroundColor = .clear
     }
 }

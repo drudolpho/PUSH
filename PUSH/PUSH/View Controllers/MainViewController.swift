@@ -33,14 +33,14 @@ class MainViewController: UIViewController {
         guard let userController = userController else { return }
         
         //TESTING for testing on simulator, comment this vvv out
-//        cameraController.setUpCamera()
+        cameraController.setUpCamera()
         //TESTING
         
         cameraController.delegate = self
         prepareLight()
         cameraController.audioController = audioController
         
-        startButton.layer.cornerRadius = 33
+        startButton.layer.cornerRadius = 25
         myButton.imageView?.layer.cornerRadius = myButton.frame.size.width / 2.0
         //for collecti0n view
         statsCollectionView.delegate = self

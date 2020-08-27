@@ -14,8 +14,8 @@ class SplashViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        login()
-        simLogin() // for using a simulator
+        login()
+//        simLogin() // for using a simulator
     }
     
     func login() {
