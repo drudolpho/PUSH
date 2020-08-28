@@ -19,3 +19,14 @@ extension StringProtocol {
         self[index(startIndex, offsetBy: offset)]
     }
 }
+
+struct ActivityConstants {
+    var dayVgap: Double = 2
+    var dayHeight: Double = 13
+    var dayWidth: Double = 13
+    var weekHeight: Double = 103
+    var monthVgap: Double = 17
+    var dayLabelDimension: Double = 12
+    var graphHeight: Double = 135
+}
+let constants = ActivityConstants()

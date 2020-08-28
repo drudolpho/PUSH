@@ -33,10 +33,10 @@ class StatCollectionViewCell: UICollectionViewCell {
         statTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: statTableView.frame.size.width, height: 1))
         self.layer.cornerRadius = 40
         topView.layer.cornerRadius = 40
-        topView.backgroundColor = UIColor(red: 37/255, green: 37/255, blue: 37/255, alpha: 1)
+        topView.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
 //            UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
         topView.layer.masksToBounds = false
-        topView.layer.shadowColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1).cgColor
+        topView.layer.shadowColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 0.8).cgColor
         topView.layer.shadowOpacity = 1
         topView.layer.shadowOffset = CGSize.zero
         topView.layer.shadowRadius = 10
@@ -77,9 +77,18 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let userController = self.userController, let user = userController.user else { return UITableViewCell() }
-
-        if let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatTableViewCell {
+        
+        if indexPath.row == 2 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "GraphCell", for: indexPath) as? GraphTableViewCell else { return UITableViewCell() }
             
+            cell.activityGraph = ActivityView(frame: CGRect(x: 25, y: 20, width: Double(cell.frame.width) - 60, height: constants.graphHeight))
+            let weekData = [[2,1,1,1,0,0,0],[2,1,0,1,0,1,0],[0,1,2,1,0,1,0],[0,1,2,2,0,1,0],[0,1,1,2,0,1,0],[0,0,1,1,0,2,0],[2,1,1,1,0,1,0],[2,1,0,1,0]]
+            cell.addGraph(withData: weekData, position: 2, month1: "Aug", month2: "Sep")
+            
+            return cell
+            
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatTableViewCell else { return UITableViewCell() }
             var statee: User {
                 if cellIndex == 0 {
                     return user
@@ -89,20 +98,13 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
             }
             
             if indexPath.row == 0 {
-                cell.statOneNameLabel.text = ""
-                cell.statOneValueLabel.text = ""
-                cell.statTwoNameLabel.text = ""
-                cell.statTwoValueLabel.text = ""
-                cell.statThreeNameLabel.text = ""
-                cell.statThreeValueLabel.text = ""
-            } else if indexPath.row == 1 {
                 cell.statOneNameLabel.text = "Total:"
                 cell.statOneValueLabel.text = String(statee.total)
                 cell.statTwoNameLabel.text = "Avg:"
                 cell.statTwoValueLabel.text = String(statee.avg)
                 cell.statThreeNameLabel.text = "Sets:"
                 cell.statThreeValueLabel.text = String(statee.sets)
-            } else if indexPath.row == 2 {
+            } else if indexPath.row == 1 {
                 cell.statOneNameLabel.text = "Max:"
                 cell.statOneValueLabel.text = String(statee.max)
                 cell.statTwoNameLabel.text = "Streak:"
@@ -121,16 +123,15 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
             
             cell.selectionStyle = .none
             return cell
-        }  else {
-            return UITableViewCell()
         }
     }
     
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return tableView.frame.height / 2
+        if indexPath.row == 2 {
+            return tableView.frame.height / 1.90
         } else {
-            return tableView.frame.height / 4
+            return tableView.frame.height / 4.6
         }
     }
 }

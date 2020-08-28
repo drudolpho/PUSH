@@ -45,8 +45,9 @@ class SplashViewController: UIViewController {
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MainSegue" {
-            if let viewController = segue.destination as? MainViewController {
-                viewController.userController = userController
+            if let tabBar = segue.destination as? UITabBarController {
+                let vc = tabBar.viewControllers?[0] as! MainViewController
+                vc.userController = userController
             }
         }
     }

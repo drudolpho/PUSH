@@ -10,7 +10,13 @@
 		490DF974B9AB24359BC1AAD0 /* Pods_PUSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70ACCFE5EBCF539C023FD7A /* Pods_PUSH.framework */; };
 		680882C924EF0F670056D2A9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680882C824EF0F670056D2A9 /* Extensions.swift */; };
 		683698CA24E3411B00749236 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683698C924E3411B00749236 /* GoogleService-Info.plist */; };
+		685F3F4B24F800D900AB4593 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685F3F4A24F800D900AB4593 /* ActivityView.swift */; };
 		686506B724E57EE900089234 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686506B624E57EE900089234 /* SplashViewController.swift */; };
+		688CB18724F83A3600C37E7F /* ColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688CB18624F83A3600C37E7F /* ColumnView.swift */; };
+		688CB18A24F83B0900C37E7F /* GraphTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688CB18924F83B0900C37E7F /* GraphTableViewCell.swift */; };
+		6890DA1A24F8541100DEC067 /* PushViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890DA1924F8541100DEC067 /* PushViewController.swift */; };
+		6890DA1C24F8541E00DEC067 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890DA1B24F8541E00DEC067 /* ProfileViewController.swift */; };
+		6890DA1E24F85AF100DEC067 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6890DA1D24F85AF100DEC067 /* TabBarController.swift */; };
 		68978B2E24DC42E700CBE40D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B2D24DC42E700CBE40D /* AppDelegate.swift */; };
 		68978B3024DC42E700CBE40D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B2F24DC42E700CBE40D /* SceneDelegate.swift */; };
 		68978B3524DC42E700CBE40D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 68978B3324DC42E700CBE40D /* Main.storyboard */; };
@@ -43,7 +49,13 @@
 /* Begin PBXFileReference section */
 		680882C824EF0F670056D2A9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		683698C924E3411B00749236 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		685F3F4A24F800D900AB4593 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		686506B624E57EE900089234 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		688CB18624F83A3600C37E7F /* ColumnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnView.swift; sourceTree = "<group>"; };
+		688CB18924F83B0900C37E7F /* GraphTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphTableViewCell.swift; sourceTree = "<group>"; };
+		6890DA1924F8541100DEC067 /* PushViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushViewController.swift; sourceTree = "<group>"; };
+		6890DA1B24F8541E00DEC067 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		6890DA1D24F85AF100DEC067 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		68978B2A24DC42E700CBE40D /* PUSH.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PUSH.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		68978B2D24DC42E700CBE40D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		68978B2F24DC42E700CBE40D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +118,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		688CB18824F83ABF00C37E7F /* ActivityGraph */ = {
+			isa = PBXGroup;
+			children = (
+				685F3F4A24F800D900AB4593 /* ActivityView.swift */,
+				688CB18624F83A3600C37E7F /* ColumnView.swift */,
+			);
+			path = ActivityGraph;
+			sourceTree = "<group>";
+		};
 		68978B2124DC42E700CBE40D = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +156,7 @@
 				68E6C77F24E2EA1400A014BC /* View Controllers */,
 				68978B4624DC553700CBE40D /* StatViewsCells */,
 				68EF0F6624F4394900F93899 /* Table View Cells */,
+				688CB18824F83ABF00C37E7F /* ActivityGraph */,
 				68978B3324DC42E700CBE40D /* Main.storyboard */,
 				68978B3624DC42E800CBE40D /* Assets.xcassets */,
 				68978B3824DC42E800CBE40D /* LaunchScreen.storyboard */,
@@ -197,7 +219,10 @@
 			children = (
 				686506B624E57EE900089234 /* SplashViewController.swift */,
 				68978B4124DC453A00CBE40D /* MainViewController.swift */,
+				6890DA1924F8541100DEC067 /* PushViewController.swift */,
+				6890DA1B24F8541E00DEC067 /* ProfileViewController.swift */,
 				68978B6E24DC8F3700CBE40D /* LoginViewController.swift */,
+				6890DA1D24F85AF100DEC067 /* TabBarController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -206,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				68EF0F6924F4399D00F93899 /* StatTableViewCell.swift */,
+				688CB18924F83B0900C37E7F /* GraphTableViewCell.swift */,
 			);
 			path = "Table View Cells";
 			sourceTree = "<group>";
@@ -351,14 +377,20 @@
 				68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */,
 				68978B5124DC574F00CBE40D /* CameraController.swift in Sources */,
 				68978B6F24DC8F3700CBE40D /* LoginViewController.swift in Sources */,
+				6890DA1A24F8541100DEC067 /* PushViewController.swift in Sources */,
 				68EF0F6A24F4399D00F93899 /* StatTableViewCell.swift in Sources */,
 				68978B4224DC453A00CBE40D /* MainViewController.swift in Sources */,
+				6890DA1C24F8541E00DEC067 /* ProfileViewController.swift in Sources */,
 				68978B6D24DC72B100CBE40D /* UserController.swift in Sources */,
+				688CB18724F83A3600C37E7F /* ColumnView.swift in Sources */,
 				68978B4E24DC561900CBE40D /* AddCollectionViewCell.swift in Sources */,
+				6890DA1E24F85AF100DEC067 /* TabBarController.swift in Sources */,
+				688CB18A24F83B0900C37E7F /* GraphTableViewCell.swift in Sources */,
 				68978B2E24DC42E700CBE40D /* AppDelegate.swift in Sources */,
 				680882C924EF0F670056D2A9 /* Extensions.swift in Sources */,
 				68978B4C24DC560F00CBE40D /* StatCollectionViewCell.swift in Sources */,
 				68978B3024DC42E700CBE40D /* SceneDelegate.swift in Sources */,
+				685F3F4B24F800D900AB4593 /* ActivityView.swift in Sources */,
 				68978B6B24DC6AF200CBE40D /* User.swift in Sources */,
 				686506B724E57EE900089234 /* SplashViewController.swift in Sources */,
 			);
