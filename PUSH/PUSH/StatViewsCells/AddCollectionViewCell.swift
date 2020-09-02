@@ -27,7 +27,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         nameTF.delegate = self
         codeTF.delegate = self
-        self.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
+        self.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
         self.layer.cornerRadius = 40
         addButton.layer.cornerRadius = 20
         cancelButton.layer.cornerRadius = 20
@@ -78,20 +78,30 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         let noSpacesCodeName = String(codeName.filter { !" \n\t\r".contains($0) })
         print(noSpacesCodeName)
         guard noSpacesCodeName.isAlphanumeric else {
-            //alert
+            
+            let alert = UIAlertController(title: "Incorrect info", message: "Please use an alphanumeric name and 4 character code", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+            self.parentViewController?.present(alert, animated: true, completion: nil)
+            
             return
         }
         userController?.findFriendData(codeName: noSpacesCodeName, completion: { (successful) in
             if successful {
                 updateCollectionView()
+                self.nameTF.text = ""
+                self.codeTF.text = "#"
                 self.viewOne()
             } else {
-//                ALERT
+                let alert = UIAlertController(title: "Could not retrieve data", message: "There was an error finding your friend", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                self.parentViewController?.present(alert, animated: true, completion: nil)
             }
         })
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
+        self.nameTF.text = ""
+        self.codeTF.text = "#"
         viewOne()
     }
     

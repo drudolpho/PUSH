@@ -40,6 +40,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         } else {
             self.isModalInPresentation = true
         }
+        self.hideKeyboardWhenTappedAround() 
     }
     
     private func presentImagePickerController(type: Int) {

@@ -48,14 +48,14 @@ class ActivityView: UIView {
         
         let monthOneX: Double = constants.dayLabelDimension + (Double(position) * gap) + ((Double(position) - 1) * constants.dayWidth)
         
-        let monthOne = UILabel(frame: CGRect(x: monthOneX, y: constants.weekHeight + constants.monthVgap, width: constants.dayLabelDimension * 3, height: constants.dayLabelDimension))
+        let monthOne = UILabel(frame: CGRect(x: monthOneX, y: constants.weekHeight + constants.monthVgap/1.5, width: constants.dayLabelDimension * 3, height: constants.dayLabelDimension))
         monthOne.text = month1
         monthOne.font = UIFont.systemFont(ofSize: 10.0)
         monthOne.textColor = UIColor(red: 106/255, green: 106/255, blue: 106/255, alpha: 1)
         monthOne.textAlignment = .left
         self.addSubview(monthOne)
         
-        let monthTwo = UILabel(frame: CGRect(x: monthOneX + ((4 * gap) + (4 * constants.dayWidth)), y: constants.weekHeight + constants.monthVgap, width: constants.dayLabelDimension * 3, height: constants.dayLabelDimension))
+        let monthTwo = UILabel(frame: CGRect(x: monthOneX + ((4 * gap) + (4 * constants.dayWidth)), y: constants.weekHeight + constants.monthVgap/1.5, width: constants.dayLabelDimension * 3, height: constants.dayLabelDimension))
         monthTwo.text = month2
         monthTwo.font = UIFont.systemFont(ofSize: 10.0)
         monthTwo.textColor = UIColor(red: 106/255, green: 106/255, blue: 106/255, alpha: 1)

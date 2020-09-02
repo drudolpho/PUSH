@@ -30,12 +30,14 @@ class MainViewController: UIViewController {
         
         statsCollectionView.backgroundColor = UIColor.black
         statsCollectionView.showsHorizontalScrollIndicator = false
+        greenView.layer.cornerRadius = 2
         self.view.bringSubviewToFront(pageControl)
         pageControl.numberOfPages = userController.friends.count + 2
         if userController.daysSinceLastDate() > 0 {
             UserDefaults.standard.set(0, forKey: "todaysPushups")
         }
         todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
+        self.hideKeyboardWhenTappedAround()
     }
     
     override func viewDidAppear(_ animated: Bool) {

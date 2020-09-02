@@ -129,9 +129,9 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 2 {
-            return tableView.frame.height / 1.90
+            return tableView.frame.height / 1.78
         } else {
-            return tableView.frame.height / 4.6
+            return tableView.frame.height / 5
         }
     }
 }
