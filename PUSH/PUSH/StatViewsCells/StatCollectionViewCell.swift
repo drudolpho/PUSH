@@ -92,7 +92,7 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
             cell.activityGraph = ActivityView(frame: CGRect(x: 25, y: 20, width: Double(cell.frame.width) - 60, height: constants.graphHeight))
 //            let weekData = [[2,1,1,1,0,0,0],[2,1,0,1,0,1,0],[0,1,2,1,0,1,0],[0,1,2,2,0,1,0],[0,1,1,2,0,1,0],[0,0,1,1,0,2,0],[2,1,1,1,0,1,0],[2,1,0,1,0]]
             
-            cell.addGraph(withData: statee.dayData, position: 2, month1: "Aug", month2: "Sep")
+            cell.addGraph(withData: statee.dayData, date: userController.date)
             
             return cell
             

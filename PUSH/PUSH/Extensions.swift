@@ -63,4 +63,12 @@ extension Date {
     func dayNumberOfWeek() -> Int? {
         return Calendar.current.dateComponents([.weekday], from: self).weekday
     }
+    
+    func monthNumber() -> Int? {
+        return Calendar.current.dateComponents([.month], from: self).month
+    }
+    
+    func dayOfMonth() -> Int? {
+        return Calendar.current.dateComponents([.day], from: self).day
+    }
 }
