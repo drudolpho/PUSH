@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PushViewControllerDelegate {
+    func updateData()
+}
+
 class PushViewController: UIViewController {
     
     var userController: UserController?
@@ -16,9 +20,11 @@ class PushViewController: UIViewController {
     
     var countDownTime = 3
     var timer = Timer()
+    var delegate: PushViewControllerDelegate?
     
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var instructionView: UIView!
     
     override func viewDidLoad() {
@@ -32,32 +38,20 @@ class PushViewController: UIViewController {
         
         view.backgroundColor = .black
         startButton.layer.cornerRadius = 25
+        instructionView.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        instructionView.layer.cornerRadius = 40
         prepareLight()
-        
-
     }
     
     func prepareDark() {
-//        todaysCountLabel.isHidden = true
-//        statsCollectionView.isHidden = true
-//        yourPushLabel.isHidden = true
-//        greenView.isHidden = true
-//        pageControl.isHidden = true
-//        countLabel.isHidden = false
-//        soundButton.isHidden = false
-//        countLabel.text = String(countDownTime)
-//        setSpeakOn(bool: !defaults.bool(forKey: "sound"))
+        instructionView.isHidden = true
+        countLabel.isHidden = false
+        countLabel.text = String(countDownTime)
     }
     
     func prepareLight() {
-//        todaysCountLabel.isHidden = false
-//        statsCollectionView.isHidden = false
-//        yourPushLabel.isHidden = false
-//        greenView.isHidden = false
-//        pageControl.isHidden = false
-//        countLabel.isHidden = true
-//        soundButton.isHidden = true
-//        todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
+        instructionView.isHidden = false
+        countLabel.isHidden = true
     }
     
     // MARK: - Timer
@@ -79,12 +73,12 @@ class PushViewController: UIViewController {
     
     @objc func countDownAction() {
         if countDownTime == 1 {
-//            countLabel.text = "Go!"
+            countLabel.text = "Go!"
             stopTimer()
             cameraController.captureStartingBrightness()
         } else {
             countDownTime -= 1
-//            countLabel.text = String(countDownTime)
+            countLabel.text = String(countDownTime)
         }
     }
     
@@ -96,39 +90,31 @@ class PushViewController: UIViewController {
             cameraController.captureSession.stopRunning()
             stopTimer()
 
-            print("Done")
-            userController.newSet(reps: cameraController.count) //updates local user
-            userController.updateUserDatatoServer() { (error) in
+            let doneAlert = UIAlertController(title: "Done!", message: "You did \(self.cameraController.count) pushups, would you like to save this set?", preferredStyle: .alert)
+            doneAlert.addAction(UIAlertAction(title: "No", style: .destructive, handler: { (action) in
                 self.startButton.setTitle("Start", for: .normal)
                 self.startButton.backgroundColor = UIColor(red: 58/255, green: 192/255, blue: 90/255, alpha: 1)
                 self.prepareLight()
                 self.reset()
-//                self.statsCollectionView.reloadData()
-            }
-            
+            }))
+            doneAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
+                userController.newSet(reps: self.cameraController.count) //updates local user
+                userController.updateUserDatatoServer() { (error) in
+                    self.startButton.setTitle("Start", for: .normal)
+                    self.startButton.backgroundColor = UIColor(red: 58/255, green: 192/255, blue: 90/255, alpha: 1)
+                    self.prepareLight()
+                    self.reset()
+                    self.delegate?.updateData()
+                }
+            }))
+            present(doneAlert, animated: true)
         } else {
             cameraController.captureSession.startRunning()
             startButton.setTitle("Stop", for: .normal)
-            startButton.backgroundColor = UIColor(red: 176/255, green: 92/255, blue: 90/255, alpha: 1)
+            startButton.backgroundColor = UIColor(red: 226/255, green: 77/255, blue: 77/255, alpha: 1)
             startCountDown()
             prepareDark()
         }
-    }
-    
-    private func setSpeakOn(bool: Bool) {
-        if bool == false {
-            audioController.speakOn = true
-//            soundButton.setImage(UIImage(named: "speak"), for: .normal)
-//            defaults.set(true, forKey: "sound")
-        } else if bool == true {
-            audioController.speakOn = false
-//            soundButton.setImage(UIImage(named: "sound"), for: .normal)
-//            defaults.set(false, forKey: "sound")
-        }
-    }
-    
-    @IBAction func soundTapped(sender: UIButton) {
-        setSpeakOn(bool: audioController.speakOn)
     }
 }
 

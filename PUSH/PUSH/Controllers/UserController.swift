@@ -23,8 +23,8 @@ class UserController {
     var date: Date {
         var dateComponents = DateComponents()
         dateComponents.year = 2020
-        dateComponents.month = 8
-        dateComponents.day = 16
+        dateComponents.month = 10
+        dateComponents.day = 15
         dateComponents.hour = 8
         dateComponents.minute = 33
 
@@ -75,12 +75,19 @@ class UserController {
             }
 //            print(userDataDictionary)
             if let user = User(dictionary: userDataDictionary) {
-                self.user = user
                 if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
-                    if self.getDaysSince(day1: lastDate, day2: self.date) > 1 {
-                        self.user?.dayStreak = 0
+                    let daysSince = self.getDaysSince(day1: lastDate, day2: self.date)
+                    if daysSince > 0 {
+                        for _ in 1...daysSince {
+                            self.appendADayData(user: user, value: 0)
+                        }
+                    }
+                    if daysSince > 1 {
+                        user.dayStreak = 0
                     }
                 }
+                self.user = user
+                
                 self.fetchAllFriendData {
                     self.fetchPhotosFromStorage(user: user) {
                         completion(true)
@@ -139,6 +146,18 @@ class UserController {
             ref.child(friend).observeSingleEvent(of: .value) { (snapshot) in
                 if let userDataDictionary = snapshot.value as? [String: Any] {
                     if let user = User(dictionary: userDataDictionary) {
+                        if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
+                            let daysSince = self.getDaysSince(day1: lastDate, day2: self.date)
+                            if daysSince > 0 {
+                                for _ in 1...daysSince {
+                                    self.appendADayData(user: user, value: 0)
+                                }
+                            }
+                            if daysSince > 1 {
+                                user.dayStreak = 0
+                            }
+                            
+                        }
                         self.friends.append(user)
                     } else {
                         print("Could not make a user from this data")
@@ -244,18 +263,52 @@ class UserController {
         if daysSinceLastDate() == 1 { //add to streak
             self.user?.dayStreak += 1
             self.user?.lastDate = df.string(from: date)
+            if reps >= constants.highPushupCount {
+                user.dayData[(user.dayData.count - 1)] = 2
+            } else {
+                user.dayData[(user.dayData.count - 1)] = 1
+            }
             UserDefaults.standard.set(reps, forKey: "todaysPushups")
         } else if daysSinceLastDate() == 0 && user.lastDate == user.startDate { //users first day
             self.user?.dayStreak += 1
             let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
-            UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
+            let newCount = reps + todaysCount
+            if newCount >= constants.highPushupCount {
+                user.dayData[(user.dayData.count - 1)] = 2
+            } else {
+                user.dayData[(user.dayData.count - 1)] = 1
+            }
+            UserDefaults.standard.set(newCount, forKey: "todaysPushups")
         } else if daysSinceLastDate() == 0 { //new set same day
             let todaysCount = UserDefaults.standard.integer(forKey: "todaysPushups")
-            UserDefaults.standard.set(reps + todaysCount, forKey: "todaysPushups")
+            let newCount = reps + todaysCount
+            if newCount >= constants.highPushupCount {
+                user.dayData[(user.dayData.count - 1)] = 2
+            } else {
+                user.dayData[(user.dayData.count - 1)] = 1
+            }
+            UserDefaults.standard.set(newCount, forKey: "todaysPushups")
         } else { // streak ended
             self.user?.dayStreak = 1
             self.user?.lastDate = df.string(from: date)
+            if reps >= constants.highPushupCount {
+                user.dayData[(user.dayData.count - 1)] = 2
+            } else {
+                user.dayData[(user.dayData.count - 1)] = 1
+            }
             UserDefaults.standard.set(reps, forKey: "todaysPushups")
+        }
+    }
+    
+    func appendADayData(user: User, value: Int) {
+        switch user.dayData.count {
+        case constants.totalDays:
+            user.dayData.append(value)
+            for i in 0...6 {
+                user.dayData.remove(at: i)
+            }
+        default:
+            user.dayData.append(value)
         }
     }
     

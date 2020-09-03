@@ -78,25 +78,27 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let userController = self.userController, let user = userController.user else { return UITableViewCell() }
         
+        var statee: User {
+            if cellIndex == 0 {
+                return user
+            } else {
+                return userController.friends[cellIndex - 1]
+            }
+        }
+        
         if indexPath.row == 2 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "GraphCell", for: indexPath) as? GraphTableViewCell else { return UITableViewCell() }
             
             cell.activityGraph = ActivityView(frame: CGRect(x: 25, y: 20, width: Double(cell.frame.width) - 60, height: constants.graphHeight))
-            let weekData = [[2,1,1,1,0,0,0],[2,1,0,1,0,1,0],[0,1,2,1,0,1,0],[0,1,2,2,0,1,0],[0,1,1,2,0,1,0],[0,0,1,1,0,2,0],[2,1,1,1,0,1,0],[2,1,0,1,0]]
-            cell.addGraph(withData: weekData, position: 2, month1: "Aug", month2: "Sep")
+//            let weekData = [[2,1,1,1,0,0,0],[2,1,0,1,0,1,0],[0,1,2,1,0,1,0],[0,1,2,2,0,1,0],[0,1,1,2,0,1,0],[0,0,1,1,0,2,0],[2,1,1,1,0,1,0],[2,1,0,1,0]]
+            
+            cell.addGraph(withData: statee.dayData, position: 2, month1: "Aug", month2: "Sep")
             
             return cell
             
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatTableViewCell else { return UITableViewCell() }
-            var statee: User {
-                if cellIndex == 0 {
-                    return user
-                } else {
-                    return userController.friends[cellIndex - 1]
-                }
-            }
-            
+
             if indexPath.row == 0 {
                 cell.statOneNameLabel.text = "Total:"
                 cell.statOneValueLabel.text = String(statee.total)
@@ -108,13 +110,7 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
                 cell.statOneNameLabel.text = "Max:"
                 cell.statOneValueLabel.text = String(statee.max)
                 cell.statTwoNameLabel.text = "Streak:"
-                if let recentDate = userController.df.date(from: statee.lastDate) {
-                    if userController.getDaysSince(day1: recentDate, day2: userController.date) > 1 {
-                        cell.statTwoValueLabel.text = "0"
-                    } else {
-                        cell.statTwoValueLabel.text = "\(statee.dayStreak)"
-                    }
-                }
+                cell.statTwoValueLabel.text = String(statee.dayStreak)
                 cell.statThreeNameLabel.text = "Days:"
                 if let dayOne = userController.df.date(from: statee.startDate) {
                     cell.statThreeValueLabel.text = "\(userController.getDaysSince(day1: dayOne, day2: userController.date) + 1)"

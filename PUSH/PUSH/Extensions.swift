@@ -29,6 +29,8 @@ struct ActivityConstants {
     var monthVgap: Double = 17
     var dayLabelDimension: Double = 12
     var graphHeight: Double = 135
+    var totalDays: Int = 56
+    var highPushupCount: Int = 50
 }
 let constants = ActivityConstants()
 
@@ -54,5 +56,11 @@ extension UIView {
             }
         }
         return nil
+    }
+}
+
+extension Date {
+    func dayNumberOfWeek() -> Int? {
+        return Calendar.current.dateComponents([.weekday], from: self).weekday
     }
 }

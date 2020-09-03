@@ -122,3 +122,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         targetContentOffset.pointee = point
     }
 }
+
+extension MainViewController: PushViewControllerDelegate {
+    func updateData() {
+        statsCollectionView.reloadData()
+        todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
+    }
+}

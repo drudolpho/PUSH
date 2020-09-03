@@ -19,10 +19,11 @@ class User: Codable {
     var avg: Int
     var max: Int
     var dayStreak: Int
+    var dayData: [Int]
     var lastDate: String
     var startDate: String
     
-    init(name: String, id: String, codeName: String, imageID: String, total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: Int = 0, max: Int = 0, lastDate: String, startDate: String) {
+    init(name: String, id: String, codeName: String, imageID: String, total: Int = 0, sets: Int = 0, avg: Int = 0, dayStreak: Int = 0, max: Int = 0, dayData: [Int], lastDate: String, startDate: String) {
         self.name = name
         self.id = id
         self.codeName = codeName
@@ -32,6 +33,7 @@ class User: Codable {
         self.avg = avg
         self.max = max
         self.dayStreak = dayStreak
+        self.dayData = dayData
         self.lastDate = lastDate
         self.startDate = startDate
     }
@@ -46,13 +48,14 @@ class User: Codable {
             let avg = dictionary["avg"] as? Int,
             let dayStreak = dictionary["dayStreak"] as? Int,
             let max = dictionary["max"] as? Int,
+            let dayData = dictionary["dayData"] as? [Int],
             let lastDate = dictionary["lastDate"] as? String,
             let startDate = dictionary["startDate"] as? String else { return nil }
 
-        self.init(name: name, id: id, codeName: codeName, imageID: imageID, total: total, sets: sets, avg: avg, dayStreak: dayStreak, max: max, lastDate: lastDate, startDate: startDate)
+        self.init(name: name, id: id, codeName: codeName, imageID: imageID, total: total, sets: sets, avg: avg, dayStreak: dayStreak, max: max, dayData: dayData, lastDate: lastDate, startDate: startDate)
     }
     
     var dictionaryRepresentation: [String: Any] {
-        return ["name": name, "id": id, "codeName": codeName, "imageID": imageID, "total": total, "sets": sets, "avg": avg, "dayStreak": dayStreak, "max": max, "lastDate": lastDate, "startDate": startDate]
+        return ["name": name, "id": id, "codeName": codeName, "imageID": imageID, "total": total, "sets": sets, "avg": avg, "dayStreak": dayStreak, "max": max, "dayData": dayData, "lastDate": lastDate, "startDate": startDate]
       }
 }

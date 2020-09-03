@@ -23,7 +23,34 @@ class ActivityView: UIView {
         super.init(coder: coder)
     }
     
-    func addWeeks(weekData: [[Int]], position: Int, month1: String, month2: String) {
+    func formatWeekData(data: [Int]) -> [[Int]] {
+        var formattedData: [[Int]] = [[],[],[],[],[],[],[],[]]
+        
+        for i in 0...(data.count - 1) {
+            switch i {
+            case 0...6:
+                formattedData[0].append(data[i])
+            case 7...13:
+                formattedData[1].append(data[i])
+            case 14...20:
+                formattedData[2].append(data[i])
+            case 21...27:
+                formattedData[3].append(data[i])
+            case 28...34:
+                formattedData[4].append(data[i])
+            case 35...41:
+                formattedData[5].append(data[i])
+            case 42...48:
+                formattedData[6].append(data[i])
+            default:
+                formattedData[7].append(data[i])
+            }
+        }
+        
+        return formattedData
+    }
+    
+    func addWeeks(weekData: [Int], position: Int, month1: String, month2: String) {
         backgroundColor = .clear
         let mLabel = UILabel(frame: CGRect(x: 0, y: constants.dayWidth + constants.dayVgap, width: constants.dayLabelDimension, height: constants.dayLabelDimension))
         mLabel.text = "M"
@@ -63,7 +90,7 @@ class ActivityView: UIView {
         self.addSubview(monthTwo)
         
         var i = 1
-        for data in weekData {
+        for data in formatWeekData(data: weekData) {
             let week = ColumnView(frame: CGRect(x: (Double(i) * gap) + (constants.dayWidth * Double(i)), y: 0, width: constants.dayWidth, height: constants.weekHeight))
             week.setColors(activity: data)
             self.addSubview(week)

@@ -17,7 +17,7 @@ class GraphTableViewCell: UITableViewCell {
         backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
     }
     
-    func addGraph(withData: [[Int]], position: Int, month1: String, month2: String) {
+    func addGraph(withData: [Int], position: Int, month1: String, month2: String) {
         guard let activityGraph = activityGraph else { return }
         self.addSubview(activityGraph)
         activityGraph.addWeeks(weekData: withData, position: position, month1: month1, month2: month2)

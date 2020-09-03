@@ -126,7 +126,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let user = User(name: name, id: uuidString, codeName: noSpacesCodeName, imageID: noSpacesCodeName, lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
+        let user = User(name: name, id: uuidString, codeName: noSpacesCodeName, imageID: noSpacesCodeName, dayData: dayDataCalc(), lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
         
         userController.user = user
         userController.submitUserInfo(codeName: noSpacesCodeName, user: user)
@@ -134,6 +134,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         updateCollectionView?()
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    func dayDataCalc() -> [Int] {
+        var dayData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        
+        guard let day = userController?.date.dayNumberOfWeek() else { return dayData }
+        
+        for _ in 1...day {
+            dayData.append(0)
+        }
+        
+        return dayData
     }
 }
 
