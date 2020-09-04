@@ -91,16 +91,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.frame.size.height
         let width = collectionView.frame.size.width
-        return CGSize(width: width - 60, height: height)
+        return CGSize(width: width - 28, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return 10
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 
-        let pageWidth = Float((statsCollectionView.frame.width - 60) + 20)
+        let pageWidth = Float((statsCollectionView.frame.width - 28) + 10)
         let targetXContentOffset = Float(targetContentOffset.pointee.x)
         let contentWidth = Float(statsCollectionView!.contentSize.width  )
         var newPage = Float(self.pageControl.currentPage)

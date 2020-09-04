@@ -32,7 +32,7 @@ class StatCollectionViewCell: UICollectionViewCell {
         statTableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         statTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: statTableView.frame.size.width, height: 1))
         self.layer.cornerRadius = 40
-        topView.layer.cornerRadius = 40
+        topView.layer.cornerRadius = 35
         topView.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
 //            UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
         topView.layer.masksToBounds = false
@@ -89,8 +89,7 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 2 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "GraphCell", for: indexPath) as? GraphTableViewCell else { return UITableViewCell() }
             
-            cell.activityGraph = ActivityView(frame: CGRect(x: 25, y: 20, width: Double(cell.frame.width) - 60, height: constants.graphHeight))
-//            let weekData = [[2,1,1,1,0,0,0],[2,1,0,1,0,1,0],[0,1,2,1,0,1,0],[0,1,2,2,0,1,0],[0,1,1,2,0,1,0],[0,0,1,1,0,2,0],[2,1,1,1,0,1,0],[2,1,0,1,0]]
+            cell.activityGraph = ActivityView(frame: CGRect(x: 30, y: 15, width: Double(cell.frame.width) - 65, height: constants.graphHeight))
             
             cell.addGraph(withData: statee.dayData, date: userController.date)
             

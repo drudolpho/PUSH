@@ -37,7 +37,7 @@ class GraphTableViewCell: UITableViewCell {
             if dayNum < lastRowCount {
                 position = 4
             } else if dayNum < lastRowCount + 7 {
-                position = 4
+                position = 3
             } else if dayNum < lastRowCount + 14 {
                 position = 2  
             } else {

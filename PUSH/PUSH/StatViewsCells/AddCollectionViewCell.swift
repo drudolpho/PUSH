@@ -27,7 +27,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         nameTF.delegate = self
         codeTF.delegate = self
-        self.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
+        self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         self.layer.cornerRadius = 40
         addButton.layer.cornerRadius = 20
         cancelButton.layer.cornerRadius = 20
