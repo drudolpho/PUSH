@@ -42,39 +42,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         self.hideKeyboardWhenTappedAround() 
     }
+
     
-    private func presentImagePickerController(type: Int) {
-        let imagePicker = UIImagePickerController()
-        
-        if type == 0 {
-            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-                print("The photo library is not available")
-                return
-            }
-            
-            imagePicker.sourceType = .photoLibrary
-        } else if type == 1 {
-            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
-                print("The camera is not available")
-                return
-            }
-            
-            imagePicker.sourceType = .camera
-        } else {
-            return
-        }
-        
-        imagePicker.delegate = self
-        imagePicker.mediaTypes = ["public.image"]
-        imagePicker.allowsEditing = true
-        
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
+    // MARK: - Alerts
     
     private func imageAlert() {
         let imageAlert = UIAlertController(title: "Please choose a photo", message: nil, preferredStyle: .actionSheet)
@@ -97,6 +67,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let bigImageAlert = UIAlertController(title: "Image is too large", message: "Please choose an image under 1.6 mb", preferredStyle: .alert)
         bigImageAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
     }
+    
+    // MARK: - Actions
     
     @IBAction func imageViewButtonTapped(_ sender: UIButton) {
         imageAlert()
@@ -134,6 +106,41 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         updateCollectionView?()
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: - Helper Functions
+    
+    private func presentImagePickerController(type: Int) {
+        let imagePicker = UIImagePickerController()
+        
+        if type == 0 {
+            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+                print("The photo library is not available")
+                return
+            }
+            
+            imagePicker.sourceType = .photoLibrary
+        } else if type == 1 {
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) else {
+                print("The camera is not available")
+                return
+            }
+            
+            imagePicker.sourceType = .camera
+        } else {
+            return
+        }
+        
+        imagePicker.delegate = self
+        imagePicker.mediaTypes = ["public.image"]
+        imagePicker.allowsEditing = true
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     func dayDataCalc() -> [Int] {

@@ -17,27 +17,5 @@ class TabBarController: UITabBarController {
         
         tabBar.tintColor = UIColor(red: 196/255, green: 196/255, blue: 196/255, alpha: 1)
         tabBar.unselectedItemTintColor = UIColor(red: 106/255, green: 106/255, blue: 106/255, alpha: 1)
-        setTabBarItems()
     }
-    
-    func setTabBarItems(){
-
-//          let myTabBarItem1 = (self.tabBar.items?[0])! as UITabBarItem
-//          myTabBarItem1.image = UIImage(named: "TrackerDark")
-//          myTabBarItem1.selectedImage = UIImage(named: "TrackerLight")
-//          myTabBarItem1.title = "Tracker"
-//          myTabBarItem1.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-//
-//          let myTabBarItem2 = (self.tabBar.items?[1])! as UITabBarItem
-//          myTabBarItem2.image = UIImage(named: "CounterDark")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
-//          myTabBarItem2.selectedImage = UIImage(named: "CounterLight")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
-//          myTabBarItem2.title = "Counter"
-//          myTabBarItem2.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-//
-//          let myTabBarItem3 = (self.tabBar.items?[2])! as UITabBarItem
-//          myTabBarItem3.image = UIImage(named: "SettingsDark")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
-//          myTabBarItem3.selectedImage = UIImage(named: "SettingsLight")?.withRenderingMode(UIImage.RenderingMode.alwaysOriginal)
-//          myTabBarItem3.title = "Settings"
-//          myTabBarItem3.imageInsets = UIEdgeInsets(top: 6, left: 0, bottom: -6, right: 0)
-     }
 }

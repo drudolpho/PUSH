@@ -36,35 +36,8 @@ class UserController {
         df.dateFormat = "yyyy-MM-dd"
     }
     
-    func compressAddImage(name: String, image: UIImage) -> Data? {
-        var compression: CGFloat = 1.0
-        let maxCompression: CGFloat = 0.1
-        let maxFileSize = 400 * 400
-        var imageData = image.jpegData(compressionQuality: compression)
-        
-        if imageData!.count > maxFileSize * 10 {
-            print("Photo is too large")
-            return nil
-        }
-        
-        while (imageData!.count > maxFileSize) && (compression > maxCompression) {
-            compression -= 0.1
-            imageData = image.jpegData(compressionQuality: compression)
-        }
-        
-        images[name] = image
-        return imageData
-    }
     
-    func uploadImage(name: String, imageData: Data) {
-        let imageRef = storageRef.child(name)
-        _ = imageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            if let error = error {
-                print("Error saving image to storage \(error)")
-                return
-            }
-        }
-    }
+    // MARK: - Fetch Methods
     
     func fetchUserData(codeName: String, completion: @escaping (Bool) -> Void) {
         ref.child(codeName).observeSingleEvent(of: .value) { (snapshot) in
@@ -96,41 +69,6 @@ class UserController {
             } else {
                 completion(false)
             }
-        }
-    }
-    
-    func fetchPhotosFromStorage(user: User, completion: @escaping () -> Void) {
-        var photoIDs = [user.imageID]
-        for friend in friends {
-            photoIDs.append(friend.imageID)
-        }
-        
-        let photoGroup = DispatchGroup()
-        
-        for id in photoIDs {
-            photoGroup.enter()
-            let photoRef = storageRef.child(id)
-            
-            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-            photoRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-                if let error = error {
-                    print("Error loading images \(error)")
-                    let image = UIImage(named: "chooseImage")
-                    self.images[id] = image
-                }
-                if let data = data {
-                    let image = UIImage(data: data)
-                    self.images[id] = image
-                } else {
-                    let image = UIImage(named: "chooseImage")
-                    self.images[id] = image
-                }
-                photoGroup.leave()
-            }
-        }
-        
-        photoGroup.notify(queue: .main) {
-            completion()
         }
     }
     
@@ -205,26 +143,7 @@ class UserController {
         }
     }
     
-    func fetchPhoto(photoID: String, completion: @escaping () -> Void) {
-        let photoRef = storageRef.child(photoID)
-        
-        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-        photoRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-            if let error = error {
-                print("Error loading images \(error)")
-                let image = UIImage(named: "chooseImage")
-                self.images[photoID] = image
-            }
-            if let data = data {
-                let image = UIImage(data: data)
-                self.images[photoID] = image
-            } else {
-                let image = UIImage(named: "chooseImage")
-                self.images[photoID] = image
-            }
-            completion()
-        }
-    }
+    // MARK: - Update Server Methods
     
     func submitUserInfo(codeName: String, user: User) {
         ref.child(codeName).setValue(user.dictionaryRepresentation) { (error:Error?, ref:DatabaseReference) in
@@ -299,6 +218,97 @@ class UserController {
             UserDefaults.standard.set(reps, forKey: "todaysPushups")
         }
     }
+    
+    
+    // MARK: - Image Methods
+    
+    func compressAddImage(name: String, image: UIImage) -> Data? {
+        var compression: CGFloat = 1.0
+        let maxCompression: CGFloat = 0.1
+        let maxFileSize = 400 * 400
+        var imageData = image.jpegData(compressionQuality: compression)
+        
+        if imageData!.count > maxFileSize * 10 {
+            print("Photo is too large")
+            return nil
+        }
+        
+        while (imageData!.count > maxFileSize) && (compression > maxCompression) {
+            compression -= 0.1
+            imageData = image.jpegData(compressionQuality: compression)
+        }
+        
+        images[name] = image
+        return imageData
+    }
+    
+    func uploadImage(name: String, imageData: Data) {
+        let imageRef = storageRef.child(name)
+        _ = imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            if let error = error {
+                print("Error saving image to storage \(error)")
+                return
+            }
+        }
+    }
+    
+    func fetchPhotosFromStorage(user: User, completion: @escaping () -> Void) {
+        var photoIDs = [user.imageID]
+        for friend in friends {
+            photoIDs.append(friend.imageID)
+        }
+        
+        let photoGroup = DispatchGroup()
+        
+        for id in photoIDs {
+            photoGroup.enter()
+            let photoRef = storageRef.child(id)
+            
+            // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+            photoRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                if let error = error {
+                    print("Error loading images \(error)")
+                    let image = UIImage(named: "chooseImage")
+                    self.images[id] = image
+                }
+                if let data = data {
+                    let image = UIImage(data: data)
+                    self.images[id] = image
+                } else {
+                    let image = UIImage(named: "chooseImage")
+                    self.images[id] = image
+                }
+                photoGroup.leave()
+            }
+        }
+        
+        photoGroup.notify(queue: .main) {
+            completion()
+        }
+    }
+    
+    func fetchPhoto(photoID: String, completion: @escaping () -> Void) {
+        let photoRef = storageRef.child(photoID)
+        
+        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+        photoRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if let error = error {
+                print("Error loading images \(error)")
+                let image = UIImage(named: "chooseImage")
+                self.images[photoID] = image
+            }
+            if let data = data {
+                let image = UIImage(data: data)
+                self.images[photoID] = image
+            } else {
+                let image = UIImage(named: "chooseImage")
+                self.images[photoID] = image
+            }
+            completion()
+        }
+    }
+    
+    // MARK: - Helper Methods
     
     func appendADayData(user: User, value: Int) {
         switch user.dayData.count {

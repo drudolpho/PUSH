@@ -64,7 +64,7 @@ class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         allowedToStartTrackingBrightness = false
     }
     
-    //Helper Methods
+    // MARK: - Helper Methods
     
     private func calculateBrightnessLogic() {
         // Calculate if it was a valid pushup

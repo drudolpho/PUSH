@@ -71,6 +71,8 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         plusButton.isHidden = true
     }
     
+    // MARK: - Actions
+    
     @IBAction func addButtonTapped(_ sender: UIButton) {
         guard let name = nameTF.text, !name.isEmpty, let code = codeTF.text, !code.isEmpty, let updateCollectionView = updateCollectionView else { return }
         let codeLastFour = code.suffix(4)
