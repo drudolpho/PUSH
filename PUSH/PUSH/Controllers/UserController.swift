@@ -18,13 +18,14 @@ class UserController {
     var ref = Database.database().reference()
     let storageRef = Storage.storage().reference()
     let df = DateFormatter()
+    var updateCollectionView: (() -> Void)?
 //    var date = Date()
 //    for testing future dates
     var date: Date {
         var dateComponents = DateComponents()
         dateComponents.year = 2020
         dateComponents.month = 9
-        dateComponents.day = 8
+        dateComponents.day = 9
         dateComponents.hour = 8
         dateComponents.minute = 33
 
@@ -39,38 +40,39 @@ class UserController {
     
     // MARK: - Fetch Methods
     
-    func fetchUserData(codeName: String, completion: @escaping (Bool) -> Void) {
-        ref.child(codeName).observeSingleEvent(of: .value) { (snapshot) in
-            guard let userDataDictionary = snapshot.value as? [String: Any] else {
-                print("There is no data for this user")
-                completion(false)
-                return
-            }
-//            print(userDataDictionary)
-            if let user = User(dictionary: userDataDictionary) {
-                if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
+    func getUserData() {
+        if let savedUser = UserDefaults.standard.object(forKey: "User") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedUser = try? decoder.decode(User.self, from: savedUser) {
+
+                if let lastDate =  self.df.date(from: loadedUser.lastDate) { //check if there is a streak still
                     let daysSince = self.getDaysSince(day1: lastDate, day2: self.date)
                     if daysSince > 0 {
                         for _ in 1...daysSince {
-                            self.appendADayData(user: user, value: 0)
+                            self.appendADayData(user: loadedUser, value: 0)
                         }
                     }
                     if daysSince > 1 {
-                        user.dayStreak = 0
+                        loadedUser.dayStreak = 0
                     }
                 }
-                self.user = user
+                self.user = loadedUser
+                
+                //get users image
+                let usersImage = loadImageFromDiskWith(fileName: loadedUser.codeName)
+                images[loadedUser.codeName] = usersImage
                 
                 self.fetchAllFriendData {
-                    self.fetchPhotosFromStorage(user: user) {
-                        completion(true)
+                    self.fetchPhotosFromStorage() {
+                        DispatchQueue.main.async {
+                            self.updateCollectionView?()
+                        }
                     }
                 }
-            } else {
-                completion(false)
             }
         }
     }
+
     
     func fetchAllFriendData(completion: @escaping () -> Void) {
         var friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
@@ -145,14 +147,20 @@ class UserController {
     
     // MARK: - Update Server Methods
     
-    func submitUserInfo(codeName: String, user: User) {
+    func submitUserInfo(codeName: String, user: User, completion: @escaping (Error?) -> Void) {
         ref.child(codeName).setValue(user.dictionaryRepresentation) { (error:Error?, ref:DatabaseReference) in
             if let error = error {
                 print("Data could not be saved: \(error).")
+                completion(error)
                 return
             } else {
                 print("Data saved successfully!")
-                UserDefaults.standard.set(codeName, forKey: "codeName")
+                let encoder = JSONEncoder()
+                if let encoded = try? encoder.encode(user) {
+                    let defaults = UserDefaults.standard
+                    defaults.set(encoded, forKey: "User")
+                }
+                completion(nil)
             }
         }
     }
@@ -217,6 +225,12 @@ class UserController {
             }
             UserDefaults.standard.set(reps, forKey: "todaysPushups")
         }
+        
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(user) {
+            let defaults = UserDefaults.standard
+            defaults.set(encoded, forKey: "User")
+        }
     }
     
     
@@ -242,18 +256,21 @@ class UserController {
         return imageData
     }
     
-    func uploadImage(name: String, imageData: Data) {
+    func uploadImage(name: String, imageData: Data, completion: @escaping (Error?) -> Void) {
         let imageRef = storageRef.child(name)
         _ = imageRef.putData(imageData, metadata: nil) { (metadata, error) in
             if let error = error {
                 print("Error saving image to storage \(error)")
+                completion(error)
                 return
+            } else {
+                completion(nil)
             }
         }
     }
     
-    func fetchPhotosFromStorage(user: User, completion: @escaping () -> Void) {
-        var photoIDs = [user.imageID]
+    func fetchPhotosFromStorage(completion: @escaping () -> Void) {
+        var photoIDs: [String] = []
         for friend in friends {
             photoIDs.append(friend.imageID)
         }
@@ -287,7 +304,7 @@ class UserController {
         }
     }
     
-    func fetchPhoto(photoID: String, completion: @escaping () -> Void) {
+    func fetchPhoto(photoID: String, completion: @escaping () -> Void) { //For fetching photo in friend search
         let photoRef = storageRef.child(photoID)
         
         // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
@@ -306,6 +323,47 @@ class UserController {
             }
             completion()
         }
+    }
+    
+    func saveImage(imageName: String, image: UIImage) {
+     guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+
+        let fileName = imageName
+        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        guard let data = image.jpegData(compressionQuality: 1) else { return }
+
+        //Checks if file exists, removes it if so.
+        if FileManager.default.fileExists(atPath: fileURL.path) {
+            do {
+                try FileManager.default.removeItem(atPath: fileURL.path)
+                print("Removed old image")
+            } catch let removeError {
+                print("couldn't remove file at path", removeError)
+            }
+        }
+        
+        do {
+            try data.write(to: fileURL)
+        } catch let error {
+            print("error saving file with error", error)
+        }
+    }
+    
+    func loadImageFromDiskWith(fileName: String) -> UIImage {
+      let documentDirectory = FileManager.SearchPathDirectory.documentDirectory
+
+        let userDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
+
+        if let dirPath = paths.first {
+            let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
+            if let image = UIImage(contentsOfFile: imageUrl.path) {
+                return image
+            } else {
+                return UIImage(contentsOfFile: "chooseImage")!
+            }
+        }
+        return UIImage(contentsOfFile: "chooseImage")!
     }
     
     // MARK: - Helper Methods

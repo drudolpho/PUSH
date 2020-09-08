@@ -19,27 +19,31 @@ class SplashViewController: UIViewController {
     }
     
     func login() {
-        if let codeName = UserDefaults.standard.string(forKey: "codeName") {
-            print("This was the stored codeName: \(codeName)")
-            userController.fetchUserData(codeName: codeName) { (user) in
-                if user == false {
-                    UserDefaults.standard.set(nil, forKey: "codeName")
-                }
-                self.performSegue(withIdentifier: "MainSegue", sender: nil)
-            }
-        } else {
-            performSegue(withIdentifier: "MainSegue", sender: nil)
-        }
+        userController.getUserData()
+        
+        self.performSegue(withIdentifier: "MainSegue", sender: nil)
+        
+//        if let codeName = UserDefaults.standard.string(forKey: "codeName") {
+//            print("This was the stored codeName: \(codeName)")
+//            userController.fetchUserData(codeName: codeName) { (user) in
+//                if user == false {
+//                    UserDefaults.standard.set(nil, forKey: "codeName")
+//                }
+//                self.performSegue(withIdentifier: "MainSegue", sender: nil)
+//            }
+//        } else {
+//            performSegue(withIdentifier: "MainSegue", sender: nil)
+//        }
     }
     
-    func simLogin() { // Use this when using a simulator
-        userController.fetchUserData(codeName: "DennisB2D6") { (user) in
-            if user == false {
-                UserDefaults.standard.set(nil, forKey: "codeName")
-            }
-            self.performSegue(withIdentifier: "MainSegue", sender: nil)
-        }
-    }
+//    func simLogin() { // Use this when using a simulator
+//        userController.fetchUserData(codeName: "DennisB2D6") { (user) in
+//            if user == false {
+//                UserDefaults.standard.set(nil, forKey: "codeName")
+//            }
+//            self.performSegue(withIdentifier: "MainSegue", sender: nil)
+//        }
+//    }
 
     
     // MARK: - Navigation

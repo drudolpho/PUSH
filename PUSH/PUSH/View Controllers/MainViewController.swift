@@ -22,6 +22,10 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let userController = userController else { return }
+        userController.updateCollectionView = { () -> Void in
+            self.statsCollectionView.reloadData()
+            self.pageControl.numberOfPages = userController.friends.count + 2
+        }
         //for collecti0n view
         statsCollectionView.delegate = self
         statsCollectionView.dataSource = self

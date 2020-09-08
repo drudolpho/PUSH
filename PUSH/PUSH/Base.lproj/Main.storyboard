@@ -318,8 +318,8 @@
                                                         <constraint firstItem="Lwh-mN-puj" firstAttribute="width" secondItem="Laz-xm-VKe" secondAttribute="width" id="FXT-IJ-xYW"/>
                                                     </constraints>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="YoV-H2-4uC">
-                                                    <rect key="frame" x="53" y="215.5" width="247" height="96"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="YoV-H2-4uC">
+                                                    <rect key="frame" x="53" y="215.5" width="247" height="110"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hn7-Wh-3y2">
                                                             <rect key="frame" x="0.0" y="0.0" width="247" height="40"/>
@@ -336,7 +336,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ReY-hc-s8X">
-                                                            <rect key="frame" x="0.0" y="56" width="247" height="40"/>
+                                                            <rect key="frame" x="0.0" y="70" width="247" height="40"/>
                                                             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="jmj-0g-Uq7"/>

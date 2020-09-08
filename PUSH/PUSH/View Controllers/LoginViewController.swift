@@ -101,11 +101,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let user = User(name: name, id: uuidString, codeName: noSpacesCodeName, imageID: noSpacesCodeName, dayData: dayDataCalc(), lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
         
         userController.user = user
-        userController.submitUserInfo(codeName: noSpacesCodeName, user: user)
-        userController.uploadImage(name: noSpacesCodeName, imageData: imageData)
-        updateCollectionView?()
         
-        dismiss(animated: true, completion: nil)
+        //These need to be successful in order to create user
+        userController.submitUserInfo(codeName: noSpacesCodeName, user: user) { (error) in
+            if let _ = error {
+                self.presentCouldntSaveAlert()
+            } else {
+                userController.uploadImage(name: noSpacesCodeName, imageData: imageData) { (error) in
+                    if let _ = error {
+                        self.presentCouldntSaveAlert()
+                    } else {
+                        userController.saveImage(imageName: noSpacesCodeName, image: image)
+                        self.updateCollectionView?()
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
+        }
     }
     
     // MARK: - Helper Functions
@@ -141,6 +153,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func presentCouldntSaveAlert() {
+        let alert = UIAlertController(title: "Error creating profile", message: "We could'nt reach our servers at this time, please try again with better connection", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(alert, animated: true)
     }
     
     func dayDataCalc() -> [Int] {
