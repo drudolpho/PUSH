@@ -17,23 +17,57 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     var chosenImage: UIImage? {
         didSet {
             guard let chosenImage = chosenImage else { return }
-
-            imageViewButton.setImage(chosenImage, for: .normal)
+            addPhotosButton.setImage(chosenImage, for: .normal)
         }
     }
 
     @IBOutlet weak var nameTF: UITextField!
-    @IBOutlet weak var imageViewButton: UIButton!
+    @IBOutlet weak var addPhotosButton: UIButton!
+    @IBOutlet weak var fullView: UIView!
+    @IBOutlet weak var cardView: UIView!
+    @IBOutlet weak var greenView: UIView!
+    @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var helpLabel1: UILabel!
+    @IBOutlet weak var helpLabel3: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        nameTF.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         nameTF.delegate = self
         self.view.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
-        nameTF.layer.cornerRadius = 10
-        nameTF.clipsToBounds = true
-        imageViewButton.imageView?.layer.cornerRadius = imageViewButton.frame.size.width / 2.0
+//        nameTF.clipsToBounds = true
         doneButton.layer.cornerRadius = 25
+        greenView.layer.cornerRadius = 2
+        fullView.layer.cornerRadius = 40
+        fullView.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        
+        addPhotosButton.layer.cornerRadius = addPhotosButton.frame.size.width/2
+        addPhotosButton.clipsToBounds = true
+        
+        nameTF.borderStyle = .none
+        nameTF.attributedPlaceholder = NSAttributedString(string: "YourName",
+                                     attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)])
+        helpLabel1.textColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 1)
+        helpLabel3.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1)
+        
+        cardView.layer.cornerRadius = 35
+        cardView.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
+        cardView.layer.masksToBounds = false
+        cardView.layer.shadowColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 0.8).cgColor
+        cardView.layer.shadowOpacity = 1
+        cardView.layer.shadowOffset = CGSize.zero
+        cardView.layer.shadowRadius = 10
+        
+        shadowView.clipsToBounds = false
+        shadowView.layer.cornerRadius = addPhotosButton.frame.size.width/2
+        shadowView.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        shadowView.layer.shadowColor = UIColor(red: 15/255, green: 15/255, blue: 15/255, alpha: 1).cgColor
+        shadowView.layer.shadowOpacity = 1
+        shadowView.layer.shadowOffset = CGSize.zero
+        shadowView.layer.shadowRadius = 0
+        shadowView.layer.shadowPath = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: addPhotosButton.frame.size.width/2).cgPath
         
         if let _ = userController?.user { //prevents user from swiping to dismiss if no user is set
             self.isModalInPresentation = false
@@ -59,7 +93,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func badNameAlert() {
-        let badNameAlert = UIAlertController(title: "Invalid name", message: "Please create an alphanumeric name between 3 and 8 characters", preferredStyle: .alert)
+        let badNameAlert = UIAlertController(title: "Invalid name", message: "Please create an alphanumeric name between 4 and 12 characters", preferredStyle: .alert)
         badNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
     }
     
@@ -67,15 +101,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let bigImageAlert = UIAlertController(title: "Image is too large", message: "Please choose an image under 1.6 mb", preferredStyle: .alert)
         bigImageAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
     }
+
     
     // MARK: - Actions
     
-    @IBAction func imageViewButtonTapped(_ sender: UIButton) {
+    @IBAction func addPhotoButton(_ sender: UIButton) {
         imageAlert()
     }
     
     @IBAction func readyButton(_ sender: UIButton) {
-        guard let userController = userController, let name = nameTF.text, !name.isEmpty, name.count < 9, name.count > 2 else {
+        guard let userController = userController, let name = nameTF.text, !name.isEmpty, name.count < 13, name.count > 3 else {
             badNameAlert()
             return
         }
@@ -150,9 +185,25 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         present(imagePicker, animated: true, completion: nil)
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if nameTF.isFirstResponder == true {
+            nameTF.placeholder = ""
+        }
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let textFieldText = textField.text,
+            let rangeOfTextToReplace = Range(range, in: textFieldText) else {
+                return false
+        }
+        let substringToReplace = textFieldText[rangeOfTextToReplace]
+        let count = textFieldText.count - substringToReplace.count + string.count
+        return count <= 13
     }
     
     func presentCouldntSaveAlert() {

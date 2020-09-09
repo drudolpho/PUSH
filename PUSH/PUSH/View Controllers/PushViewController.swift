@@ -26,6 +26,9 @@ class PushViewController: UIViewController {
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var instructionView: UIView!
+    @IBOutlet weak var yourPushLabel: UILabel!
+    @IBOutlet weak var todaysPushCount: UILabel!
+    @IBOutlet weak var greenView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,20 +40,45 @@ class PushViewController: UIViewController {
         cameraController.audioController = audioController
         
         view.backgroundColor = .black
+        greenView.layer.cornerRadius = 2
         startButton.layer.cornerRadius = 25
         instructionView.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1)
         instructionView.layer.cornerRadius = 40
         prepareLight()
+        
+//        if userController.daysSinceLastDate() > 0 {  For when this is the main screen
+//            UserDefaults.standard.set(0, forKey: "todaysPushups")
+//        }
+        
+        todaysPushCount.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
+        detailLabel.text = "Quickly get into push-up position!"
+        
+//        let backSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(sender:)))
+//        view.addGestureRecognizer(backSwipe)
+    }
+    
+    @objc func handleSwipe(sender: UISwipeGestureRecognizer) {
+        if sender.direction == .right {
+            self.tabBarController?.selectedIndex = 0
+        } else if sender.direction == .left {
+            self.tabBarController?.selectedIndex = 2
+        }
     }
     
     func prepareDark() {
         instructionView.isHidden = true
+        yourPushLabel.isHidden = true
+        todaysPushCount.isHidden = true
+        greenView.isHidden = true
         countLabel.isHidden = false
         countLabel.text = String(countDownTime)
     }
     
     func prepareLight() {
         instructionView.isHidden = false
+        yourPushLabel.isHidden = false
+        todaysPushCount.isHidden = false
+        greenView.isHidden = false
         countLabel.isHidden = true
     }
     
@@ -72,8 +100,11 @@ class PushViewController: UIViewController {
     }
     
     @objc func countDownAction() {
+        guard let userController = userController, let user = userController.user else { return }
         if countDownTime == 1 {
             countLabel.text = "Go!"
+            self.detailLabel.fadeTransition(0.3)
+            detailLabel.text = "Your average push-ups per set is \(user.avg)"
             stopTimer()
             cameraController.captureStartingBrightness()
         } else {
@@ -92,36 +123,45 @@ class PushViewController: UIViewController {
 
             let doneAlert = UIAlertController(title: "Done!", message: "You did \(self.cameraController.count) pushups, would you like to save this set?", preferredStyle: .alert)
             doneAlert.addAction(UIAlertAction(title: "No", style: .destructive, handler: { (action) in
-                self.startButton.setTitle("Start", for: .normal)
-                self.startButton.backgroundColor = UIColor(red: 58/255, green: 192/255, blue: 90/255, alpha: 1)
+                self.startButton.setImage(UIImage(named: "Play"), for: .normal)
                 self.prepareLight()
                 self.reset()
             }))
             doneAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 userController.newSet(reps: self.cameraController.count) //updates local user
                 userController.updateUserDatatoServer() { (error) in
-                    self.startButton.setTitle("Start", for: .normal)
-                    self.startButton.backgroundColor = UIColor(red: 58/255, green: 192/255, blue: 90/255, alpha: 1)
+                    self.startButton.setImage(UIImage(named: "Play"), for: .normal)
                     self.prepareLight()
                     self.reset()
                     self.delegate?.updateData()
+                    self.todaysPushCount.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
                 }
             }))
             present(doneAlert, animated: true)
         } else {
             cameraController.captureSession.startRunning()
-            startButton.setTitle("Stop", for: .normal)
-            startButton.backgroundColor = UIColor(red: 226/255, green: 77/255, blue: 77/255, alpha: 1)
+            self.startButton.setImage(UIImage(named: "Stop"), for: .normal)
             startCountDown()
             prepareDark()
         }
+        self.detailLabel.fadeTransition(0.3)
+        detailLabel.text = "Quickly get into push-up position!"
     }
 }
 
 extension PushViewController: PushupControllerDelegate {
     func updatePushupLabel(pushups: Int) {
+        guard let userController = userController, let user = userController.user else { return }
         DispatchQueue.main.async {
             self.countLabel.text = String(pushups)
+            if pushups > user.max {
+                self.detailLabel.fadeTransition(0.3)
+                self.detailLabel.text = "Keep going, new record!"
+            } else if pushups > user.avg {
+                self.detailLabel.fadeTransition(0.3)
+                self.detailLabel.text = "Your all time max is \(user.max)"
+            }
+
             UIView.animate(withDuration: 0.2) {
                 self.countLabel.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
             }
