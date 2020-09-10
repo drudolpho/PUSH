@@ -13,7 +13,7 @@ class StatCollectionViewCell: UICollectionViewCell {
     var userController: UserController?
     var cellIndex = 0
     
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var nameTF: UITextField!
     @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var topView: UIView!
@@ -23,11 +23,16 @@ class StatCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupViews()
+    }
+    
+    func setupViews() {
         statTableView.delegate = self
         statTableView.dataSource = self
         self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         statTableView.backgroundColor = .clear
         statTableView.separatorColor = .clear
+        nameTF.borderStyle = .none
 //            UIColor(red: 82/255, green: 82/255, blue: 82/255, alpha: 1)
         statTableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         statTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: statTableView.frame.size.width, height: 1))
@@ -56,12 +61,12 @@ class StatCollectionViewCell: UICollectionViewCell {
     func updateViews() {
         guard let userController = self.userController, let user = userController.user else { return }
         if cellIndex == 0 {
-            nameLabel.text = user.name
+            nameTF.text = user.name
             cellImageView.image = userController.images[user.imageID]
             codeLabel.text = "#\(user.codeName.suffix(4))"
         } else {
             let friend = userController.friends[cellIndex - 1]
-            nameLabel.text = friend.name
+            nameTF.text = friend.name
             cellImageView.image = userController.images[friend.imageID]
             codeLabel.text = "#\(userController.friends[cellIndex - 1].codeName.suffix(4))"
         }

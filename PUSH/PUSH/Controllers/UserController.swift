@@ -155,11 +155,6 @@ class UserController {
                 return
             } else {
                 print("Data saved successfully!")
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(user) {
-                    let defaults = UserDefaults.standard
-                    defaults.set(encoded, forKey: "User")
-                }
                 completion(nil)
             }
         }
@@ -238,17 +233,17 @@ class UserController {
     
     func compressAddImage(name: String, image: UIImage) -> Data? {
         var compression: CGFloat = 1.0
-        let maxCompression: CGFloat = 0.1
-        let maxFileSize = 400 * 400
+        let maxCompression: CGFloat = 0.05
+        let maxFileSize = 80000
         var imageData = image.jpegData(compressionQuality: compression)
         
-        if imageData!.count > maxFileSize * 10 {
+        if imageData!.count > maxFileSize * 20 {
             print("Photo is too large")
             return nil
         }
         
-        while (imageData!.count > maxFileSize) && (compression > maxCompression) {
-            compression -= 0.1
+        while (imageData!.count >= maxFileSize) && (compression > maxCompression) {
+            compression -= 0.05
             imageData = image.jpegData(compressionQuality: compression)
         }
         

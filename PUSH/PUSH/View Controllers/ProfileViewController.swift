@@ -31,6 +31,13 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    @IBAction func logoutTapped(sender: UIButton) {
+        let domain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
+        print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
+    }
+    
     @IBAction func soundTapped(sender: UIButton) {
         guard let audioController = audioController else { return }
         setSpeakOn(bool: audioController.speakOn)

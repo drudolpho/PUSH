@@ -147,6 +147,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         self.presentCouldntSaveAlert()
                     } else {
                         userController.saveImage(imageName: noSpacesCodeName, image: image)
+                        let encoder = JSONEncoder()
+                        if let encoded = try? encoder.encode(user) {
+                            let defaults = UserDefaults.standard
+                            defaults.set(encoded, forKey: "User")
+                        }
                         self.updateCollectionView?()
                         self.dismiss(animated: true, completion: nil)
                     }
@@ -203,7 +208,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         let substringToReplace = textFieldText[rangeOfTextToReplace]
         let count = textFieldText.count - substringToReplace.count + string.count
-        return count <= 13
+        return count <= 12
     }
     
     func presentCouldntSaveAlert() {

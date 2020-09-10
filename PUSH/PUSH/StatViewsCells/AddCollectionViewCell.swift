@@ -75,6 +75,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     @IBAction func addButtonTapped(_ sender: UIButton) {
         guard let name = nameTF.text, !name.isEmpty, let code = codeTF.text, !code.isEmpty, let updateCollectionView = updateCollectionView else { return }
+        sender.isUserInteractionEnabled = false
         let codeLastFour = code.suffix(4)
         let codeName = name + codeLastFour.uppercased()
         let noSpacesCodeName = String(codeName.filter { !" \n\t\r".contains($0) })
@@ -89,6 +90,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         }
         userController?.findFriendData(codeName: noSpacesCodeName, completion: { (successful) in
             if successful {
+                sender.isUserInteractionEnabled = true
                 updateCollectionView()
                 self.nameTF.text = ""
                 self.codeTF.text = "#"
