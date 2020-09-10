@@ -16,9 +16,8 @@ class UserController {
     var friends: [User] = []
     var images: [String: UIImage] = [:]
     var ref = Database.database().reference()
-    let storageRef = Storage.storage().reference()
+    var storageRef = Storage.storage().reference()
     let df = DateFormatter()
-    var updateCollectionView: (() -> Void)?
 //    var date = Date()
 //    for testing future dates
     var date: Date {
@@ -35,6 +34,14 @@ class UserController {
     
     init() {
         df.dateFormat = "yyyy-MM-dd"
+    }
+    
+    func reset() {
+        user = nil
+        friends = []
+        images = [:]
+        ref = Database.database().reference()
+        storageRef = Storage.storage().reference()
     }
     
     
@@ -65,10 +72,34 @@ class UserController {
                 self.fetchAllFriendData {
                     self.fetchPhotosFromStorage() {
                         DispatchQueue.main.async {
-                            self.updateCollectionView?()
+                            NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    func deleteUserData(completion: @escaping (Error?) -> Void) {
+        guard let user = user else { return }
+        ref.child(user.codeName).removeValue { (error, reference) in
+            if let error = error {
+                print(error)
+                completion(error)
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    func deleteImage(completion: @escaping (Error?) -> Void) {
+        guard let user = user else { return }
+        let desertRef = storageRef.child(user.imageID)
+        desertRef.delete { error in
+            if let error = error {
+                completion(error)
+            } else {
+                completion(nil)
             }
         }
     }
@@ -160,9 +191,7 @@ class UserController {
         }
     }
     
-    func updateUserDatatoServer(completion: @escaping (Error?) -> Void) {
-        guard let user = user else { return }
-        
+    func updateUserDatatoServer(user: User, completion: @escaping (Error?) -> Void) {
         //update server with new user data
         ref.child(user.codeName).updateChildValues(user.dictionaryRepresentation) { (error, ref) in
             if let error = error {
@@ -173,8 +202,7 @@ class UserController {
         }
     }
     
-    func newSet(reps: Int) {
-        guard let user = user else { return }
+    func newSet(user: User, reps: Int) -> User {
         user.sets += 1
         user.total += reps
         user.avg = user.total / user.sets
@@ -226,6 +254,8 @@ class UserController {
             let defaults = UserDefaults.standard
             defaults.set(encoded, forKey: "User")
         }
+        
+        return user
     }
     
     
@@ -320,7 +350,7 @@ class UserController {
         }
     }
     
-    func saveImage(imageName: String, image: UIImage) {
+    func saveImage(imageName: String, image: UIImage) { //saves image to local file
      guard let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
 
         let fileName = imageName
@@ -392,5 +422,17 @@ class UserController {
 
         let components = calendar.dateComponents([.day], from: date1, to: date2)
         return components.day ?? 0
+    }
+    
+    func dayDataCalc() -> [Int] {
+        var dayData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        
+        guard let day = self.date.dayNumberOfWeek() else { return dayData }
+        
+        for _ in 1...day {
+            dayData.append(0)
+        }
+        
+        return dayData
     }
 }

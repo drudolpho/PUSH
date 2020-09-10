@@ -94,6 +94,10 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 2 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "GraphCell", for: indexPath) as? GraphTableViewCell else { return UITableViewCell() }
             
+            if let viewWithTag = cell.viewWithTag(100) { //Removes graph that has already been added if updating
+                viewWithTag.removeFromSuperview()
+            }
+            
             cell.activityGraph = ActivityView(frame: CGRect(x: 30, y: 15, width: Double(cell.frame.width) - 65, height: constants.graphHeight))
             
             cell.addGraph(withData: statee.dayData, date: userController.date)

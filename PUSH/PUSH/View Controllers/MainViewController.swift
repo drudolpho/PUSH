@@ -22,10 +22,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let userController = userController else { return }
-        userController.updateCollectionView = { () -> Void in
-            self.statsCollectionView.reloadData()
-            self.pageControl.numberOfPages = userController.friends.count + 2
-        }
+
         //for collecti0n view
         statsCollectionView.delegate = self
         statsCollectionView.dataSource = self
@@ -34,6 +31,9 @@ class MainViewController: UIViewController {
         
         statsCollectionView.backgroundColor = UIColor.black
         statsCollectionView.showsHorizontalScrollIndicator = false
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("UpdateCollectionView"), object: nil)
+        
         greenView.layer.cornerRadius = 2
         self.view.bringSubviewToFront(pageControl)
         pageControl.numberOfPages = userController.friends.count + 2
@@ -52,13 +52,16 @@ class MainViewController: UIViewController {
         }
     }
     
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        self.statsCollectionView.reloadData()
+        self.pageControl.numberOfPages = (self.userController?.friends.count ?? 0) + 2
+        todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "UserSegue" {
             if let viewController = segue.destination as? LoginViewController {
                 viewController.userController = userController
-                viewController.updateCollectionView = { () -> Void in
-                    self.statsCollectionView.reloadData()
-                }
             }
         }
     }
@@ -77,10 +80,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AddCell", for: indexPath) as? AddCollectionViewCell else { return UICollectionViewCell()}
             cell.userController = self.userController
             cell.viewOne()
-            cell.updateCollectionView = { () -> Void in
-                self.statsCollectionView.reloadData()
-                self.pageControl.numberOfPages = (self.userController?.friends.count ?? 0) + 2
-            }
+
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "StatCell", for: indexPath) as? StatCollectionViewCell else { return UICollectionViewCell()}

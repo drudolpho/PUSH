@@ -116,7 +116,7 @@ class PushViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
-        guard let userController = userController else { return }
+        guard let userController = userController, let user = userController.user else { return }
         if cameraController.captureSession.isRunning {
             cameraController.captureSession.stopRunning()
             stopTimer()
@@ -128,8 +128,8 @@ class PushViewController: UIViewController {
                 self.reset()
             }))
             doneAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
-                userController.newSet(reps: self.cameraController.count) //updates local user
-                userController.updateUserDatatoServer() { (error) in
+                let updatedUser = userController.newSet(user: user, reps: self.cameraController.count) //updates local user
+                userController.updateUserDatatoServer(user: updatedUser) { (error) in
                     self.startButton.setImage(UIImage(named: "Play"), for: .normal)
                     self.prepareLight()
                     self.reset()

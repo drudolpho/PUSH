@@ -12,7 +12,6 @@ import FirebaseDatabase
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
     var userController: UserController?
-    var updateCollectionView: (() -> Void)?
     
     var chosenImage: UIImage? {
         didSet {
@@ -133,7 +132,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
-        let user = User(name: name, id: uuidString, codeName: noSpacesCodeName, imageID: noSpacesCodeName, dayData: dayDataCalc(), lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
+        let user = User(name: name, id: uuidString, codeName: noSpacesCodeName, imageID: noSpacesCodeName, dayData: userController.dayDataCalc(), lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
         
         userController.user = user
         
@@ -152,7 +151,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             let defaults = UserDefaults.standard
                             defaults.set(encoded, forKey: "User")
                         }
-                        self.updateCollectionView?()
+                        NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
                         self.dismiss(animated: true, completion: nil)
                     }
                 }
@@ -215,18 +214,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let alert = UIAlertController(title: "Error creating profile", message: "We could'nt reach our servers at this time, please try again with better connection", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
         present(alert, animated: true)
-    }
-    
-    func dayDataCalc() -> [Int] {
-        var dayData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-        
-        guard let day = userController?.date.dayNumberOfWeek() else { return dayData }
-        
-        for _ in 1...day {
-            dayData.append(0)
-        }
-        
-        return dayData
     }
 }
 

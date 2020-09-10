@@ -19,6 +19,7 @@ class GraphTableViewCell: UITableViewCell {
     
     func addGraph(withData: [Int], date: Date) {
         guard let activityGraph = activityGraph, let monthNum = date.monthNumber(), let dayNum = date.dayOfMonth() else { return }
+        activityGraph.tag = 100
         self.addSubview(activityGraph)
         
         let month2: String  = monthFor(number: monthNum)

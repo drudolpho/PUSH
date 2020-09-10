@@ -11,7 +11,6 @@ import UIKit
 class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     var userController: UserController?
-    var updateCollectionView: (() -> Void)?
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var nameTF: UITextField!
@@ -74,7 +73,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     // MARK: - Actions
     
     @IBAction func addButtonTapped(_ sender: UIButton) {
-        guard let name = nameTF.text, !name.isEmpty, let code = codeTF.text, !code.isEmpty, let updateCollectionView = updateCollectionView else { return }
+        guard let name = nameTF.text, !name.isEmpty, let code = codeTF.text, !code.isEmpty else { return }
         sender.isUserInteractionEnabled = false
         let codeLastFour = code.suffix(4)
         let codeName = name + codeLastFour.uppercased()
@@ -91,7 +90,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         userController?.findFriendData(codeName: noSpacesCodeName, completion: { (successful) in
             if successful {
                 sender.isUserInteractionEnabled = true
-                updateCollectionView()
+                NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
                 self.nameTF.text = ""
                 self.codeTF.text = "#"
                 self.viewOne()
