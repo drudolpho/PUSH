@@ -29,7 +29,7 @@ class StatCollectionViewCell: UICollectionViewCell {
     func setupViews() {
         statTableView.delegate = self
         statTableView.dataSource = self
-        self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        self.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 0.93)
         statTableView.backgroundColor = .clear
         statTableView.separatorColor = .clear
         nameTF.borderStyle = .none
@@ -38,13 +38,13 @@ class StatCollectionViewCell: UICollectionViewCell {
         statTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: statTableView.frame.size.width, height: 1))
         self.layer.cornerRadius = 40
         topView.layer.cornerRadius = 35
-        topView.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
+        topView.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 0.93)
 //            UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
         topView.layer.masksToBounds = false
-        topView.layer.shadowColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 0.8).cgColor
+        topView.layer.shadowColor = UIColor(red: 22/255, green: 22/255, blue: 22/255, alpha: 0.8).cgColor
         topView.layer.shadowOpacity = 1
         topView.layer.shadowOffset = CGSize.zero
-        topView.layer.shadowRadius = 10
+        topView.layer.shadowRadius = 15
         cellImageView.layer.cornerRadius = cellImageView.frame.size.width/2
         cellImageView.clipsToBounds = true
         
@@ -91,14 +91,14 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
             }
         }
         
-        if indexPath.row == 2 {
+        if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "GraphCell", for: indexPath) as? GraphTableViewCell else { return UITableViewCell() }
             
             if let viewWithTag = cell.viewWithTag(100) { //Removes graph that has already been added if updating
                 viewWithTag.removeFromSuperview()
             }
             
-            cell.activityGraph = ActivityView(frame: CGRect(x: 30, y: 15, width: Double(cell.frame.width) - 65, height: constants.graphHeight))
+            cell.activityGraph = ActivityView(frame: CGRect(x: 30, y: 15, width: Double(cell.frame.width) - 60, height: constants.graphHeight))
             
             cell.addGraph(withData: statee.dayData, date: userController.date)
             
@@ -107,14 +107,14 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "StatCell", for: indexPath) as? StatTableViewCell else { return UITableViewCell() }
 
-            if indexPath.row == 0 {
+            if indexPath.row == 1 {
                 cell.statOneNameLabel.text = "Total:"
                 cell.statOneValueLabel.text = String(statee.total)
                 cell.statTwoNameLabel.text = "Avg:"
                 cell.statTwoValueLabel.text = String(statee.avg)
                 cell.statThreeNameLabel.text = "Sets:"
                 cell.statThreeValueLabel.text = String(statee.sets)
-            } else if indexPath.row == 1 {
+            } else if indexPath.row == 2 {
                 cell.statOneNameLabel.text = "Max:"
                 cell.statOneValueLabel.text = String(statee.max)
                 cell.statTwoNameLabel.text = "Streak:"
@@ -132,10 +132,10 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 2 {
-            return tableView.frame.height / 1.78
+        if indexPath.row == 0 {
+            return tableView.frame.height / 1.65
         } else {
-            return tableView.frame.height / 5
+            return tableView.frame.height / 6.5
         }
     }
 }

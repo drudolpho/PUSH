@@ -34,7 +34,7 @@ class ColumnView: UIView {
         
         for day in newActivity {
             if day == 0 {
-                colors.append(UIColor(red: 71/255, green: 71/255, blue: 71/255, alpha: 1))
+                colors.append(UIColor(red: 60/255, green: 60/255, blue: 60/255, alpha: 1))
             } else if day == 1 {
                 colors.append(UIColor(red: 60/255, green: 133/255, blue: 78/255, alpha: 1))
             } else if day == 2 {

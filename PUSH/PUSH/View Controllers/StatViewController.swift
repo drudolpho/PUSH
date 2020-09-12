@@ -1,5 +1,5 @@
 //
-//  MainViewController.swift
+//  StatViewController.swift
 //  PUSH
 //
 //  Created by Dennis Rudolph on 8/6/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class StatViewController: UIViewController {
     
     var userController: UserController?
     
@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
 
         statsCollectionView.decelerationRate = .fast
         
-        statsCollectionView.backgroundColor = UIColor.black
+        statsCollectionView.backgroundColor = UIColor.clear
         statsCollectionView.showsHorizontalScrollIndicator = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("UpdateCollectionView"), object: nil)
@@ -44,32 +44,16 @@ class MainViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        guard let _ = userController?.user else {
-
-            performSegue(withIdentifier: "UserSegue", sender: nil)
-            return
-        }
-    }
-    
     @objc func methodOfReceivedNotification(notification: Notification) {
         self.statsCollectionView.reloadData()
         self.pageControl.numberOfPages = (self.userController?.friends.count ?? 0) + 2
         todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "UserSegue" {
-            if let viewController = segue.destination as? LoginViewController {
-                viewController.userController = userController
-            }
-        }
-    }
 }
 
 
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension StatViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return (self.userController?.friends.count ?? 0) + 2 //friends plus 1 for add
     }
@@ -127,7 +111,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
-extension MainViewController: PushViewControllerDelegate {
+extension StatViewController: PushViewControllerDelegate {
     func updateData() {
         statsCollectionView.reloadData()
         todaysCountLabel.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"

@@ -25,10 +25,16 @@ class PushViewController: UIViewController {
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var instructionView: UIView!
     @IBOutlet weak var yourPushLabel: UILabel!
     @IBOutlet weak var todaysPushCount: UILabel!
     @IBOutlet weak var greenView: UIView!
+    @IBOutlet weak var instructionLabel1: UILabel!
+    @IBOutlet weak var instructionLabel2: UILabel!
+    @IBOutlet weak var pushUpImageView: UIImageView!
+    @IBOutlet weak var pushDownImageView: UIImageView!
+    @IBOutlet weak var shadowUpImageView: UIImageView!
+    @IBOutlet weak var shadowDownImageView: UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,8 +48,6 @@ class PushViewController: UIViewController {
         view.backgroundColor = .black
         greenView.layer.cornerRadius = 2
         startButton.layer.cornerRadius = 25
-        instructionView.backgroundColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1)
-        instructionView.layer.cornerRadius = 40
         prepareLight()
         
 //        if userController.daysSinceLastDate() > 0 {  For when this is the main screen
@@ -57,6 +61,14 @@ class PushViewController: UIViewController {
 //        view.addGestureRecognizer(backSwipe)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        guard let _ = userController?.user else {
+
+            performSegue(withIdentifier: "UserSegue", sender: nil)
+            return
+        }
+    }
+    
     @objc func handleSwipe(sender: UISwipeGestureRecognizer) {
         if sender.direction == .right {
             self.tabBarController?.selectedIndex = 0
@@ -66,20 +78,30 @@ class PushViewController: UIViewController {
     }
     
     func prepareDark() {
-        instructionView.isHidden = true
+        instructionLabel1.isHidden = true
+        instructionLabel2.isHidden = true
+        pushUpImageView.isHidden = true
+        pushDownImageView.isHidden = true
         yourPushLabel.isHidden = true
         todaysPushCount.isHidden = true
         greenView.isHidden = true
         countLabel.isHidden = false
+        detailLabel.isHidden = false
         countLabel.text = String(countDownTime)
     }
     
     func prepareLight() {
-        instructionView.isHidden = false
+        shadowUpImageView.isHidden = false
+        shadowDownImageView.isHidden = true
+        instructionLabel1.isHidden = false
+        instructionLabel2.isHidden = false
+        pushUpImageView.isHidden = false
+        pushDownImageView.isHidden = false
         yourPushLabel.isHidden = false
         todaysPushCount.isHidden = false
         greenView.isHidden = false
         countLabel.isHidden = true
+        detailLabel.isHidden = true
     }
     
     // MARK: - Timer
@@ -105,6 +127,8 @@ class PushViewController: UIViewController {
             countLabel.text = "Go!"
             self.detailLabel.fadeTransition(0.3)
             detailLabel.text = "Your average push-ups per set is \(user.avg)"
+            shadowUpImageView.isHidden = true
+            shadowDownImageView.isHidden = false
             stopTimer()
             cameraController.captureStartingBrightness()
         } else {
@@ -129,13 +153,12 @@ class PushViewController: UIViewController {
             }))
             doneAlert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (action) in
                 let updatedUser = userController.newSet(user: user, reps: self.cameraController.count) //updates local user
-                userController.updateUserDatatoServer(user: updatedUser) { (error) in
-                    self.startButton.setImage(UIImage(named: "Play"), for: .normal)
-                    self.prepareLight()
-                    self.reset()
-                    self.delegate?.updateData()
-                    self.todaysPushCount.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
-                }
+                userController.updateUserDatatoServer(user: updatedUser)
+                self.startButton.setImage(UIImage(named: "Play"), for: .normal)
+                self.prepareLight()
+                self.reset()
+                self.delegate?.updateData()
+                self.todaysPushCount.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
             }))
             present(doneAlert, animated: true)
         } else {
@@ -146,6 +169,16 @@ class PushViewController: UIViewController {
         }
         self.detailLabel.fadeTransition(0.3)
         detailLabel.text = "Quickly get into push-up position!"
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UserSegue" {
+            if let viewController = segue.destination as? LoginViewController {
+                viewController.userController = userController
+            }
+        }
     }
 }
 

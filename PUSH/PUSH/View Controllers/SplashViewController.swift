@@ -50,9 +50,9 @@ class SplashViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MainSegue" {
             if let tabBar = segue.destination as? UITabBarController {
-                let mainVC = tabBar.viewControllers?[0] as! MainViewController
+                let mainVC = tabBar.viewControllers?[1] as! StatViewController
                 mainVC.userController = userController
-                let pushVC = tabBar.viewControllers?[1] as! PushViewController
+                let pushVC = tabBar.viewControllers?[0] as! PushViewController
                 pushVC.userController = userController
                 pushVC.delegate = mainVC as PushViewControllerDelegate
                 let profileVC = tabBar.viewControllers?[2] as! ProfileViewController

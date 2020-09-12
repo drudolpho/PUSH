@@ -26,7 +26,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         super.awakeFromNib()
         nameTF.delegate = self
         codeTF.delegate = self
-        self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        self.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 0.93)
         self.layer.cornerRadius = 40
         addButton.layer.cornerRadius = 20
         cancelButton.layer.cornerRadius = 20
@@ -84,9 +84,21 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
             let alert = UIAlertController(title: "Incorrect info", message: "Please use an alphanumeric name and 4 character code", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
             self.parentViewController?.present(alert, animated: true, completion: nil)
-            
+            sender.isUserInteractionEnabled = true
             return
         }
+        
+        let friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
+        for friendCode in friends {
+            if friendCode == noSpacesCodeName {
+                let alert = UIAlertController(title: "You already follow this person!", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+                self.parentViewController?.present(alert, animated: true, completion: nil)
+                sender.isUserInteractionEnabled = true
+                return
+            }
+        }
+        
         userController?.findFriendData(codeName: noSpacesCodeName, completion: { (successful) in
             if successful {
                 sender.isUserInteractionEnabled = true
@@ -98,6 +110,7 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
                 let alert = UIAlertController(title: "Could not retrieve data", message: "There was an error finding your friend", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
                 self.parentViewController?.present(alert, animated: true, completion: nil)
+                sender.isUserInteractionEnabled = true
             }
         })
     }

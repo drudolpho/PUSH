@@ -25,12 +25,18 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var editImageButton: UIButton!
     @IBOutlet weak var friendTableView: UITableView!
+    @IBOutlet weak var nameTF: UITextField!
+    @IBOutlet weak var codeLabel: UILabel!
+    @IBOutlet weak var greenView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         friendTableView.delegate = self
         friendTableView.dataSource = self
+        friendTableView.separatorColor = UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
+        
+        greenView.layer.cornerRadius = 2
      }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +47,8 @@ class ProfileViewController: UIViewController {
         editImageButton.setImage(userController.images[user.imageID], for: .normal)
         friendTableView.backgroundColor = .clear
         friendTableView.reloadData()
+        nameTF.text = user.name
+        codeLabel.text = "#\(user.codeName.suffix(4))"
     }
     
     private func setSpeakOn(bool: Bool) {
@@ -56,35 +64,7 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    @IBAction func resetDataTapped(sender: UIButton) {
-        guard let userController = userController, let user = userController.user else { return }
-        
-        let alert = UIAlertController(title: "Are you sure you want to reset your data?", message: "You will keep your profile but your data will be reset to day one", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Reset", style: .destructive, handler: { (action) in
-            let resetUser: User = User(name: user.name, id: user.id, codeName: user.codeName, imageID: user.imageID, dayData: userController.dayDataCalc(), lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
-            
-            userController.user = resetUser //updates Locally
-            
-            userController.updateUserDatatoServer(user: resetUser) { (error) in
-                if let error = error {
-                    print(error)
-                }
-                let encoder = JSONEncoder()
-                if let encoded = try? encoder.encode(resetUser) {
-                    let defaults = UserDefaults.standard
-                    defaults.set(encoded, forKey: "User")
-                }
-                UserDefaults.standard.set(0, forKey: "todaysPushups")
-                NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
-                self.tabBarController?.selectedIndex = 0
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alert, animated: true)
-    }
-    
     @IBAction func editImageTapped(sender: UIButton) {
-        guard let userController = userController, let user = userController.user else { return }
         let imageAlert = UIAlertController(title: "Please choose a photo", message: nil, preferredStyle: .actionSheet)
         imageAlert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
             self.presentImagePickerController(type: 0)
@@ -150,12 +130,6 @@ class ProfileViewController: UIViewController {
         return imageData
     }
     
-    func errorDeletingUserAlert() {
-        let alert = UIAlertController(title: "Error deleting user", message: "We couldn't connect to the servers right now, please try again later", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
-        present(alert, animated: true)
-    }
-    
     private func presentImagePickerController(type: Int) {
         let imagePicker = UIImagePickerController()
         
@@ -182,37 +156,6 @@ class ProfileViewController: UIViewController {
         imagePicker.allowsEditing = true
         
         present(imagePicker, animated: true, completion: nil)
-    }
-    
-    
-    @IBAction func deleteUserTapped(sender: UIButton) {
-        guard let userController = userController else { return }
-        
-        let alert = UIAlertController(title: "Are you sure you want to delete your profile?", message: "Your will permanently lose all of your data", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
-            userController.deleteUserData { (error) in
-                if let _ = error {
-                    self.errorDeletingUserAlert()
-                } else {
-                    userController.deleteImage { (error) in
-                        if let _ = error {
-                            self.errorDeletingUserAlert()
-                        } else {
-                            let domain = Bundle.main.bundleIdentifier! //Gets rid of all userDefaults
-                            UserDefaults.standard.removePersistentDomain(forName: domain)
-                            UserDefaults.standard.synchronize()
-                            print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
-                            
-                            userController.reset()
-                            NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
-                            self.tabBarController?.selectedIndex = 0
-                        }
-                    }
-                }
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(alert, animated: true)
     }
     
     @IBAction func logoutTapped(sender: UIButton) {
@@ -250,27 +193,76 @@ extension ProfileViewController: UINavigationControllerDelegate {
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userController?.friends.count ?? 0
+        guard let userController = userController else { return 0 }
+        var cellCount = 6
+        if userController.friends.count > 5 {
+            cellCount = userController.friends.count + 1
+        }
+        return cellCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as? FriendTableViewCell, let userController = userController else { return UITableViewCell() }
-        cell.nameLabel.text = userController.friends[indexPath.row].name
-        cell.friendImageView.image = userController.images[userController.friends[indexPath.row].codeName]
-        cell.index = indexPath.row
-        cell.userController = userController
-        cell.updateTableView = { () -> Void in
-            self.friendTableView.reloadData()
+        guard let userController = userController else { return UITableViewCell() }
+        
+        var cellCount = 6
+        if userController.friends.count > 5 {
+            cellCount = userController.friends.count + 1
         }
         
-        cell.selectionStyle = .none
-        
-        return cell
+        if indexPath.row == cellCount - 1 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AccountCell", for: indexPath) as? AccountTableViewCell else { return UITableViewCell() }
+            
+            cell.userController = userController
+            
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as? FriendTableViewCell else { return UITableViewCell() }
+            if userController.friends.count > 0 {
+                if indexPath.row <= userController.friends.count - 1 {
+                    cell.nameLabel.text = userController.friends[indexPath.row].name
+                    cell.nameLabel.textColor = UIColor(red: 207/255, green: 207/255, blue: 207/255, alpha: 1)
+                    cell.friendImageView.image = userController.images[userController.friends[indexPath.row].codeName]
+                    cell.nameLabel.isHidden = false
+                    cell.removeButton.isHidden = false
+                    cell.friendImageView.isHidden = false
+                } else {
+                    cell.nameLabel.isHidden = true
+                    cell.removeButton.isHidden = true
+                    cell.friendImageView.isHidden = true
+                }
+            } else {
+                if indexPath.row == 0 {
+                    cell.nameLabel.text = "You don't follow anyone"
+                    cell.nameLabel.textColor = UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
+                } else {
+                    cell.nameLabel.isHidden = true
+                }
+                cell.removeButton.isHidden = true
+                cell.friendImageView.isHidden = true
+            }
+
+            cell.index = indexPath.row
+            cell.userController = userController
+            cell.updateTableView = { () -> Void in
+                self.friendTableView.reloadData()
+            }
+            cell.selectionStyle = .none
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        guard let userController = userController else { return tableView.frame.height / 7 }
+        var cellCount = 6
+        if userController.friends.count > 5 {
+            cellCount = userController.friends.count + 1
+        }
         
-        return tableView.frame.height / 5
+        if indexPath.row == cellCount - 1 {
+            return 90
+        } else {
+            return tableView.frame.height / 7
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

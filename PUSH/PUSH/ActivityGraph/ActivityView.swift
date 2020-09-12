@@ -52,21 +52,21 @@ class ActivityView: UIView {
     
     func addWeeks(weekData: [Int], position: Int, month1: String, month2: String) {
         backgroundColor = .clear
-        let mLabel = UILabel(frame: CGRect(x: 0, y: constants.dayWidth + constants.dayVgap, width: constants.dayLabelDimension, height: constants.dayLabelDimension))
+        let mLabel = UILabel(frame: CGRect(x: gap/2, y: constants.dayWidth + constants.dayVgap, width: constants.dayLabelDimension, height: constants.dayLabelDimension))
         mLabel.text = "M"
         mLabel.font = UIFont.systemFont(ofSize: 10.0)
         mLabel.textColor = UIColor(red: 106/255, green: 106/255, blue: 106/255, alpha: 1)
         mLabel.textAlignment = .center
         self.addSubview(mLabel)
         
-        let wLabel = UILabel(frame: CGRect(x: 0, y: (3 * constants.dayWidth) + (3 * constants.dayVgap), width: constants.dayLabelDimension, height: constants.dayLabelDimension))
+        let wLabel = UILabel(frame: CGRect(x: gap/2, y: (3 * constants.dayWidth) + (3 * constants.dayVgap), width: constants.dayLabelDimension, height: constants.dayLabelDimension))
         wLabel.text = "W"
         wLabel.font = UIFont.systemFont(ofSize: 10.0)
         wLabel.textColor = UIColor(red: 106/255, green: 106/255, blue: 106/255, alpha: 1)
         wLabel.textAlignment = .center
         self.addSubview(wLabel)
         
-        let fLabel = UILabel(frame: CGRect(x: 0, y: (5 * constants.dayWidth) + (5 * constants.dayVgap), width: constants.dayLabelDimension, height: constants.dayLabelDimension))
+        let fLabel = UILabel(frame: CGRect(x: gap/2, y: (5 * constants.dayWidth) + (5 * constants.dayVgap), width: constants.dayLabelDimension, height: constants.dayLabelDimension))
         fLabel.text = "F"
         fLabel.font = UIFont.systemFont(ofSize: 10.0)
         fLabel.textColor = UIColor(red: 106/255, green: 106/255, blue: 106/255, alpha: 1)

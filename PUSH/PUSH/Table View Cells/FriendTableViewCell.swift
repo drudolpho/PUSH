@@ -16,12 +16,13 @@ class FriendTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var friendImageView: UIImageView!
+    @IBOutlet weak var removeButton: UIButton!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundColor = .clear
         nameLabel.textColor = .white
-        friendImageView.layer.cornerRadius = friendImageView.frame.size.width/2
+        friendImageView.layer.cornerRadius = friendImageView.frame.size.width/1.7
         friendImageView.clipsToBounds = true
     }
     

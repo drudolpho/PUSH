@@ -191,14 +191,12 @@ class UserController {
         }
     }
     
-    func updateUserDatatoServer(user: User, completion: @escaping (Error?) -> Void) {
+    func updateUserDatatoServer(user: User) {
         //update server with new user data
         ref.child(user.codeName).updateChildValues(user.dictionaryRepresentation) { (error, ref) in
             if let error = error {
                 print("data not saved correctly \(error)")
-                completion(error)
             }
-            completion(nil)
         }
     }
     
