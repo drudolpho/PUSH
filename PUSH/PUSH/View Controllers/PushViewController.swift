@@ -23,6 +23,7 @@ class PushViewController: UIViewController {
     var delegate: PushViewControllerDelegate?
     
     @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var soundButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var yourPushLabel: UILabel!
@@ -55,6 +56,16 @@ class PushViewController: UIViewController {
 //        }
         
         todaysPushCount.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
+        
+        let sound = UserDefaults.standard.bool(forKey: "Sound")
+        if sound {
+            audioController.speakOn = true
+            soundButton.setImage(UIImage(named: "Voice"), for: .normal)
+        } else {
+            audioController.speakOn = false
+            soundButton.setImage(UIImage(named: "Sound"), for: .normal)
+        }
+        
         detailLabel.text = "Quickly get into push-up position!"
         
 //        let backSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(sender:)))
@@ -78,6 +89,8 @@ class PushViewController: UIViewController {
     }
     
     func prepareDark() {
+        shadowUpImageView.isHidden = false
+        shadowDownImageView.isHidden = true
         instructionLabel1.isHidden = true
         instructionLabel2.isHidden = true
         pushUpImageView.isHidden = true
@@ -91,8 +104,8 @@ class PushViewController: UIViewController {
     }
     
     func prepareLight() {
-        shadowUpImageView.isHidden = false
-        shadowDownImageView.isHidden = true
+        shadowUpImageView.isHidden = true
+        shadowDownImageView.isHidden = false
         instructionLabel1.isHidden = false
         instructionLabel2.isHidden = false
         pushUpImageView.isHidden = false
@@ -102,6 +115,18 @@ class PushViewController: UIViewController {
         greenView.isHidden = false
         countLabel.isHidden = true
         detailLabel.isHidden = true
+    }
+    
+    private func setSpeakOn(bool: Bool) {
+        if bool == false {
+            audioController.speakOn = true
+            soundButton.setImage(UIImage(named: "Voice"), for: .normal)
+            UserDefaults.standard.set(true, forKey: "Sound")
+        } else if bool == true {
+            audioController.speakOn = false
+            soundButton.setImage(UIImage(named: "Sound"), for: .normal)
+            UserDefaults.standard.set(false, forKey: "Sound")
+        }
     }
     
     // MARK: - Timer
@@ -138,6 +163,10 @@ class PushViewController: UIViewController {
     }
     
     // MARK: - Actions
+    
+    @IBAction func soundTapped(sender: UIButton) {
+        setSpeakOn(bool: audioController.speakOn)
+    }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
         guard let userController = userController, let user = userController.user else { return }

@@ -29,17 +29,15 @@ class StatCollectionViewCell: UICollectionViewCell {
     func setupViews() {
         statTableView.delegate = self
         statTableView.dataSource = self
-        self.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 0.93)
+        self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         statTableView.backgroundColor = .clear
         statTableView.separatorColor = .clear
         nameTF.borderStyle = .none
-//            UIColor(red: 82/255, green: 82/255, blue: 82/255, alpha: 1)
         statTableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
         statTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: statTableView.frame.size.width, height: 1))
         self.layer.cornerRadius = 40
         topView.layer.cornerRadius = 35
-        topView.backgroundColor = UIColor(red: 33/255, green: 33/255, blue: 33/255, alpha: 0.93)
-//            UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
+        topView.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
         topView.layer.masksToBounds = false
         topView.layer.shadowColor = UIColor(red: 22/255, green: 22/255, blue: 22/255, alpha: 0.8).cgColor
         topView.layer.shadowOpacity = 1
@@ -101,7 +99,7 @@ extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
             cell.activityGraph = ActivityView(frame: CGRect(x: 30, y: 15, width: Double(cell.frame.width) - 60, height: constants.graphHeight))
             
             cell.addGraph(withData: statee.dayData, date: userController.date)
-            
+            cell.selectionStyle = .none
             return cell
             
         } else {

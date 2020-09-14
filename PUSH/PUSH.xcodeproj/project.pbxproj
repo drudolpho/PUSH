@@ -45,6 +45,7 @@
 		68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B7024DCE6E900CBE40D /* AudioController.swift */; };
 		68978B7424DCE77C00CBE40D /* ClippedPock.wav in Resources */ = {isa = PBXBuildFile; fileRef = 68978B7324DCE77C00CBE40D /* ClippedPock.wav */; };
 		68B46BF6250AA0F0000D20A4 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B46BF5250AA0F0000D20A4 /* FriendTableViewCell.swift */; };
+		68BCD1A3250FF60D0061F029 /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68BCD1A2250FF60D0061F029 /* HelpViewController.swift */; };
 		68EF0F6A24F4399D00F93899 /* StatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EF0F6924F4399D00F93899 /* StatTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,7 @@
 		68978B7024DCE6E900CBE40D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = SOURCE_ROOT; };
 		68978B7324DCE77C00CBE40D /* ClippedPock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ClippedPock.wav; sourceTree = "<group>"; };
 		68B46BF5250AA0F0000D20A4 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
+		68BCD1A2250FF60D0061F029 /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 		68EF0F6924F4399D00F93899 /* StatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatTableViewCell.swift; sourceTree = "<group>"; };
 		8B592F8160E120FB1DCF44A4 /* Pods-PUSH.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PUSH.release.xcconfig"; path = "Target Support Files/Pods-PUSH/Pods-PUSH.release.xcconfig"; sourceTree = "<group>"; };
 		A23F7BDAAE49502D4528D9F4 /* Pods-PUSH.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PUSH.debug.xcconfig"; path = "Target Support Files/Pods-PUSH/Pods-PUSH.debug.xcconfig"; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			children = (
 				686506B624E57EE900089234 /* SplashViewController.swift */,
 				68978B4124DC453A00CBE40D /* StatViewController.swift */,
+				68BCD1A2250FF60D0061F029 /* HelpViewController.swift */,
 				6890DA1924F8541100DEC067 /* PushViewController.swift */,
 				6890DA1B24F8541E00DEC067 /* ProfileViewController.swift */,
 				68978B6E24DC8F3700CBE40D /* LoginViewController.swift */,
@@ -391,6 +394,7 @@
 				68978B6D24DC72B100CBE40D /* UserController.swift in Sources */,
 				688CB18724F83A3600C37E7F /* ColumnView.swift in Sources */,
 				68978B4E24DC561900CBE40D /* AddCollectionViewCell.swift in Sources */,
+				68BCD1A3250FF60D0061F029 /* HelpViewController.swift in Sources */,
 				6890DA1E24F85AF100DEC067 /* TabBarController.swift in Sources */,
 				688CB18A24F83B0900C37E7F /* GraphTableViewCell.swift in Sources */,
 				68978B2E24DC42E700CBE40D /* AppDelegate.swift in Sources */,

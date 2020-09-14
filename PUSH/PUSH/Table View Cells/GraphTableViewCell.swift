@@ -45,7 +45,7 @@ class GraphTableViewCell: UITableViewCell {
         
         activityGraph.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: activityGraph, attribute: NSLayoutConstraint.Attribute.top, relatedBy: NSLayoutConstraint.Relation.equal, toItem: activityLabel, attribute: NSLayoutConstraint.Attribute.top, multiplier: 1, constant: 33).isActive = true
-        NSLayoutConstraint(item: activityGraph, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1.0, constant: 15.0).isActive = true
+        NSLayoutConstraint(item: activityGraph, attribute: NSLayoutConstraint.Attribute.leading, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.leading, multiplier: 1.0, constant: 20.0).isActive = true
 //        NSLayoutConstraint(item: activityGraph, attribute: NSLayoutConstraint.Attribute.trailing, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.contentView, attribute: NSLayoutConstraint.Attribute.trailing, multiplier: 1.0, constant: 50.0).isActive = true
         
         let month2: String  = monthFor(number: monthNum)

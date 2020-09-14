@@ -10,7 +10,6 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    var audioController: AudioController?
     var userController: UserController?
     
     var chosenImage: UIImage? {
@@ -49,19 +48,6 @@ class ProfileViewController: UIViewController {
         friendTableView.reloadData()
         nameTF.text = user.name
         codeLabel.text = "#\(user.codeName.suffix(4))"
-    }
-    
-    private func setSpeakOn(bool: Bool) {
-        guard let audioController = audioController else { return }
-        if bool == false {
-            audioController.speakOn = true
-//            soundButton.setImage(UIImage(named: "speak"), for: .normal)
-//            defaults.set(true, forKey: "sound")
-        } else if bool == true {
-            audioController.speakOn = false
-//            soundButton.setImage(UIImage(named: "sound"), for: .normal)
-//            defaults.set(false, forKey: "sound")
-        }
     }
     
     @IBAction func editImageTapped(sender: UIButton) {
@@ -157,18 +143,6 @@ class ProfileViewController: UIViewController {
         
         present(imagePicker, animated: true, completion: nil)
     }
-    
-    @IBAction func logoutTapped(sender: UIButton) {
-        let domain = Bundle.main.bundleIdentifier!
-        UserDefaults.standard.removePersistentDomain(forName: domain)
-        UserDefaults.standard.synchronize()
-        print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
-    }
-    
-    @IBAction func soundTapped(sender: UIButton) {
-        guard let audioController = audioController else { return }
-        setSpeakOn(bool: audioController.speakOn)
-    }
 }
 
 extension ProfileViewController: UIImagePickerControllerDelegate {
@@ -213,7 +187,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AccountCell", for: indexPath) as? AccountTableViewCell else { return UITableViewCell() }
             
             cell.userController = userController
-            
+            cell.selectionStyle = .none
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell", for: indexPath) as? FriendTableViewCell else { return UITableViewCell() }
