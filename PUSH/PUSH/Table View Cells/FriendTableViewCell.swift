@@ -22,7 +22,7 @@ class FriendTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.backgroundColor = .clear
         nameLabel.textColor = .white
-        friendImageView.layer.cornerRadius = friendImageView.frame.size.width/1.7
+        friendImageView.layer.cornerRadius = (contentView.frame.height * 1)/2
         friendImageView.clipsToBounds = true
     }
     

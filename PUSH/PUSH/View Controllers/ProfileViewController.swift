@@ -27,27 +27,35 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var nameTF: UITextField!
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var greenView: UIView!
-
+    @IBOutlet weak var shadowView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         friendTableView.delegate = self
         friendTableView.dataSource = self
         friendTableView.separatorColor = UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
-        
+        nameTF.borderStyle = .none
         greenView.layer.cornerRadius = 2
+        shadowView.isHidden = false
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("UpdateFriendView"), object: nil)
      }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         guard let userController = userController, let user = userController.user else { return }
-        editImageButton.layer.cornerRadius = editImageButton.frame.size.width/2
-        editImageButton.clipsToBounds = true
         editImageButton.setImage(userController.images[user.imageID], for: .normal)
+        editImageButton.layer.cornerRadius = (view.frame.height * 0.15)/2
+        editImageButton.clipsToBounds = true
         friendTableView.backgroundColor = .clear
         friendTableView.reloadData()
         nameTF.text = user.name
         codeLabel.text = "#\(user.codeName.suffix(4))"
+    }
+    
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        self.friendTableView.reloadData()
     }
     
     @IBAction func editImageTapped(sender: UIButton) {

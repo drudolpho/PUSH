@@ -39,6 +39,8 @@ class PushViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let userController = userController else { return }
+        
         //TESTING for testing on simulator, comment this vvv out
         cameraController.setUpCamera()
         //TESTING
@@ -51,9 +53,9 @@ class PushViewController: UIViewController {
         startButton.layer.cornerRadius = 25
         prepareLight()
         
-//        if userController.daysSinceLastDate() > 0 {  For when this is the main screen
-//            UserDefaults.standard.set(0, forKey: "todaysPushups")
-//        }
+        if userController.daysSinceLastDate() > 0 {
+            UserDefaults.standard.set(0, forKey: "todaysPushups")
+        }
         
         todaysPushCount.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
         
@@ -89,6 +91,7 @@ class PushViewController: UIViewController {
     }
     
     func prepareDark() {
+        soundButton.isHidden = false
         shadowUpImageView.isHidden = false
         shadowDownImageView.isHidden = true
         instructionLabel1.isHidden = true
@@ -104,6 +107,7 @@ class PushViewController: UIViewController {
     }
     
     func prepareLight() {
+        soundButton.isHidden = true
         shadowUpImageView.isHidden = true
         shadowDownImageView.isHidden = false
         instructionLabel1.isHidden = false

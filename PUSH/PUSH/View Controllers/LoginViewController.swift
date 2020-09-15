@@ -29,6 +29,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var helpLabel1: UILabel!
     @IBOutlet weak var helpLabel3: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     
     override func viewDidLoad() {
@@ -117,18 +118,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             imageAlert()
             return
         }
-        
+        sender.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
         let uuid = UUID()
         let uuidString = uuid.uuidString
         let codeName = name + String(uuidString[0]) + String(uuidString[1]) + String(uuidString[2]) + String(uuidString[3])
         let noSpacesCodeName = String(codeName.filter { !" \n\t\r".contains($0) })
         guard noSpacesCodeName.isAlphanumeric else {
             badNameAlert()
+            sender.isUserInteractionEnabled = true
+            activityIndicator.stopAnimating()
             return
         }
         
         guard let imageData = userController.compressAddImage(name: noSpacesCodeName, image: image) else {
             bigImageAlert()
+            sender.isUserInteractionEnabled = true
+            activityIndicator.stopAnimating()
             return
         }
         
@@ -140,10 +146,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         userController.submitUserInfo(codeName: noSpacesCodeName, user: user) { (error) in
             if let _ = error {
                 self.presentCouldntSaveAlert()
+                sender.isUserInteractionEnabled = true
+                self.activityIndicator.stopAnimating()
             } else {
                 userController.uploadImage(name: noSpacesCodeName, imageData: imageData) { (error) in
                     if let _ = error {
                         self.presentCouldntSaveAlert()
+                        sender.isUserInteractionEnabled = true
+                        self.activityIndicator.stopAnimating()
                     } else {
                         userController.saveImage(imageName: noSpacesCodeName, image: image)
                         let encoder = JSONEncoder()
@@ -152,6 +162,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             defaults.set(encoded, forKey: "User")
                         }
                         NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
+                        sender.isUserInteractionEnabled = true
+                        self.activityIndicator.stopAnimating()
                         self.dismiss(animated: true, completion: nil)
                     }
                 }

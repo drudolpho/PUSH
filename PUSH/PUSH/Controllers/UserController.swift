@@ -18,19 +18,19 @@ class UserController {
     var ref = Database.database().reference()
     var storageRef = Storage.storage().reference()
     let df = DateFormatter()
-//    var date = Date()
+    var date = Date()
 //    for testing future dates
-    var date: Date {
-        var dateComponents = DateComponents()
-        dateComponents.year = 2020
-        dateComponents.month = 9
-        dateComponents.day = 9
-        dateComponents.hour = 8
-        dateComponents.minute = 33
-
-        let userCalendar = Calendar.current // user calendar
-        return userCalendar.date(from: dateComponents)!
-    }
+//    var date: Date {
+//        var dateComponents = DateComponents()
+//        dateComponents.year = 2020
+//        dateComponents.month = 9
+//        dateComponents.day = 11
+//        dateComponents.hour = 8
+//        dateComponents.minute = 33
+//
+//        let userCalendar = Calendar.current // user calendar
+//        return userCalendar.date(from: dateComponents)!
+//    }
     
     init() {
         df.dateFormat = "yyyy-MM-dd"
@@ -73,6 +73,7 @@ class UserController {
                     self.fetchPhotosFromStorage() {
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name("UpdateFriendView"), object: nil)
                         }
                     }
                 }

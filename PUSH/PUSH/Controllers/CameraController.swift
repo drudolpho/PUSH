@@ -16,9 +16,7 @@ protocol PushupControllerDelegate {
 class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
     //Controllers
-//    var testController = TestController()
     var audioController: AudioController?
-//    var pushupController: PushupController?
     var count = 0
     var delegate: PushupControllerDelegate?
     

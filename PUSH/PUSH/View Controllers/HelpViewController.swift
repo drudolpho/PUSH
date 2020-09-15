@@ -14,7 +14,6 @@ class HelpViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.roundCorners(corners: [.topLeft, .topRight], radius: 20)
         view.layer.cornerRadius = 20
         view.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
         
