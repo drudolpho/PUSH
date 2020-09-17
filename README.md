@@ -24,7 +24,7 @@ You can find it deployed here on [Test Flight]().
 
 PUSH is a pushup tracking and sharing app. It uses the phones camera to track your pushups, it displays your statistics, and charts your activity in a GitHub style graph. You can also follow friends and monitor their stats.
 
-<img src="https://i.ibb.co/W5mjCb3/IMG-0147.png" width = "200" /> <img src="https://ibb.co/NC04K4b"><img src="https://i.ibb.co/3dxJcJQ/IMG-0138.png" width = "200" /><img src="https://i.ibb.co/SwYh9zN/IMG-0148.png" width = "200" /><img src="https://i.ibb.co/TbnyGBD/IMG-0143.png" width = "200" />
+<img src="https://i.ibb.co/W5mjCb3/IMG-0147.png" width = "200" /><img src="https://i.ibb.co/3dxJcJQ/IMG-0138.png" width = "200" /><img src="https://i.ibb.co/SwYh9zN/IMG-0148.png" width = "200" /><img src="https://i.ibb.co/TbnyGBD/IMG-0143.png" width = "200" />
 <img src="https://i.ibb.co/drxGvD6/IMG-0144.png" width = "200" /><img src="https://i.ibb.co/G7JDbRG/IMG-0141.png" width = "200" />
 
 ### Features
