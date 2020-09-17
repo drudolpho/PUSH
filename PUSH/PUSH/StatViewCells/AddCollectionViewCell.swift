@@ -30,16 +30,18 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         codeTF.borderStyle = .none
         nameTF.setLeftPaddingPoints(5)
         codeTF.setLeftPaddingPoints(5)
-        self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        self.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
         self.layer.cornerRadius = 40
-        addButton.layer.cornerRadius = 20
-        cancelButton.layer.cornerRadius = 20
+        addButton.layer.cornerRadius = 13
+        cancelButton.layer.cornerRadius = 13
         nameTF.layer.cornerRadius = 10
         nameTF.clipsToBounds = true
         codeTF.layer.cornerRadius = 10
         codeTF.clipsToBounds = true
         self.layer.masksToBounds = false
     }
+    
+    // MARK: - Methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == nameTF {
@@ -118,6 +120,8 @@ class AddCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
             }
         })
     }
+    
+    // MARK: - Actions
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
         self.nameTF.text = ""

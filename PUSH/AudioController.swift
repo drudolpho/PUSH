@@ -18,7 +18,7 @@ enum AudioType {
 class AudioController {
     
     var audioPlayer = AVAudioPlayer()
-    var speakOn: Bool = false
+    var audioType: AudioType = .sound
     
     init() {
         setupAudio()
@@ -30,18 +30,15 @@ class AudioController {
             print(error.localizedDescription)
         }
     }
-
-    //Play Sounds
+    // MARK: - Methods
     
     func playChosenAudio(pushups: Int?) {
-        if speakOn{
+        if audioType == .speak{
             speakCount(pushups: pushups ?? 0)
-        } else {
+        } else if audioType == .sound {
             playPockAudio()
         }
     }
-    
-    // Helper Methods
     
     func playPockAudio() {
         audioPlayer.play()
@@ -55,7 +52,7 @@ class AudioController {
         synthesizer.speak(utterance)
     }
     
-    //Setup
+    // MARK: - Helper Methods
     
     private func setupAudio() {
         let sound = Bundle.main.path(forResource: "ClippedPock", ofType: "wav")

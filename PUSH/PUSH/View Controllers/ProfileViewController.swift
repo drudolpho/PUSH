@@ -11,6 +11,8 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     var userController: UserController?
+    var audioController: AudioController?
+    let soundSize: CGFloat = 20
     
     var chosenImage: UIImage? {
         didSet {
@@ -22,12 +24,15 @@ class ProfileViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var soundButton: UIButton!
     @IBOutlet weak var editImageButton: UIButton!
     @IBOutlet weak var friendTableView: UITableView!
     @IBOutlet weak var nameTF: UITextField!
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var greenView: UIView!
     @IBOutlet weak var shadowView: UIImageView!
+    
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +45,20 @@ class ProfileViewController: UIViewController {
         shadowView.isHidden = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("UpdateFriendView"), object: nil)
+        
+        guard let audioController = audioController else { return }
+        let sound = UserDefaults.standard.integer(forKey: "Sound")
+        if sound == 1 {
+            audioController.audioType = .speak
+            soundButton.setImage(UIImage(systemName: "person.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: soundSize, weight: .medium, scale: .medium)), for: .normal)
+        } else if sound == 2 {
+            audioController.audioType = .none
+            soundButton.setImage(UIImage(systemName: "speaker.slash.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: soundSize, weight: .medium, scale: .medium)), for: .normal)
+        } else {
+            audioController.audioType = .sound
+            soundButton.setImage(UIImage(systemName: "speaker.2.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: soundSize, weight: .medium, scale: .medium)), for: .normal)
+        }
+        soundButton.tintColor = UIColor(red: 180/255, green: 180/255, blue: 180/255, alpha: 1)
      }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,20 +73,10 @@ class ProfileViewController: UIViewController {
         codeLabel.text = "#\(user.codeName.suffix(4))"
     }
     
+    // MARK: - Methods
+    
     @objc func methodOfReceivedNotification(notification: Notification) {
         self.friendTableView.reloadData()
-    }
-    
-    @IBAction func editImageTapped(sender: UIButton) {
-        let imageAlert = UIAlertController(title: "Please choose a photo", message: nil, preferredStyle: .actionSheet)
-        imageAlert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
-            self.presentImagePickerController(type: 0)
-        }))
-        imageAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
-            self.presentImagePickerController(type: 1)
-        }))
-        imageAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(imageAlert, animated: true)
     }
     
     func errorChangingImageAlert() {
@@ -151,7 +160,41 @@ class ProfileViewController: UIViewController {
         
         present(imagePicker, animated: true, completion: nil)
     }
+    
+    // MARK: - Actions
+    
+    @IBAction func soundTapped(sender: UIButton) {
+        guard let audioController = audioController else { return }
+        let audioType = audioController.audioType
+        if audioType == .sound {
+            audioController.audioType = .speak
+            soundButton.setImage(UIImage(systemName: "person.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: soundSize, weight: .medium, scale: .medium)), for: .normal)
+            UserDefaults.standard.set(1, forKey: "Sound")
+        } else if audioType == .speak {
+            audioController.audioType = .none
+            soundButton.setImage(UIImage(systemName: "speaker.slash.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: soundSize, weight: .medium, scale: .medium)), for: .normal)
+            UserDefaults.standard.set(2, forKey: "Sound")
+        } else if audioType == .none {
+            audioController.audioType = .sound
+            soundButton.setImage(UIImage(systemName: "speaker.2.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: soundSize, weight: .medium, scale: .medium)), for: .normal)
+            UserDefaults.standard.set(0, forKey: "Sound")
+        }
+    }
+    
+    @IBAction func editImageTapped(sender: UIButton) {
+        let imageAlert = UIAlertController(title: "Please choose a photo", message: nil, preferredStyle: .actionSheet)
+        imageAlert.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
+            self.presentImagePickerController(type: 0)
+        }))
+        imageAlert.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+            self.presentImagePickerController(type: 1)
+        }))
+        imageAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(imageAlert, animated: true)
+    }
 }
+
+// MARK: - Extensions
 
 extension ProfileViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

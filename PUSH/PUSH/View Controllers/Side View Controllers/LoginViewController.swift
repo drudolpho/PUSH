@@ -36,12 +36,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         nameTF.smartInsertDeleteType = UITextSmartInsertDeleteType.no
         nameTF.delegate = self
-        self.view.backgroundColor = UIColor(red: 39/255, green: 39/255, blue: 39/255, alpha: 1)
+        self.view.backgroundColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 1)
 //        nameTF.clipsToBounds = true
-        doneButton.layer.cornerRadius = 25
+        let yourAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 20),
+            .foregroundColor: UIColor(red: 140/255, green: 140/255, blue: 140/255, alpha: 1)
+            ,.underlineStyle: NSUnderlineStyle.single.rawValue
+        ]
+        
+        let attributeString = NSMutableAttributedString(string: "Ready",
+                                                        attributes: yourAttributes)
+        doneButton.setAttributedTitle(attributeString, for: .normal)
+        
         greenView.layer.cornerRadius = 2
         fullView.layer.cornerRadius = 40
-        fullView.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        fullView.backgroundColor = UIColor(red: 24/255, green: 24/255, blue: 24/255, alpha: 1)
         
         addPhotosButton.layer.cornerRadius = addPhotosButton.frame.size.width/2
         addPhotosButton.clipsToBounds = true
@@ -53,21 +62,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         helpLabel3.textColor = UIColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1)
         
         cardView.layer.cornerRadius = 35
-        cardView.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
+        cardView.backgroundColor = UIColor(red: 27/255, green: 27/255, blue: 27/255, alpha: 1)
         cardView.layer.masksToBounds = false
-        cardView.layer.shadowColor = UIColor(red: 20/255, green: 20/255, blue: 20/255, alpha: 0.8).cgColor
+        cardView.layer.shadowColor = UIColor(red: 21/255, green: 21/255, blue: 21/255, alpha: 1).cgColor
         cardView.layer.shadowOpacity = 1
         cardView.layer.shadowOffset = CGSize.zero
-        cardView.layer.shadowRadius = 10
+        cardView.layer.shadowRadius = 15
         
         shadowView.clipsToBounds = false
         shadowView.layer.cornerRadius = addPhotosButton.frame.size.width/2
-        shadowView.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
-        shadowView.layer.shadowColor = UIColor(red: 15/255, green: 15/255, blue: 15/255, alpha: 1).cgColor
-        shadowView.layer.shadowOpacity = 1
-        shadowView.layer.shadowOffset = CGSize.zero
-        shadowView.layer.shadowRadius = 0
-        shadowView.layer.shadowPath = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: addPhotosButton.frame.size.width/2).cgPath
+        shadowView.backgroundColor = UIColor(red: 32/255, green: 32/255, blue: 32/255, alpha: 1)
         
         if let _ = userController?.user { //prevents user from swiping to dismiss if no user is set
             self.isModalInPresentation = false
@@ -95,11 +99,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private func badNameAlert() {
         let badNameAlert = UIAlertController(title: "Invalid name", message: "Please create an alphanumeric name between 4 and 12 characters", preferredStyle: .alert)
         badNameAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(badNameAlert, animated: true)
     }
     
     private func bigImageAlert() {
         let bigImageAlert = UIAlertController(title: "Image is too large", message: "Please choose an image under 1.6 mb", preferredStyle: .alert)
         bigImageAlert.addAction(UIAlertAction(title: "Ok", style: .cancel, handler: nil))
+        present(bigImageAlert, animated: true)
     }
 
     
@@ -131,6 +137,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        
         guard let imageData = userController.compressAddImage(name: noSpacesCodeName, image: image) else {
             bigImageAlert()
             sender.isUserInteractionEnabled = true
@@ -138,6 +145,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        // TODO: Sim
+//        let imageData = UIImage(named: "Dennis")!.pngData()! //sim
+
         let user = User(name: name, id: uuidString, codeName: noSpacesCodeName, imageID: noSpacesCodeName, dayData: userController.dayDataCalc(), lastDate: userController.df.string(from: userController.date), startDate: userController.df.string(from: userController.date))
         
         userController.user = user
@@ -164,6 +174,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
                         sender.isUserInteractionEnabled = true
                         self.activityIndicator.stopAnimating()
+                        
+                        // TODO: Sim
+//                        userController.images[userController.user!.codeName] = UIImage(named: "Dennis")
+                        
                         self.dismiss(animated: true, completion: nil)
                     }
                 }

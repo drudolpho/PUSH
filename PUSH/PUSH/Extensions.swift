@@ -46,7 +46,7 @@ extension UIViewController {
     }
 }
 
-extension UIView {
+extension UIView { //for accessing parentVC to present alerts
     var parentViewController: UIViewController? {
         var parentResponder: UIResponder? = self
         while parentResponder != nil {

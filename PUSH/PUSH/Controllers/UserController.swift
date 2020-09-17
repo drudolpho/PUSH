@@ -19,6 +19,7 @@ class UserController {
     var storageRef = Storage.storage().reference()
     let df = DateFormatter()
     var date = Date()
+    var isFetching = false
 //    for testing future dates
 //    var date: Date {
 //        var dateComponents = DateComponents()
@@ -36,16 +37,8 @@ class UserController {
         df.dateFormat = "yyyy-MM-dd"
     }
     
-    func reset() {
-        user = nil
-        friends = []
-        images = [:]
-        ref = Database.database().reference()
-        storageRef = Storage.storage().reference()
-    }
     
-    
-    // MARK: - Fetch Methods
+    // MARK: - User CRUD Methods
     
     func getUserData() {
         if let savedUser = UserDefaults.standard.object(forKey: "User") as? Data {
@@ -69,8 +62,10 @@ class UserController {
                 let usersImage = loadImageFromDiskWith(fileName: loadedUser.codeName)
                 images[loadedUser.codeName] = usersImage
                 
+                self.isFetching = true
                 self.fetchAllFriendData {
                     self.fetchPhotosFromStorage() {
+                        self.isFetching = false
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
                             NotificationCenter.default.post(name: Notification.Name("UpdateFriendView"), object: nil)
@@ -80,6 +75,7 @@ class UserController {
             }
         }
     }
+    
     
     func deleteUserData(completion: @escaping (Error?) -> Void) {
         guard let user = user else { return }
@@ -93,100 +89,12 @@ class UserController {
         }
     }
     
-    func deleteImage(completion: @escaping (Error?) -> Void) {
-        guard let user = user else { return }
-        let desertRef = storageRef.child(user.imageID)
-        desertRef.delete { error in
-            if let error = error {
-                completion(error)
-            } else {
-                completion(nil)
-            }
-        }
-    }
-
-    
-    func fetchAllFriendData(completion: @escaping () -> Void) {
-        var friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
-        var codesToRemove: [Int] = []
-        var friendIndex = 0
-        
-        let friendGroup = DispatchGroup()
-        
-        for friend in friends {
-            friendGroup.enter()
-            ref.child(friend).observeSingleEvent(of: .value) { (snapshot) in
-                if let userDataDictionary = snapshot.value as? [String: Any] {
-                    if let user = User(dictionary: userDataDictionary) {
-                        if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
-                            let daysSince = self.getDaysSince(day1: lastDate, day2: self.date)
-                            if daysSince > 0 {
-                                for _ in 1...daysSince {
-                                    self.appendADayData(user: user, value: 0)
-                                }
-                            }
-                            if daysSince > 1 {
-                                user.dayStreak = 0
-                            }
-                            
-                        }
-                        self.friends.append(user)
-                    } else {
-                        print("Could not make a user from this data")
-                        codesToRemove.append(friendIndex)
-                    }
-                } else {
-                    print("There is no data for this user")
-                    codesToRemove.append(friendIndex)
-                }
-                friendIndex += 1
-                friendGroup.leave()
-            }
-        }
-        
-        friendGroup.notify(queue: .main) {
-            for index in codesToRemove {
-                friends.remove(at: index)
-                UserDefaults.standard.set(friends, forKey: "friends")
-            }
-            completion()
-        }
-    }
-    
-    func findFriendData(codeName: String, completion: @escaping (Bool) -> Void) {
-        ref.child(codeName).observeSingleEvent(of: .value) { (snapshot) in
-            guard let userDataDictionary = snapshot.value as? [String: Any] else {
-                print("There is no data for this user")
-                completion(false)
-                return
-            }
-            if let user = User(dictionary: userDataDictionary) {
-                print("friend was found")
-                self.friends.append(user)
-                var friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
-                friends.append(codeName)
-                UserDefaults.standard.set(friends, forKey: "friends")
-                //fetch photo
-                self.fetchPhoto(photoID: user.imageID) {
-                    completion(true)
-                }
-            } else {
-                print("friend was not found")
-                completion(false)
-            }
-        }
-    }
-    
-    // MARK: - Update Server Methods
-    
     func submitUserInfo(codeName: String, user: User, completion: @escaping (Error?) -> Void) {
         ref.child(codeName).setValue(user.dictionaryRepresentation) { (error:Error?, ref:DatabaseReference) in
             if let error = error {
-                print("Data could not be saved: \(error).")
                 completion(error)
                 return
             } else {
-                print("Data saved successfully!")
                 completion(nil)
             }
         }
@@ -256,24 +164,149 @@ class UserController {
         
         return user
     }
+
+    
+    // MARK: - Friend CRUD Methods
+    
+    func fetchAllFriendData(completion: @escaping () -> Void) {
+        var friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
+        var codesToRemove: [Int] = []
+        var friendIndex = 0
+        
+        let friendGroup = DispatchGroup()
+        
+        for friend in friends {
+            friendGroup.enter()
+            ref.child(friend).observeSingleEvent(of: .value) { (snapshot) in
+                if let userDataDictionary = snapshot.value as? [String: Any] {
+                    if let user = User(dictionary: userDataDictionary) {
+                        if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
+                            let daysSince = self.getDaysSince(day1: lastDate, day2: self.date)
+                            if daysSince > 0 {
+                                for _ in 1...daysSince {
+                                    self.appendADayData(user: user, value: 0)
+                                }
+                            }
+                            if daysSince > 1 {
+                                user.dayStreak = 0
+                            }
+                        }
+                        self.friends.append(user)
+                    } else {
+                        codesToRemove.append(friendIndex)
+                    }
+                } else {
+                    codesToRemove.append(friendIndex)
+                }
+                friendIndex += 1
+                friendGroup.leave()
+            }
+        }
+        
+        friendGroup.notify(queue: .main) {
+            for index in codesToRemove {
+                friends.remove(at: index)
+                UserDefaults.standard.set(friends, forKey: "friends")
+            }
+            completion()
+        }
+    }
+    
+    func findFriendData(codeName: String, completion: @escaping (Bool) -> Void) {
+        ref.child(codeName).observeSingleEvent(of: .value) { (snapshot) in
+            guard let userDataDictionary = snapshot.value as? [String: Any] else {
+                completion(false)
+                return
+            }
+            
+            if let user = User(dictionary: userDataDictionary) {
+                if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
+                    let daysSince = self.getDaysSince(day1: lastDate, day2: self.date)
+                    if daysSince > 0 {
+                        for _ in 1...daysSince {
+                            self.appendADayData(user: user, value: 0)
+                        }
+                    }
+                    if daysSince > 1 {
+                        user.dayStreak = 0
+                    }
+                }
+                
+                self.friends.append(user)
+                
+                var friends: [String] = UserDefaults.standard.stringArray(forKey: "friends") ?? []
+                friends.append(codeName)
+                UserDefaults.standard.set(friends, forKey: "friends")
+                //fetch photo
+                self.fetchPhoto(photoID: user.imageID) {
+                    completion(true)
+                }
+            } else {
+                completion(false)
+            }
+        }
+    }
+    
+    func updateFriendData() {
+        let friendGroup = DispatchGroup()
+        
+        var friendIndex = 0
+        for friend in friends {
+            friendGroup.enter()
+            ref.child(friend.codeName).observeSingleEvent(of: .value) { (snapshot) in
+                if let userDataDictionary = snapshot.value as? [String: Any] {
+                    if let user = User(dictionary: userDataDictionary) {
+                        if let lastDate =  self.df.date(from: user.lastDate) { //check if there is a streak still
+                            let daysSince = self.getDaysSince(day1: lastDate, day2: self.date)
+                            if daysSince > 0 {
+                                for _ in 1...daysSince {
+                                    self.appendADayData(user: user, value: 0)
+                                }
+                            }
+                            if daysSince > 1 {
+                                user.dayStreak = 0
+                            }
+                        }
+                        //update the friend
+                        if self.friends[friendIndex].codeName == user.codeName {
+                            self.friends[friendIndex] = user
+                        }
+                        friendIndex += 1
+                    }
+                }
+                friendGroup.leave()
+            }
+        }
+        
+        friendGroup.notify(queue: .main) {
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Notification.Name("UpdateCollectionView"), object: nil)
+                NotificationCenter.default.post(name: Notification.Name("UpdateFriendView"), object: nil)
+            }
+        }
+    }
     
     
     // MARK: - Image Methods
     
     func compressAddImage(name: String, image: UIImage) -> Data? {
         var compression: CGFloat = 1.0
-        let maxCompression: CGFloat = 0.05
+        let maxCompression: CGFloat = 100
         let maxFileSize = 80000
         var imageData = image.jpegData(compressionQuality: compression)
         
-        if imageData!.count > maxFileSize * 20 {
+        if imageData!.count > maxFileSize * 60 {
             print("Photo is too large")
             return nil
         }
         
-        while (imageData!.count >= maxFileSize) && (compression > maxCompression) {
-            compression -= 0.05
-            imageData = image.jpegData(compressionQuality: compression)
+        while (imageData!.count >= maxFileSize) && (compression < maxCompression) {
+            if compression < 10 {
+                compression += 1
+            } else {
+                compression += 10
+            }
+            imageData = image.jpegData(compressionQuality: 1/compression)
         }
         
         images[name] = image
@@ -287,6 +320,18 @@ class UserController {
                 print("Error saving image to storage \(error)")
                 completion(error)
                 return
+            } else {
+                completion(nil)
+            }
+        }
+    }
+    
+    func deleteImage(completion: @escaping (Error?) -> Void) {
+        guard let user = user else { return }
+        let desertRef = storageRef.child(user.imageID)
+        desertRef.delete { error in
+            if let error = error {
+                completion(error)
             } else {
                 completion(nil)
             }
@@ -391,6 +436,14 @@ class UserController {
     }
     
     // MARK: - Helper Methods
+    
+    func reset() {
+        user = nil
+        friends = []
+        images = [:]
+        ref = Database.database().reference()
+        storageRef = Storage.storage().reference()
+    }
     
     func appendADayData(user: User, value: Int) {
         switch user.dayData.count {

@@ -10,6 +10,7 @@
 		490DF974B9AB24359BC1AAD0 /* Pods_PUSH.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F70ACCFE5EBCF539C023FD7A /* Pods_PUSH.framework */; };
 		680882C924EF0F670056D2A9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680882C824EF0F670056D2A9 /* Extensions.swift */; };
 		680C32FB250BD55B00780A49 /* AccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C32FA250BD55B00780A49 /* AccountTableViewCell.swift */; };
+		6816A6962512EE8500F227B1 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6816A6952512EE8500F227B1 /* LoginViewController.swift */; };
 		683698CA24E3411B00749236 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 683698C924E3411B00749236 /* GoogleService-Info.plist */; };
 		685F3F4B24F800D900AB4593 /* ActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685F3F4A24F800D900AB4593 /* ActivityView.swift */; };
 		686506B724E57EE900089234 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 686506B624E57EE900089234 /* SplashViewController.swift */; };
@@ -41,7 +42,6 @@
 		68978B6924DC636E00CBE40D /* Roboto-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 68978B5D24DC636E00CBE40D /* Roboto-Thin.ttf */; };
 		68978B6B24DC6AF200CBE40D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6A24DC6AF200CBE40D /* User.swift */; };
 		68978B6D24DC72B100CBE40D /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6C24DC72B100CBE40D /* UserController.swift */; };
-		68978B6F24DC8F3700CBE40D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B6E24DC8F3700CBE40D /* LoginViewController.swift */; };
 		68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68978B7024DCE6E900CBE40D /* AudioController.swift */; };
 		68978B7424DCE77C00CBE40D /* ClippedPock.wav in Resources */ = {isa = PBXBuildFile; fileRef = 68978B7324DCE77C00CBE40D /* ClippedPock.wav */; };
 		68B46BF6250AA0F0000D20A4 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68B46BF5250AA0F0000D20A4 /* FriendTableViewCell.swift */; };
@@ -52,6 +52,7 @@
 /* Begin PBXFileReference section */
 		680882C824EF0F670056D2A9 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		680C32FA250BD55B00780A49 /* AccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTableViewCell.swift; sourceTree = "<group>"; };
+		6816A6952512EE8500F227B1 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		683698C924E3411B00749236 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		685F3F4A24F800D900AB4593 /* ActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityView.swift; sourceTree = "<group>"; };
 		686506B624E57EE900089234 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -85,7 +86,6 @@
 		68978B5D24DC636E00CBE40D /* Roboto-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Thin.ttf"; sourceTree = "<group>"; };
 		68978B6A24DC6AF200CBE40D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		68978B6C24DC72B100CBE40D /* UserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
-		68978B6E24DC8F3700CBE40D /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = "PUSH/View Controllers/LoginViewController.swift"; sourceTree = SOURCE_ROOT; };
 		68978B7024DCE6E900CBE40D /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = SOURCE_ROOT; };
 		68978B7324DCE77C00CBE40D /* ClippedPock.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ClippedPock.wav; sourceTree = "<group>"; };
 		68B46BF5250AA0F0000D20A4 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
@@ -124,6 +124,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		681218C92512EB8E00D1A7D7 /* Side View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				686506B624E57EE900089234 /* SplashViewController.swift */,
+				6816A6952512EE8500F227B1 /* LoginViewController.swift */,
+				68BCD1A2250FF60D0061F029 /* HelpViewController.swift */,
+				6890DA1D24F85AF100DEC067 /* TabBarController.swift */,
+			);
+			path = "Side View Controllers";
+			sourceTree = "<group>";
+		};
 		688CB18824F83ABF00C37E7F /* ActivityGraph */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,7 +171,7 @@
 				680882CA24EF0F8F0056D2A9 /* Models */,
 				68978B4F24DC570B00CBE40D /* Controllers */,
 				68E6C77F24E2EA1400A014BC /* View Controllers */,
-				68978B4624DC553700CBE40D /* StatViewsCells */,
+				68978B4624DC553700CBE40D /* StatViewCells */,
 				68EF0F6624F4394900F93899 /* Table View Cells */,
 				688CB18824F83ABF00C37E7F /* ActivityGraph */,
 				68978B3324DC42E700CBE40D /* Main.storyboard */,
@@ -193,13 +204,13 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		68978B4624DC553700CBE40D /* StatViewsCells */ = {
+		68978B4624DC553700CBE40D /* StatViewCells */ = {
 			isa = PBXGroup;
 			children = (
 				68978B4B24DC560F00CBE40D /* StatCollectionViewCell.swift */,
 				68978B4D24DC561900CBE40D /* AddCollectionViewCell.swift */,
 			);
-			path = StatViewsCells;
+			path = StatViewCells;
 			sourceTree = "<group>";
 		};
 		68978B4F24DC570B00CBE40D /* Controllers */ = {
@@ -223,13 +234,10 @@
 		68E6C77F24E2EA1400A014BC /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				686506B624E57EE900089234 /* SplashViewController.swift */,
-				68978B4124DC453A00CBE40D /* StatViewController.swift */,
-				68BCD1A2250FF60D0061F029 /* HelpViewController.swift */,
 				6890DA1924F8541100DEC067 /* PushViewController.swift */,
+				68978B4124DC453A00CBE40D /* StatViewController.swift */,
 				6890DA1B24F8541E00DEC067 /* ProfileViewController.swift */,
-				68978B6E24DC8F3700CBE40D /* LoginViewController.swift */,
-				6890DA1D24F85AF100DEC067 /* TabBarController.swift */,
+				681218C92512EB8E00D1A7D7 /* Side View Controllers */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -385,7 +393,6 @@
 			files = (
 				68978B7124DCE6E900CBE40D /* AudioController.swift in Sources */,
 				68978B5124DC574F00CBE40D /* CameraController.swift in Sources */,
-				68978B6F24DC8F3700CBE40D /* LoginViewController.swift in Sources */,
 				6890DA1A24F8541100DEC067 /* PushViewController.swift in Sources */,
 				68EF0F6A24F4399D00F93899 /* StatTableViewCell.swift in Sources */,
 				68978B4224DC453A00CBE40D /* StatViewController.swift in Sources */,
@@ -394,6 +401,7 @@
 				68978B6D24DC72B100CBE40D /* UserController.swift in Sources */,
 				688CB18724F83A3600C37E7F /* ColumnView.swift in Sources */,
 				68978B4E24DC561900CBE40D /* AddCollectionViewCell.swift in Sources */,
+				6816A6962512EE8500F227B1 /* LoginViewController.swift in Sources */,
 				68BCD1A3250FF60D0061F029 /* HelpViewController.swift in Sources */,
 				6890DA1E24F85AF100DEC067 /* TabBarController.swift in Sources */,
 				688CB18A24F83B0900C37E7F /* GraphTableViewCell.swift in Sources */,
@@ -552,7 +560,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A9A835224B;
 				INFOPLIST_FILE = PUSH/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -572,7 +580,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = A9A835224B;
 				INFOPLIST_FILE = PUSH/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

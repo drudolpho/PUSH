@@ -14,22 +14,23 @@ class StatCollectionViewCell: UICollectionViewCell {
     var cellIndex = 0
     
     @IBOutlet weak var nameTF: UITextField!
-    @IBOutlet weak var cellImageView: UIImageView!
+    @IBOutlet weak var cellImageViewButton: UIButton!
     @IBOutlet weak var codeLabel: UILabel!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var statTableView: UITableView!
     @IBOutlet weak var shadowView: UIView!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupViews()
     }
     
+    // MARK: - Setup/Update Methods
+    
     func setupViews() {
         statTableView.delegate = self
         statTableView.dataSource = self
-        self.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        self.backgroundColor = UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
         statTableView.backgroundColor = .clear
         statTableView.separatorColor = .clear
         nameTF.borderStyle = .none
@@ -37,41 +38,42 @@ class StatCollectionViewCell: UICollectionViewCell {
         statTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: statTableView.frame.size.width, height: 1))
         self.layer.cornerRadius = 40
         topView.layer.cornerRadius = 35
-        topView.backgroundColor = UIColor(red: 35/255, green: 35/255, blue: 35/255, alpha: 1)
+        topView.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         topView.layer.masksToBounds = false
         topView.layer.shadowColor = UIColor(red: 22/255, green: 22/255, blue: 22/255, alpha: 0.8).cgColor
         topView.layer.shadowOpacity = 1
         topView.layer.shadowOffset = CGSize.zero
         topView.layer.shadowRadius = 15
-        cellImageView.layer.cornerRadius = cellImageView.frame.size.width/2
-        cellImageView.clipsToBounds = true
+        cellImageViewButton.layer.cornerRadius = cellImageViewButton.frame.size.width/2
+        cellImageViewButton.clipsToBounds = true
         
         shadowView.clipsToBounds = false
-        shadowView.layer.cornerRadius = cellImageView.frame.size.width/2
+        shadowView.layer.cornerRadius = cellImageViewButton.frame.size.width/2
         shadowView.backgroundColor = UIColor(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         shadowView.layer.shadowColor = UIColor(red: 15/255, green: 15/255, blue: 15/255, alpha: 1).cgColor
         shadowView.layer.shadowOpacity = 1
         shadowView.layer.shadowOffset = CGSize.zero
         shadowView.layer.shadowRadius = 0
-        shadowView.layer.shadowPath = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: cellImageView.frame.size.width/2).cgPath
+        shadowView.layer.shadowPath = UIBezierPath(roundedRect: shadowView.bounds, cornerRadius: cellImageViewButton.frame.size.width/2).cgPath
     }
     
     func updateViews() {
         guard let userController = self.userController, let user = userController.user else { return }
         if cellIndex == 0 {
             nameTF.text = user.name
-            cellImageView.image = userController.images[user.imageID]
+            cellImageViewButton.setImage(userController.images[user.imageID], for: .normal)
             codeLabel.text = "#\(user.codeName.suffix(4))"
         } else {
             let friend = userController.friends[cellIndex - 1]
             nameTF.text = friend.name
-            cellImageView.image = userController.images[friend.imageID]
+            cellImageViewButton.setImage(userController.images[friend.imageID], for: .normal)
             codeLabel.text = "#\(userController.friends[cellIndex - 1].codeName.suffix(4))"
         }
         statTableView.reloadData()
     }
 }
 
+// MARK: - Extensions
 
 extension StatCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

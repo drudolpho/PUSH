@@ -15,7 +15,6 @@ protocol PushupControllerDelegate {
 
 class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    //Controllers
     var audioController: AudioController?
     var count = 0
     var delegate: PushupControllerDelegate?
@@ -54,6 +53,31 @@ class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         keyValueBrightness = currentBrightness
         keyValueSet = true
         startBrightness = currentBrightness
+    }
+    
+    func setUpCamera() {
+        let camera = bestCamera()
+        
+        captureSession.beginConfiguration()
+        
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
+            fatalError("Cannot create camera input")
+        }
+        guard captureSession.canAddInput(cameraInput) else {
+            fatalError("Cannot add camera input to session")
+        }
+        captureSession.addInput(cameraInput)
+        
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.sessionPreset = .hd1920x1080
+        }
+        
+        let videoQueue = DispatchQueue(label: "VIDEO_QUEUE")
+        
+        videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
+        captureSession.addOutput(videoOutput)
+        
+        captureSession.commitConfiguration()
     }
     
     func reset() {
@@ -107,31 +131,6 @@ class CameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
                 keyValueSet = true
             }
         }
-    }
-    
-    func setUpCamera() {
-        let camera = bestCamera()
-        
-        captureSession.beginConfiguration()
-        
-        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
-            fatalError("Cannot create camera input")
-        }
-        guard captureSession.canAddInput(cameraInput) else {
-            fatalError("Cannot add camera input to session")
-        }
-        captureSession.addInput(cameraInput)
-        
-        if captureSession.canSetSessionPreset(.hd1920x1080) {
-            captureSession.sessionPreset = .hd1920x1080
-        }
-        
-        let videoQueue = DispatchQueue(label: "VIDEO_QUEUE")
-        
-        videoOutput.setSampleBufferDelegate(self, queue: videoQueue)
-        captureSession.addOutput(videoOutput)
-        
-        captureSession.commitConfiguration()
     }
     
     private func bestCamera() -> AVCaptureDevice {

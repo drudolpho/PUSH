@@ -11,28 +11,18 @@ import UIKit
 class SplashViewController: UIViewController {
     
     let userController = UserController()
-
+    let audioController = AudioController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         login()
-//        simLogin() // for using a simulator
     }
     
     func login() {
         userController.getUserData()
         
         self.performSegue(withIdentifier: "MainSegue", sender: nil)
-        
     }
-    
-//    func simLogin() { // Use this when using a simulator
-//        userController.fetchUserData(codeName: "DennisB2D6") { (user) in
-//            if user == false {
-//                UserDefaults.standard.set(nil, forKey: "codeName")
-//            }
-//            self.performSegue(withIdentifier: "MainSegue", sender: nil)
-//        }
-//    }
 
     
     // MARK: - Navigation
@@ -43,9 +33,11 @@ class SplashViewController: UIViewController {
                 mainVC.userController = userController
                 let pushVC = tabBar.viewControllers?[0] as! PushViewController
                 pushVC.userController = userController
+                pushVC.audioController = audioController
                 pushVC.delegate = mainVC as PushViewControllerDelegate
                 let profileVC = tabBar.viewControllers?[2] as! ProfileViewController
                 profileVC.userController = userController
+                profileVC.audioController = audioController
             }
         }
     }

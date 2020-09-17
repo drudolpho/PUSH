@@ -23,7 +23,7 @@ class StatViewController: UIViewController {
         super.viewDidLoad()
         guard let userController = userController else { return }
 
-        //for collecti0n view
+        //for collection view
         statsCollectionView.delegate = self
         statsCollectionView.dataSource = self
 
@@ -44,6 +44,13 @@ class StatViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if userController?.isFetching == false {
+            userController?.updateFriendData()
+        }
+    }
+    
     @objc func methodOfReceivedNotification(notification: Notification) {
         self.statsCollectionView.reloadData()
         self.pageControl.numberOfPages = (self.userController?.friends.count ?? 0) + 2
@@ -51,7 +58,7 @@ class StatViewController: UIViewController {
     }
 }
 
-
+// MARK: - Extensions
 
 extension StatViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

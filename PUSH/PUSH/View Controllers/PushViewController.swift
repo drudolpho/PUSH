@@ -15,15 +15,14 @@ protocol PushViewControllerDelegate {
 class PushViewController: UIViewController {
     
     var userController: UserController?
+    var audioController: AudioController?
     let cameraController = CameraController()
-    var audioController = AudioController()
     
-    var countDownTime = 3
+    var countDownTime = 5
     var timer = Timer()
     var delegate: PushViewControllerDelegate?
     
     @IBOutlet weak var startButton: UIButton!
-    @IBOutlet weak var soundButton: UIButton!
     @IBOutlet weak var countLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var yourPushLabel: UILabel!
@@ -36,11 +35,13 @@ class PushViewController: UIViewController {
     @IBOutlet weak var shadowUpImageView: UIImageView!
     @IBOutlet weak var shadowDownImageView: UIImageView!
     
+    // MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        guard let userController = userController else { return }
+        guard let userController = userController, let audioController = audioController  else { return }
         
+        // TODO: Sim
         //TESTING for testing on simulator, comment this vvv out
         cameraController.setUpCamera()
         //TESTING
@@ -59,19 +60,16 @@ class PushViewController: UIViewController {
         
         todaysPushCount.text = "\(UserDefaults.standard.integer(forKey: "todaysPushups"))"
         
-        let sound = UserDefaults.standard.bool(forKey: "Sound")
-        if sound {
-            audioController.speakOn = true
-            soundButton.setImage(UIImage(named: "Voice"), for: .normal)
-        } else {
-            audioController.speakOn = false
-            soundButton.setImage(UIImage(named: "Sound"), for: .normal)
-        }
-        
         detailLabel.text = "Quickly get into push-up position!"
         
-//        let backSwipe = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(sender:)))
-//        view.addGestureRecognizer(backSwipe)
+        let sound = UserDefaults.standard.integer(forKey: "Sound")
+        if sound == 1 {
+            audioController.audioType = .speak
+        } else if sound == 2 {
+            audioController.audioType = .none
+        } else {
+            audioController.audioType = .sound
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -82,16 +80,9 @@ class PushViewController: UIViewController {
         }
     }
     
-    @objc func handleSwipe(sender: UISwipeGestureRecognizer) {
-        if sender.direction == .right {
-            self.tabBarController?.selectedIndex = 0
-        } else if sender.direction == .left {
-            self.tabBarController?.selectedIndex = 2
-        }
-    }
+    // MARK: - Methods
     
     func prepareDark() {
-        soundButton.isHidden = false
         shadowUpImageView.isHidden = false
         shadowDownImageView.isHidden = true
         instructionLabel1.isHidden = true
@@ -107,7 +98,6 @@ class PushViewController: UIViewController {
     }
     
     func prepareLight() {
-        soundButton.isHidden = true
         shadowUpImageView.isHidden = true
         shadowDownImageView.isHidden = false
         instructionLabel1.isHidden = false
@@ -121,17 +111,6 @@ class PushViewController: UIViewController {
         detailLabel.isHidden = true
     }
     
-    private func setSpeakOn(bool: Bool) {
-        if bool == false {
-            audioController.speakOn = true
-            soundButton.setImage(UIImage(named: "Voice"), for: .normal)
-            UserDefaults.standard.set(true, forKey: "Sound")
-        } else if bool == true {
-            audioController.speakOn = false
-            soundButton.setImage(UIImage(named: "Sound"), for: .normal)
-            UserDefaults.standard.set(false, forKey: "Sound")
-        }
-    }
     
     // MARK: - Timer
     
@@ -147,7 +126,7 @@ class PushViewController: UIViewController {
     private func reset() {
         cameraController.count = 0
         cameraController.reset()
-        countDownTime = 3
+        countDownTime = 5
     }
     
     @objc func countDownAction() {
@@ -167,10 +146,6 @@ class PushViewController: UIViewController {
     }
     
     // MARK: - Actions
-    
-    @IBAction func soundTapped(sender: UIButton) {
-        setSpeakOn(bool: audioController.speakOn)
-    }
     
     @IBAction func startButtonTapped(_ sender: UIButton) {
         guard let userController = userController, let user = userController.user else { return }
