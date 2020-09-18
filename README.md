@@ -1,4 +1,4 @@
-# No Bounds
+# PUSH
 
 This project is coming soon to the app store, you can find it here on [Test Flight](https://testflight.apple.com/join/8dgyclIS).
 
