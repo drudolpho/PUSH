@@ -1,6 +1,6 @@
 # No Bounds
 
-This project is coming soon to the app store, you can find it here on [Test Flight]().
+This project is coming soon to the app store, you can find it here on [Test Flight](https://testflight.apple.com/join/8dgyclIS).
 
 ## Contributors
 
@@ -20,7 +20,7 @@ This project is coming soon to the app store, you can find it here on [Test Flig
 
 ## Project Overview
 
-You can find it deployed here on [Test Flight]().
+You can find it deployed here on [Test Flight](https://testflight.apple.com/join/8dgyclIS).
 
 PUSH is a pushup tracking and sharing app. It uses the phones camera to track your pushups, it displays your statistics, and charts your activity in a GitHub style graph. You can also follow friends and monitor their stats.
 
