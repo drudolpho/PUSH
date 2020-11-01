@@ -18,7 +18,9 @@ class UserController {
     var ref = Database.database().reference()
     var storageRef = Storage.storage().reference()
     let df = DateFormatter()
-    var date = Date()
+    var date: Date {
+        Date()
+    }
     var isFetching = false
 //    for testing future dates
 //    var date: Date {
